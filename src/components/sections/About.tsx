@@ -10,7 +10,7 @@ const highlights = [
   {
     title: "Creative Direction",
     description:
-      "Every session is planned with intent — locations, lighting, and timing chosen to bring out natural, authentic moments.",
+      "Every session is planned with intent - locations, lighting, and timing chosen to bring out natural, authentic moments.",
   },
   {
     title: "Polished Editing",
@@ -20,17 +20,15 @@ const highlights = [
   {
     title: "Studio & Outdoor",
     description:
-      "We shoot in our private studio or on location across Kathmandu — flexible to your vision and comfort.",
+      "We shoot in our private studio or on location across Kathmandu - flexible to your vision and comfort.",
   },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="bg-zinc-950 border-t border-white/5">
+    <section id="about" className="bg-neutral-50 border-t border-neutral-200">
       <Container>
-        <div className="py-20 sm:py-28 grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
-
-          {/* ── Left: heading + intro ── */}
+        <div className="grid grid-cols-1 items-start gap-14 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20">
           <div>
             <SectionHeader
               eyebrow="About SomStudioPhotography"
@@ -38,7 +36,7 @@ export default function About() {
               centered={false}
             />
 
-            <p className="mt-6 text-zinc-400 text-base leading-relaxed max-w-lg">
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-neutral-600">
               SomStudioPhotography is a professional photography studio in
               Kathmandu, Nepal, focused on creating timeless images for people,
               families, events, and brands. From emotional wedding stories to
@@ -47,39 +45,32 @@ export default function About() {
               deliver photographs clients are proud to keep, print, and share.
             </p>
 
-            {/* Location marker */}
             <div className="mt-8 flex items-center gap-3">
               <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-              <span className="text-xs uppercase tracking-[0.2em] text-zinc-600">
+              <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
                 Kathmandu, Nepal
               </span>
             </div>
           </div>
 
-          {/* ── Right: highlight cards ── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {highlights.map((item) => (
               <div
                 key={item.title}
-                className="group rounded border border-zinc-800 bg-zinc-900 p-6 transition-colors hover:border-zinc-700"
+                className="group rounded border border-neutral-200 bg-white p-6 transition-colors hover:border-neutral-300"
               >
-                {/* Gold top accent */}
-                <div
-                  aria-hidden="true"
-                  className="mb-5 h-px w-6 bg-gold"
-                />
+                <div aria-hidden="true" className="mb-5 h-px w-6 bg-gold" />
 
-                <h3 className="mb-2 text-sm font-semibold text-white">
+                <h3 className="mb-2 text-sm font-semibold text-neutral-950">
                   {item.title}
                 </h3>
 
-                <p className="text-sm leading-relaxed text-zinc-500">
+                <p className="text-sm leading-relaxed text-neutral-500">
                   {item.description}
                 </p>
               </div>
             ))}
           </div>
-
         </div>
       </Container>
     </section>

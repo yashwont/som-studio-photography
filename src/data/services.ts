@@ -5,7 +5,7 @@ export const services: Service[] = [
     id: "wedding",
     title: "Wedding Photography",
     description:
-      "Timeless coverage of your wedding day — from the first look to the final dance. Every emotion, beautifully preserved.",
+      "Timeless coverage of your wedding day - from the first look to the final dance. Every emotion, beautifully preserved.",
     highlights: [
       "Full-day coverage",
       "Candid & traditional shots",

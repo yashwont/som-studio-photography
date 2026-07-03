@@ -1,5 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
+import { contactInfo } from "@/src/data/contact";
+import { heroGallery } from "@/src/data/visuals";
 
 const serviceHighlights = [
   "Weddings",
@@ -10,63 +16,93 @@ const serviceHighlights = [
   "Products",
 ];
 
+const trustPoints = [
+  "Studio & outdoor sessions",
+  "Guided posing and planning",
+  "Edited online gallery delivery",
+];
+
+const rotationMs = 3000;
+const heroLabels = [
+  {
+    title: "Wedding cover story",
+    subtitle: "A rotating front image keeps the hero feeling alive.",
+  },
+  {
+    title: "Ceremony moments",
+    subtitle: "The front frame changes while the side prints stay present.",
+  },
+  {
+    title: "Pre-wedding session",
+    subtitle: "A cleaner opening view with changing cover imagery.",
+  },
+];
+
 export default function Hero() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % heroGallery.length);
+    }, rotationMs);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const leftImage = heroGallery[(activeIndex + 1) % heroGallery.length];
+  const centerImage = heroGallery[activeIndex];
+  const rightImage = heroGallery[(activeIndex + 2) % heroGallery.length];
+
   return (
-    <section id="home" className="relative bg-black text-white overflow-hidden">
-      {/* Ambient warm glow — very subtle, decorative only */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-[5%] top-1/3 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-gold/[0.04] blur-3xl"
-      />
-
-      {/* Content — pushed below the fixed Navbar */}
-      <div className="relative min-h-screen flex items-center pt-16 sm:pt-20">
+    <section id="home" className="relative overflow-hidden bg-white text-neutral-950">
+      <div className="relative flex min-h-screen items-center pt-16 sm:pt-20">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-16 items-center py-12 sm:py-16">
-
-            {/* ── Left column: text ── */}
+          <div className="grid grid-cols-1 items-center gap-10 py-12 sm:py-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 xl:gap-16">
             <div>
-              {/* Eyebrow */}
-              <div className="flex items-center gap-3 mb-5">
-                <div
-                  aria-hidden="true"
-                  className="h-px w-8 shrink-0 bg-gold"
-                />
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-                  Premium Photography Studio
+              <div className="mb-5 flex items-center gap-3">
+                <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
+                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-gold sm:tracking-[0.2em]">
+                  Photography studio in {contactInfo.city}
                 </span>
               </div>
 
-              {/* Headline */}
-              <h1 className="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl xl:text-6xl">
-                Capturing Stories,
-                <br />
-                <span className="text-gold">Creating Memories.</span>
+              <h1 className="break-words text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl xl:text-7xl">
+                SomStudio
+                <span className="block text-gold">Photography</span>
               </h1>
 
-              {/* Subtitle */}
-              <p className="mt-6 max-w-lg text-lg leading-relaxed text-zinc-400">
-                Professional photography for weddings, pre-weddings, events,
-                studio portraits, maternity, graduation, kids photoshoots,
-                product photography, passport photos, printing, and framing.
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
+                Professional wedding, portrait, event, and product photography
+                from our studio in {contactInfo.address}, {contactInfo.city}.
+                We help you plan the session, feel comfortable on camera, and
+                receive polished images ready to share, print, and frame.
               </p>
 
-              {/* CTA buttons */}
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Button href="/portfolio" variant="primary" size="lg">
-                  View Portfolio
-                </Button>
-                <Button href="/contact" variant="secondary" size="lg">
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                <Button href="/contact" variant="primary" size="lg" className="w-full sm:w-auto">
                   Book a Session
+                </Button>
+                <Button href="/portfolio" variant="secondary" size="lg" className="w-full sm:w-auto">
+                  View Portfolio
                 </Button>
               </div>
 
-              {/* Service tags */}
+              <div className="mt-8 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3">
+                {trustPoints.map((point) => (
+                  <div
+                    key={point}
+                    className="border-l border-neutral-200 pl-4 text-sm leading-relaxed text-neutral-600"
+                  >
+                    {point}
+                  </div>
+                ))}
+              </div>
+
               <div className="mt-8 flex flex-wrap gap-2">
                 {serviceHighlights.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-500"
+                    className="rounded-full border border-neutral-200 px-3 py-1 text-xs text-neutral-500"
                   >
                     {tag}
                   </span>
@@ -74,74 +110,80 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* ── Right column: image placeholder ── */}
-            <div className="relative">
-              {/* Top accent line — fades right to left */}
-              <div
-                aria-hidden="true"
-                className="absolute -top-px left-0 h-px w-3/4 bg-gradient-to-r from-gold to-transparent"
-              />
+            <div className="relative min-h-[520px] sm:min-h-[640px] lg:min-h-[760px]">
+              <div className="absolute inset-x-6 top-8 h-[72%] rounded-[2rem] border border-neutral-200 bg-neutral-50/80 shadow-[0_20px_60px_rgb(15_15_15_/0.06)] sm:inset-x-10 sm:top-10 lg:inset-x-16" />
 
-              {/* Placeholder box */}
-              <div className="relative h-64 overflow-hidden rounded border border-zinc-800 bg-zinc-900 sm:h-80 lg:h-[60vh]">
-                {/* Soft inner gradient */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-br from-zinc-800/10 via-zinc-900 to-zinc-950"
+              <div className="absolute left-0 top-12 h-[58%] w-[44%] overflow-hidden rounded-[1.75rem] border border-white bg-neutral-100 shadow-lg transition-all duration-700 sm:top-16">
+                <Image
+                  src={leftImage.src}
+                  alt={leftImage.alt}
+                  fill
+                  priority={false}
+                  sizes="(max-width: 1024px) 44vw, 20vw"
+                  className="image-cycle object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent" />
+              </div>
 
-                {/* Dot grid pattern */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 opacity-[0.04]"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-                    backgroundSize: "24px 24px",
-                  }}
+              <div className="absolute left-1/2 top-0 z-20 h-[84%] w-[56%] -translate-x-1/2 overflow-hidden rounded-[2rem] border border-white bg-white shadow-2xl">
+                <Image
+                  src={centerImage.src}
+                  alt={centerImage.alt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 56vw, 28vw"
+                  className="image-cycle object-cover"
                 />
-
-                {/* Left vertical gold accent */}
-                <div
-                  aria-hidden="true"
-                  className="absolute bottom-[15%] left-0 top-[15%] w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent"
-                />
-
-                {/* Corner bracket — top right */}
-                <div
-                  aria-hidden="true"
-                  className="absolute right-5 top-5 h-6 w-6 border-r border-t border-gold/40"
-                />
-
-                {/* Corner bracket — bottom left */}
-                <div
-                  aria-hidden="true"
-                  className="absolute bottom-5 left-5 h-6 w-6 border-b border-l border-gold/40"
-                />
-
-                {/* Center label */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700">
-                    <span
-                      aria-hidden="true"
-                      className="text-base leading-none text-zinc-600"
-                    >
-                      ◎
-                    </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-white/55 via-transparent to-transparent" />
+                <div className="absolute left-0 top-0 h-full w-full p-4 sm:p-5 lg:p-6">
+                  <div className="flex h-full flex-col justify-between">
+                    <div className="flex items-center justify-between">
+                      <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-700 backdrop-blur-sm">
+                        Cover image
+                      </span>
+                      <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500 backdrop-blur-sm">
+                        Changes every 3 sec
+                      </span>
+                    </div>
+                    <div className="max-w-sm">
+                      <div className="mb-3 h-px w-12 bg-gold" />
+                      <h2 className="text-xl font-semibold text-neutral-950 sm:text-2xl">
+                        {heroLabels[activeIndex].title}
+                      </h2>
+                      <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+                        {heroLabels[activeIndex].subtitle}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-600">
-                    Featured Studio Image
-                  </p>
                 </div>
               </div>
 
-              {/* Bottom accent line — fades left to right */}
-              <div
-                aria-hidden="true"
-                className="absolute -bottom-px right-0 h-px w-3/4 bg-gradient-to-l from-gold/50 to-transparent"
-              />
-            </div>
+              <div className="absolute bottom-10 right-0 h-[42%] w-[40%] overflow-hidden rounded-[1.5rem] border border-white bg-neutral-100 shadow-lg transition-all duration-700 sm:bottom-14">
+                <Image
+                  src={rightImage.src}
+                  alt={rightImage.alt}
+                  fill
+                  priority={false}
+                  sizes="(max-width: 1024px) 40vw, 18vw"
+                  className="image-cycle object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/35 via-transparent to-transparent" />
+              </div>
 
+              <div className="absolute left-6 bottom-4 flex gap-2 sm:left-10 sm:bottom-8">
+                {heroGallery.map((image, index) => (
+                  <span
+                    key={image.src}
+                    aria-hidden="true"
+                    className={`image-progress image-progress-${index} h-1 w-10 overflow-hidden rounded-full bg-neutral-200`}
+                  />
+                ))}
+              </div>
+
+              <p className="absolute right-4 top-4 max-w-[10rem] text-[10px] uppercase tracking-[0.18em] text-neutral-400 sm:right-8 sm:top-8">
+                Wedding, portrait, and studio stories
+              </p>
+            </div>
           </div>
         </Container>
       </div>

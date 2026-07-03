@@ -12,12 +12,14 @@ interface ButtonProps {
   className?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  target?: string;
+  rel?: string;
 }
 
 const variants: Record<string, string> = {
-  primary: "bg-gold text-black font-semibold hover:brightness-110",
+  primary: "bg-gold text-white font-semibold hover:brightness-110",
   secondary: "border border-gold text-gold hover:bg-gold/10",
-  ghost: "text-zinc-400 hover:text-white",
+  ghost: "text-neutral-600 hover:text-neutral-950",
 };
 
 const sizes: Record<string, string> = {
@@ -40,13 +42,15 @@ export default function Button({
   className = "",
   type = "button",
   disabled = false,
+  target,
+  rel,
 }: ButtonProps) {
   const classes =
     `${base} ${variants[variant]} ${sizes[size]} ${className}`.trim();
 
   if (href) {
     return (
-      <Link href={href} className={classes} onClick={onClick}>
+      <Link href={href} className={classes} onClick={onClick} target={target} rel={rel}>
         {children}
       </Link>
     );

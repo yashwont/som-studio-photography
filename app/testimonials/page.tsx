@@ -6,48 +6,52 @@ import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
 import { testimonials } from "@/src/data/testimonials";
 import type { Testimonial } from "@/src/types/site";
+import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Client Stories — SomStudioPhotography",
+  title: "Client Stories",
   description:
     "Read what clients say about SomStudioPhotography in Kathmandu, Nepal. Real reviews for wedding, portrait, maternity, graduation, event, and product photography.",
+  alternates: {
+    canonical: absoluteUrl("/testimonials"),
+  },
 };
 
 const stats = [
-  { value: "5 ★", label: "Average client rating" },
+  { value: "5/5", label: "Average client rating" },
   { value: "10+", label: "Service categories covered" },
-  { value: "KTM · LTP · BKT", label: "Kathmandu, Lalitpur, Bhaktapur" },
+  { value: "KTM / LTP / BKT", label: "Kathmandu, Lalitpur, Bhaktapur" },
 ];
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <div className="flex flex-col rounded border border-zinc-800 bg-zinc-900 p-6 sm:p-7">
+    <div className="flex flex-col rounded border border-neutral-200 bg-white p-6 sm:p-7">
       <div
         className="mb-5 flex gap-0.5"
         aria-label={`Rating: ${testimonial.rating} out of 5`}
       >
         {Array.from({ length: testimonial.rating }).map((_, i) => (
           <span key={i} aria-hidden="true" className="text-sm text-gold">
-            ★
+            &#9733;
           </span>
         ))}
       </div>
 
-      <blockquote className="mb-6 flex-1 text-sm leading-relaxed text-zinc-300">
+      <blockquote className="mb-6 flex-1 text-sm leading-relaxed text-neutral-700">
         &ldquo;{testimonial.content}&rdquo;
       </blockquote>
 
-      <footer className="border-t border-zinc-800 pt-5">
+      <footer className="border-t border-neutral-200 pt-5">
         <div className="mb-1 flex items-center gap-3">
           <div aria-hidden="true" className="h-px w-5 shrink-0 bg-gold" />
-          <span className="text-sm font-semibold text-white">
+          <span className="text-sm font-semibold text-neutral-950">
             {testimonial.name}
           </span>
         </div>
-        <p className="pl-8 text-xs text-zinc-500">
+        <p className="pl-8 text-xs text-neutral-500">
           {testimonial.role} &middot; {testimonial.service}
         </p>
-        <p className="mt-0.5 pl-8 text-xs text-zinc-600">
+        <p className="mt-0.5 pl-8 text-xs text-neutral-400">
           {testimonial.location}
         </p>
       </footer>
@@ -66,19 +70,18 @@ export default function TestimonialsPage() {
         subtitle="Real words from real people across Kathmandu, Lalitpur, and Bhaktapur."
       />
 
-      {/* Stats band */}
-      <section className="bg-black border-t border-white/5">
+      <section className="bg-white border-t border-neutral-200">
         <Container>
-          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/5 py-12 sm:py-14">
+          <div className="grid grid-cols-1 divide-y divide-white/5 py-12 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:py-14">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="flex flex-col items-center gap-1 py-6 sm:py-0 text-center"
+                className="flex flex-col items-center gap-1 py-6 text-center sm:py-0"
               >
-                <span className="text-2xl font-bold text-white sm:text-3xl">
+                <span className="text-2xl font-bold text-neutral-950 sm:text-3xl">
                   {stat.value}
                 </span>
-                <span className="text-xs text-zinc-600 uppercase tracking-[0.15em]">
+                <span className="text-xs uppercase tracking-[0.15em] text-neutral-400">
                   {stat.label}
                 </span>
               </div>
@@ -87,30 +90,28 @@ export default function TestimonialsPage() {
         </Container>
       </section>
 
-      {/* Testimonials grid */}
-      <section className="bg-zinc-950 border-t border-white/5">
+      <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {testimonials.map((testimonial) => (
                 <TestimonialCard key={testimonial.id} testimonial={testimonial} />
               ))}
             </div>
-            <p className="mt-14 text-center text-sm text-zinc-600">
+            <p className="mt-14 text-center text-sm text-neutral-400">
               Every session is planned with care, comfort, and attention to detail.
             </p>
           </div>
         </Container>
       </section>
 
-      {/* CTA */}
-      <section className="bg-black border-t border-white/5">
+      <section className="bg-white border-t border-neutral-200">
         <Container>
-          <div className="flex flex-col items-center gap-6 py-16 sm:py-20 text-center">
+          <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
               Ready to add your own story?
             </p>
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">
+            <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
               Book your session today.
             </h2>
             <Button href="/contact" variant="primary" size="lg">

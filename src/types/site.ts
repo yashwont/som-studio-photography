@@ -1,12 +1,8 @@
-// ─── Navigation ──────────────────────────────────────────────────────────────
-
 export interface NavLink {
   label: string;
   href: string;
   isExternal?: boolean;
 }
-
-// ─── Services ────────────────────────────────────────────────────────────────
 
 export interface Service {
   id: string;
@@ -17,16 +13,29 @@ export interface Service {
   featured: boolean;
 }
 
-// ─── Portfolio ───────────────────────────────────────────────────────────────
-
 export interface PortfolioCategory {
   id: string;
   title: string;
   description: string;
   slug: string;
+  image: SiteImage;
 }
 
-// ─── Booking Process ─────────────────────────────────────────────────────────
+export interface PortfolioWork {
+  id: string;
+  categoryId: string;
+  title: string;
+  description: string;
+  location: string;
+  image: SiteImage;
+  featured?: boolean;
+}
+
+export interface SiteImage {
+  src: string;
+  alt: string;
+  credit?: string;
+}
 
 export interface ProcessStep {
   step: number;
@@ -34,8 +43,6 @@ export interface ProcessStep {
   description: string;
   icon: string;
 }
-
-// ─── Testimonials ─────────────────────────────────────────────────────────────
 
 export interface Testimonial {
   id: string;
@@ -46,8 +53,6 @@ export interface Testimonial {
   service: string;
   location: string;
 }
-
-// ─── Contact ─────────────────────────────────────────────────────────────────
 
 export interface SocialLink {
   platform: string;

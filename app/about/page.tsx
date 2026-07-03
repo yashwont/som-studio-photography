@@ -4,12 +4,19 @@ import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
+import Trust from "@/src/components/sections/Trust";
+import AboutShowcase from "@/src/components/sections/AboutShowcase";
+import LocationVisit from "@/src/components/sections/LocationVisit";
 import { contactInfo } from "@/src/data/contact";
+import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
-  title: "About — SomStudioPhotography",
+  title: "About",
   description:
     "Learn about SomStudioPhotography, a premium photography studio in Kathmandu, Nepal offering professional photography for weddings, portraits, events, and more.",
+  alternates: {
+    canonical: absoluteUrl("/about"),
+  },
 };
 
 const highlights = [
@@ -26,12 +33,12 @@ const highlights = [
   {
     title: "Polished Editing",
     description:
-      "Every image is individually selected and carefully refined before delivery. No bulk exports — only the best frames, edited to a consistent standard.",
+      "Every image is individually selected and carefully refined before delivery. No bulk exports - only the best frames, edited to a consistent standard.",
   },
   {
     title: "Studio & Outdoor",
     description:
-      "We work in our private studio and on location across Kathmandu. Controlled lighting or natural settings — we adapt to whatever serves your vision.",
+      "We work in our private studio and on location across Kathmandu. Controlled lighting or natural settings - we adapt to whatever serves your vision.",
   },
 ];
 
@@ -47,19 +54,19 @@ export default function AboutPage() {
       />
 
       {/* Studio story */}
-      <section className="bg-black">
+      <section className="bg-white">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start py-20 sm:py-28">
 
             <div className="space-y-6">
-              <p className="text-base leading-relaxed text-zinc-400">
+              <p className="text-base leading-relaxed text-neutral-600">
                 SomStudioPhotography is a professional photography studio based
                 in Lazimpat, Kathmandu. We focus on creating timeless images
-                for people, families, events, and brands — photographs that
+                for people, families, events, and brands - photographs that
                 clients are proud to keep, print, and share long after the
                 session is over.
               </p>
-              <p className="text-base leading-relaxed text-zinc-400">
+              <p className="text-base leading-relaxed text-neutral-600">
                 Our approach is straightforward: careful preparation, genuine
                 creative direction during the session, and clean polished
                 editing afterwards. We don&rsquo;t use a one-size-fits-all
@@ -67,7 +74,7 @@ export default function AboutPage() {
                 around their comfort, their style, and what they want to
                 remember.
               </p>
-              <p className="text-base leading-relaxed text-zinc-400">
+              <p className="text-base leading-relaxed text-neutral-600">
                 We shoot in our private studio and on location across
                 Kathmandu, Lalitpur, and beyond. Whether you need a clean
                 controlled backdrop or an outdoor setting with character,
@@ -78,65 +85,27 @@ export default function AboutPage() {
 
               <div className="pt-4 flex items-center gap-3">
                 <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-                <span className="text-xs uppercase tracking-[0.2em] text-zinc-600">
+                <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
                   {contactInfo.address}, {contactInfo.city}, {contactInfo.country}
                 </span>
               </div>
             </div>
 
-            {/* Studio image placeholder */}
-            <div className="relative">
-              <div
-                aria-hidden="true"
-                className="absolute -top-px left-0 h-px w-3/4 bg-gradient-to-r from-gold to-transparent"
-              />
-              <div className="relative h-72 overflow-hidden rounded border border-zinc-800 bg-zinc-900 sm:h-96 lg:h-[480px]">
-                <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/10 via-zinc-900 to-zinc-950" />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 opacity-[0.035]"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle, #fff 1px, transparent 1px)",
-                    backgroundSize: "24px 24px",
-                  }}
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute right-5 top-5 h-5 w-5 border-r border-t border-gold/40"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute bottom-5 left-5 h-5 w-5 border-b border-l border-gold/40"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700">
-                    <span aria-hidden="true" className="text-base leading-none text-zinc-600">◎</span>
-                  </div>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-600">
-                    Studio Image
-                  </p>
-                </div>
-              </div>
-              <div
-                aria-hidden="true"
-                className="absolute -bottom-px right-0 h-px w-3/4 bg-gradient-to-l from-gold/50 to-transparent"
-              />
-            </div>
+            <AboutShowcase />
 
           </div>
         </Container>
       </section>
 
       {/* Highlights */}
-      <section className="bg-zinc-950 border-t border-white/5">
+      <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
             <div className="mb-12 sm:mb-14">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                 What to expect
               </p>
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
                 How we work with every client.
               </h2>
             </div>
@@ -144,13 +113,13 @@ export default function AboutPage() {
               {highlights.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded border border-zinc-800 bg-zinc-900 p-6 transition-colors hover:border-zinc-700"
+                  className="rounded border border-neutral-200 bg-white p-6 transition-colors hover:border-neutral-300"
                 >
                   <div aria-hidden="true" className="mb-5 h-px w-6 bg-gold" />
-                  <h3 className="mb-2 text-sm font-semibold text-white">
+                  <h3 className="mb-2 text-sm font-semibold text-neutral-950">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-zinc-500">
+                  <p className="text-sm leading-relaxed text-neutral-500">
                     {item.description}
                   </p>
                 </div>
@@ -161,41 +130,41 @@ export default function AboutPage() {
       </section>
 
       {/* Studio details */}
-      <section className="bg-black border-t border-white/5">
+      <section className="bg-white border-t border-neutral-200">
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 py-16 sm:py-20">
             <div>
-              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-zinc-600">
+              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-neutral-400">
                 Location
               </p>
-              <p className="text-sm text-zinc-300">
+              <p className="text-sm text-neutral-700">
                 {contactInfo.address}, {contactInfo.city}
               </p>
-              <p className="text-sm text-zinc-500">{contactInfo.country}</p>
+              <p className="text-sm text-neutral-500">{contactInfo.country}</p>
             </div>
             <div>
-              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-zinc-600">
+              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-neutral-400">
                 Studio Hours
               </p>
               {contactInfo.businessHours.map((slot) => (
-                <p key={slot.days} className="text-sm text-zinc-500">
-                  <span className="text-zinc-300">{slot.days}</span> — {slot.hours}
+                <p key={slot.days} className="text-sm text-neutral-500">
+                  <span className="text-neutral-700">{slot.days}</span> - {slot.hours}
                 </p>
               ))}
             </div>
             <div>
-              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-zinc-600">
+              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-neutral-400">
                 Get in Touch
               </p>
               <a
                 href={`tel:${contactInfo.phone}`}
-                className="block text-sm text-zinc-300 hover:text-white transition-colors"
+                className="block text-sm text-neutral-700 hover:text-neutral-950 transition-colors"
               >
                 {contactInfo.phone}
               </a>
               <a
                 href={`mailto:${contactInfo.email}`}
-                className="block text-sm text-zinc-500 hover:text-white transition-colors mt-1 break-all"
+                className="block text-sm text-neutral-500 hover:text-neutral-950 transition-colors mt-1 break-all"
               >
                 {contactInfo.email}
               </a>
@@ -204,18 +173,21 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <Trust />
+      <LocationVisit />
+
       {/* CTA */}
-      <section className="bg-zinc-950 border-t border-white/5">
+      <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 sm:py-20 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
               Ready to start?
             </p>
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">
+            <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
               Let&rsquo;s plan your next session.
             </h2>
-            <p className="max-w-md text-zinc-400">
-              Reach out and we&rsquo;ll take it from there — no complicated process.
+            <p className="max-w-md text-neutral-600">
+              Reach out and we&rsquo;ll take it from there - no complicated process.
             </p>
             <Button href="/contact" variant="primary" size="lg">
               Book a Session

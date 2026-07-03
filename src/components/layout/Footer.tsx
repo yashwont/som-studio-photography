@@ -9,19 +9,17 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-950 border-t border-white/5">
+    <footer className="bg-neutral-50 border-t border-neutral-200">
       <Container>
-        {/* Main grid */}
-        <div className="py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Brand */}
+        <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
               href="/"
-              className="text-white font-semibold text-xl tracking-tight"
+              className="text-xl font-semibold tracking-tight text-neutral-950"
             >
               Som<span className="text-gold">Studio</span>
             </Link>
-            <p className="mt-3 text-zinc-500 text-sm leading-relaxed max-w-xs">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-neutral-500">
               Premium photography studio in {contactInfo.city},{" "}
               {contactInfo.country}. Capturing life&apos;s most important
               moments.
@@ -33,8 +31,8 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-zinc-500 hover:text-gold text-sm transition-colors"
-                  aria-label={`${social.label} – opens in new tab`}
+                  className="text-sm text-neutral-500 transition-colors hover:text-gold"
+                  aria-label={`${social.label} - opens in new tab`}
                 >
                   {social.label}
                 </Link>
@@ -42,9 +40,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation */}
           <div>
-            <h3 className="text-white text-xs font-semibold uppercase tracking-[0.15em] mb-4">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-neutral-950">
               Navigation
             </h3>
             <ul className="space-y-2.5">
@@ -52,7 +49,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-zinc-500 hover:text-white text-sm transition-colors"
+                    className="text-sm text-neutral-500 transition-colors hover:text-neutral-950"
                   >
                     {link.label}
                   </Link>
@@ -61,46 +58,46 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
-            <h3 className="text-white text-xs font-semibold uppercase tracking-[0.15em] mb-4">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-neutral-950">
               Services
             </h3>
             <ul className="space-y-2.5">
               {footerServices.map((service) => (
                 <li key={service.id}>
-                  <span className="text-zinc-500 text-sm">{service.title}</span>
+                  <span className="text-sm text-neutral-500">
+                    {service.title}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h3 className="text-white text-xs font-semibold uppercase tracking-[0.15em] mb-4">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-neutral-950">
               Contact
             </h3>
-            <address className="not-italic space-y-2.5">
-              <p className="text-zinc-500 text-sm">
+            <address className="space-y-2.5 not-italic">
+              <p className="text-sm text-neutral-500">
                 {contactInfo.address}, {contactInfo.city}
               </p>
-              <p className="text-zinc-500 text-sm">{contactInfo.country}</p>
+              <p className="text-sm text-neutral-500">{contactInfo.country}</p>
               <Link
                 href={`tel:${contactInfo.phone}`}
-                className="text-zinc-500 hover:text-white text-sm block transition-colors"
+                className="block text-sm text-neutral-500 transition-colors hover:text-neutral-950"
               >
                 {contactInfo.phone}
               </Link>
               <Link
                 href={`mailto:${contactInfo.email}`}
-                className="text-zinc-500 hover:text-white text-sm block transition-colors break-all"
+                className="block break-all text-sm text-neutral-500 transition-colors hover:text-neutral-950"
               >
                 {contactInfo.email}
               </Link>
             </address>
             <div className="mt-4 space-y-1.5">
               {contactInfo.businessHours.map((slot) => (
-                <p key={slot.days} className="text-zinc-600 text-xs">
+                <p key={slot.days} className="text-xs text-neutral-400">
                   {slot.days}: {slot.hours}
                 </p>
               ))}
@@ -108,12 +105,11 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-white/5 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-zinc-600 text-xs">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-neutral-200 py-5 sm:flex-row">
+          <p className="text-xs text-neutral-400">
             &copy; {currentYear} SomStudioPhotography. All rights reserved.
           </p>
-          <p className="text-zinc-700 text-xs">
+          <p className="text-xs text-neutral-500">
             {contactInfo.city}, {contactInfo.country}
           </p>
         </div>

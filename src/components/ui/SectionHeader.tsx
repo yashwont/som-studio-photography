@@ -18,16 +18,16 @@ export default function SectionHeader({
   return (
     <div className={`${align} ${className}`}>
       {eyebrow && (
-        <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-3">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-gold sm:tracking-[0.2em]">
           {eyebrow}
         </p>
       )}
-      <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+      <h2 className="break-words text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`mt-4 text-zinc-400 text-lg ${
+          className={`mt-4 text-neutral-600 text-lg ${
             centered ? "max-w-2xl mx-auto" : "max-w-2xl"
           }`}
         >

@@ -6,7 +6,7 @@ export const testimonials: Testimonial[] = [
     name: "Priya Shrestha",
     role: "Bride",
     content:
-      "Som Studio captured our wedding day beyond our expectations. Every candid moment, every laugh, every tear — they caught it all. The photos feel like art.",
+      "Som Studio captured our wedding day beyond our expectations. Every candid moment, every laugh, every tear - they caught it all. The photos feel like art.",
     rating: 5,
     service: "Wedding Photography",
     location: "Kathmandu",

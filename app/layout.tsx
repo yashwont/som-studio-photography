@@ -1,21 +1,51 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  absoluteUrl,
+  defaultDescription,
+  defaultOgImage,
+  localBusinessJsonLd,
+  siteName,
+  siteUrl,
+} from "@/src/lib/seo";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "SomStudioPhotography",
-  description:
-    "Premium photography studio in Kathmandu, Nepal for weddings, pre-weddings, events, portraits, maternity, graduation, kids photoshoots, product photography, passport photos, printing, and framing.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${siteName} - Photography Studio in Kathmandu`,
+    template: `%s - ${siteName}`,
+  },
+  description: defaultDescription,
+  applicationName: siteName,
+  alternates: {
+    canonical: absoluteUrl("/"),
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: absoluteUrl("/"),
+    siteName,
+    title: `${siteName} - Photography Studio in Kathmandu`,
+    description: defaultDescription,
+    images: [defaultOgImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteName} - Photography Studio in Kathmandu`,
+    description: defaultDescription,
+    images: [defaultOgImage.url],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -23,12 +53,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = localBusinessJsonLd();
+
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
+      data-scroll-behavior="smooth"
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

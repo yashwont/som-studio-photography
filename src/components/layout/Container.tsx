@@ -9,11 +9,11 @@ interface ContainerProps {
 }
 
 const sizeClasses: Record<ContainerSize, string> = {
-  // No max-width — padding alone controls breathing room.
+  // No max-width; padding alone controls breathing room.
   // At 375px: 20px/side | 768px: 32px/side | 1280px: 48px/side | 1920px: 64px/side
   default: "px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20",
 
-  // Constrained max-width for text-heavy narrow content (future use).
+  // Constrained max-width for text-heavy narrow content.
   narrow: "max-w-3xl px-5 sm:px-8",
 };
 
