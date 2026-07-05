@@ -76,7 +76,10 @@ function WorkCard({
   const imageHeight = large ? "h-80 sm:h-[520px]" : index % 2 === 0 ? "h-72" : "h-96";
 
   return (
-    <article className={`image-lift-card group overflow-hidden rounded bg-white shadow-sm ${offset}`}>
+    <Link
+      href={`/portfolio/${work.id}`}
+      className={`image-lift-card group block overflow-hidden rounded bg-white shadow-sm ${offset}`}
+    >
       <div className={`relative overflow-hidden ${imageHeight}`}>
         <Image
           src={work.image.src}
@@ -93,14 +96,14 @@ function WorkCard({
             {work.location}
           </span>
         </div>
-        <h3 className="text-base font-semibold text-neutral-950">
+        <h3 className="text-base font-semibold text-neutral-950 transition-colors group-hover:text-gold">
           {work.title}
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-neutral-600">
           {work.description}
         </p>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -149,6 +152,13 @@ export default function PortfolioPage() {
       <section className="border-t border-neutral-200 bg-white">
         <Container>
           <div className="py-16 sm:py-20">
+            <p className="mx-auto mb-12 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-14">
+              Every gallery below reflects real session planning, from first
+              consultation to final edit, across weddings, portraits, events,
+              and more. Explore a category to see individual stories, or open
+              any single shoot for a closer look at how we approached
+              lighting, posing, and pacing for that session.
+            </p>
             <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">

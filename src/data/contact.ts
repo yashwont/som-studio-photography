@@ -11,12 +11,12 @@ export const contactInfo: ContactInfo = {
     {
       platform: "instagram",
       label: "Instagram",
-      href: "https://instagram.com/somstudiophotography",
+      href: "https://www.instagram.com/somstudio_ktm?igsh=cjlrdmEybzdkN3pj",
     },
     {
       platform: "facebook",
       label: "Facebook",
-      href: "https://facebook.com/somstudiophotography",
+      href: "https://www.facebook.com/somphotography0",
     },
     {
       platform: "tiktok",

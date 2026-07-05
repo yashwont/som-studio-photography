@@ -71,6 +71,13 @@ export default function ServicesPage() {
       <section className="bg-white border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
+            <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-16">
+              Every package below follows the same planning conversation,
+              on-site guidance, and editing standard, regardless of session
+              type or size. Whether you need a single portrait sitting or full
+              wedding day coverage, you get the same attention to detail and
+              a clear plan before the camera comes out.
+            </p>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((service) => (
                 <ServiceCard key={service.id} service={service} />

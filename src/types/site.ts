@@ -28,6 +28,7 @@ export interface PortfolioWork {
   description: string;
   location: string;
   image: SiteImage;
+  gallery?: SiteImage[];
   featured?: boolean;
 }
 

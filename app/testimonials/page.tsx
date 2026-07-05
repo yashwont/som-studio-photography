@@ -93,6 +93,13 @@ export default function TestimonialsPage() {
       <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
+            <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-16">
+              These are unedited words from real clients across Kathmandu,
+              Lalitpur, and Bhaktapur, shared after their sessions, prints,
+              and gallery deliveries. We ask every client for honest feedback
+              because it shapes how we plan future shoots and refine our
+              editing style.
+            </p>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {testimonials.map((testimonial) => (
                 <TestimonialCard key={testimonial.id} testimonial={testimonial} />

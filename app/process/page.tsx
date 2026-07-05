@@ -57,7 +57,16 @@ export default function ProcessPage() {
 
       <section className="bg-white border-t border-neutral-200">
         <Container>
-          <div className="space-y-0 py-20 sm:py-28">
+          <div className="pt-20 sm:pt-28">
+            <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-neutral-600">
+              Every project moves through the same five stages, whether
+              you&rsquo;re booking a quick portrait sitting or a full wedding
+              day. We built the process this way to remove guesswork &mdash;
+              you&rsquo;ll always know what happens next, what we need from
+              you, and roughly when to expect your final gallery.
+            </p>
+          </div>
+          <div className="space-y-0 pb-20 sm:pb-28">
             {processSteps.map((step, index) => (
               <div
                 key={step.step}

@@ -65,7 +65,16 @@ export default function ContactPage() {
 
       <section className="border-t border-neutral-200 bg-white">
         <Container>
-          <div className="grid grid-cols-1 items-start gap-14 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20">
+          <div className="pt-20 sm:pt-28">
+            <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-neutral-600">
+              Whether you already have a date in mind or you&rsquo;re still
+              exploring options, reaching out costs nothing and commits you
+              to nothing. Send a message or call us directly &mdash;
+              we&rsquo;ll ask a few quick questions about your shoot, confirm
+              availability, and walk you through pricing and next steps.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 items-start gap-14 pb-20 pt-14 sm:pb-28 sm:pt-16 lg:grid-cols-2 lg:gap-20">
             <div>
               <h2 className="mb-6 text-xl font-bold text-neutral-950 sm:text-2xl">
                 Contact Details
