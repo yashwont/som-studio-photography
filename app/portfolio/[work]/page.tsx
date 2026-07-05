@@ -79,7 +79,7 @@ export default async function PortfolioWorkPage({
             >
               &larr; Back to {category.title}
             </Link>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               {category.title} &middot; {work.location}
             </p>
             <h1 className="max-w-3xl break-words text-4xl font-bold tracking-tight text-neutral-950 sm:text-5xl xl:text-6xl">
@@ -92,7 +92,7 @@ export default async function PortfolioWorkPage({
         </Container>
       </div>
 
-      <section className="border-t border-neutral-200 bg-white">
+      <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="py-14 sm:py-16">
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded bg-neutral-100 sm:aspect-[16/8]">
@@ -132,7 +132,7 @@ export default async function PortfolioWorkPage({
         <section className="border-t border-neutral-200 bg-neutral-50">
           <Container>
             <div className="py-14 sm:py-16">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
                 More from {category.title}
               </p>
               <h2 className="mb-8 text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
@@ -170,10 +170,10 @@ export default async function PortfolioWorkPage({
         </section>
       )}
 
-      <section className="border-t border-neutral-200 bg-white">
+      <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               Planning something similar?
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">

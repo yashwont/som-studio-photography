@@ -8,12 +8,12 @@ import { contactInfo } from "@/src/data/contact";
 import { heroGallery } from "@/src/data/visuals";
 
 const serviceHighlights = [
+  "New Born",
+  "Kids",
+  "Maternity",
+  "Family",
   "Weddings",
   "Pre-Wedding",
-  "Portraits",
-  "Events",
-  "Maternity",
-  "Products",
 ];
 
 const trustPoints = [
@@ -61,14 +61,14 @@ export default function Hero() {
             <div>
               <div className="mb-5 flex items-center gap-3">
                 <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-gold sm:tracking-[0.2em]">
+                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-brand sm:tracking-[0.2em]">
                   Photography studio in {contactInfo.city}
                 </span>
               </div>
 
               <h1 className="break-words text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl xl:text-7xl">
                 SomStudio
-                <span className="block text-gold">Photography</span>
+                <span className="block text-brand">Photography</span>
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
@@ -78,10 +78,10 @@ export default function Hero() {
                 create stunning images tailored to your vision. Our studio
                 offers a comfortable environment, exceptional customer
                 service, and quick turnaround times. Choose from customizable
-                packages including digital images, prints, albums, and
-                framing. Enhance your photos with our professional editing
-                services. Contact us today to schedule your session and turn
-                your vision into cherished memories.
+                packages for newborn, kids, maternity, family, graduation,
+                portrait, wedding, pre-wedding, event, and product photography.
+                Contact us today to schedule your session and turn your vision
+                into cherished memories.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">

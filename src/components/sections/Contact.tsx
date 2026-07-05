@@ -39,7 +39,7 @@ export default function Contact() {
   const whatsappUrl = `https://wa.me/${contactInfo.whatsapp.replace("+", "")}`;
 
   return (
-    <section id="contact" className="border-t border-neutral-200 bg-white">
+    <section id="contact" className="border-t border-neutral-200 bg-neutral-50">
       <Container>
         <div className="grid grid-cols-1 items-start gap-14 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20">
           <div>
@@ -103,7 +103,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="rounded border border-neutral-200 bg-white p-6 sm:p-8">
+          <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
             <p className="mb-6 text-sm font-semibold text-neutral-950">
               Send an Inquiry
             </p>

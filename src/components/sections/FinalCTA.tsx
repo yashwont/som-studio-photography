@@ -3,14 +3,14 @@ import Button from "@/src/components/ui/Button";
 
 export default function FinalCTA() {
   return (
-    <section className="relative overflow-hidden border-t border-neutral-200 bg-white">
+    <section className="relative overflow-hidden border-t border-neutral-200 bg-neutral-50">
       <Container>
         <div className="relative py-24 sm:py-32 flex flex-col items-center text-center gap-6 max-w-2xl mx-auto">
 
           {/* Eyebrow */}
           <div className="flex items-center gap-3">
             <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-gold sm:tracking-[0.2em]">
+            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-brand sm:tracking-[0.2em]">
               Let&rsquo;s Work Together
             </span>
             <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />

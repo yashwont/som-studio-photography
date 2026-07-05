@@ -102,7 +102,7 @@ export default function AboutPage() {
         <Container>
           <div className="py-20 sm:py-28">
             <div className="mb-12 sm:mb-14">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
                 What to expect
               </p>
               <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
@@ -113,7 +113,7 @@ export default function AboutPage() {
               {highlights.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded border border-neutral-200 bg-white p-6 transition-colors hover:border-neutral-300"
+                  className="rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors hover:border-neutral-300"
                 >
                   <div aria-hidden="true" className="mb-5 h-px w-6 bg-gold" />
                   <h3 className="mb-2 text-sm font-semibold text-neutral-950">
@@ -130,11 +130,11 @@ export default function AboutPage() {
       </section>
 
       {/* Studio details */}
-      <section className="bg-white border-t border-neutral-200">
+      <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 py-16 sm:py-20">
             <div>
-              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-neutral-400">
+              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-brand">
                 Location
               </p>
               <p className="text-sm text-neutral-700">
@@ -143,7 +143,7 @@ export default function AboutPage() {
               <p className="text-sm text-neutral-500">{contactInfo.country}</p>
             </div>
             <div>
-              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-neutral-400">
+              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-brand">
                 Studio Hours
               </p>
               {contactInfo.businessHours.map((slot) => (
@@ -153,7 +153,7 @@ export default function AboutPage() {
               ))}
             </div>
             <div>
-              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-neutral-400">
+              <p className="mb-2 text-xs uppercase tracking-[0.15em] text-brand">
                 Get in Touch
               </p>
               <a
@@ -180,7 +180,7 @@ export default function AboutPage() {
       <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 sm:py-20 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               Ready to start?
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">

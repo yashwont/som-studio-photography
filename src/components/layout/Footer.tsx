@@ -14,7 +14,7 @@ export default function Footer() {
             href="/"
             className="text-xl font-semibold tracking-tight text-neutral-950"
           >
-            Som<span className="text-gold">Studio</span>
+            Som<span className="text-brand">Studio</span>
           </Link>
 
           <p className="max-w-2xl text-sm leading-relaxed text-neutral-500">

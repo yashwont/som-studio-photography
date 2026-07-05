@@ -9,7 +9,7 @@ interface InquiryFormProps {
 }
 
 const inputClass =
-  "w-full rounded border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-400 focus:border-gold/60 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors duration-200";
+  "w-full rounded border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-400 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors duration-200";
 
 function getValue(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
@@ -176,7 +176,7 @@ export default function InquiryForm({ idPrefix = "inquiry" }: InquiryFormProps) 
 
       <button
         type="submit"
-        className="w-full rounded bg-gold px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+        className="w-full rounded bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       >
         Send Inquiry on WhatsApp: {contactInfo.whatsapp}
       </button>

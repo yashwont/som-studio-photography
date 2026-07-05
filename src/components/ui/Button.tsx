@@ -17,8 +17,8 @@ interface ButtonProps {
 }
 
 const variants: Record<string, string> = {
-  primary: "bg-gold text-white font-semibold hover:brightness-110",
-  secondary: "border border-gold text-gold hover:bg-gold/10",
+  primary: "bg-accent text-white font-semibold hover:bg-accent-hover",
+  secondary: "border border-accent text-accent hover:bg-accent/10",
   ghost: "text-neutral-600 hover:text-neutral-950",
 };
 
@@ -30,7 +30,7 @@ const sizes: Record<string, string> = {
 
 const base =
   "inline-flex items-center justify-center rounded transition-all duration-200 " +
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 " +
   "disabled:opacity-50 disabled:cursor-not-allowed";
 
 export default function Button({

@@ -6,7 +6,7 @@ import type { Service } from "@/src/types/site";
 
 function ServiceCard({ service }: { service: Service }) {
   return (
-    <div className="group flex flex-col rounded border border-neutral-200 bg-white p-6 transition-colors duration-200 hover:border-neutral-300">
+    <div className="group flex flex-col rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors duration-200 hover:border-neutral-300">
       <div
         aria-hidden="true"
         className="mb-5 h-px w-6 bg-gold transition-all duration-300 group-hover:w-10"
@@ -31,19 +31,26 @@ function ServiceCard({ service }: { service: Service }) {
           </li>
         ))}
       </ul>
+
+      <div className="mt-auto flex items-center justify-between gap-4 border-t border-neutral-200 pt-5">
+        <p className="text-sm font-semibold text-gold">{service.price}</p>
+        <Button href="/contact" variant="secondary" size="sm">
+          Inquiry
+        </Button>
+      </div>
     </div>
   );
 }
 
 export default function Services() {
   return (
-    <section id="services" className="bg-white border-t border-neutral-200">
+    <section id="services" className="bg-neutral-50 border-t border-neutral-200">
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader
             eyebrow="What We Offer"
             title="Photography services for every moment."
-            subtitle="From intimate weddings to passport photos, studio portraits to product shoots - we cover it all from our studio in Kathmandu."
+            subtitle="New born, kids, maternity, family, graduation, portraits, weddings, pre-weddings, events, and product shoots from our studio in Kathmandu."
             centered={true}
             className="mb-14 sm:mb-16"
           />

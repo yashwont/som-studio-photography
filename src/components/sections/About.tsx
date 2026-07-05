@@ -40,9 +40,10 @@ export default function About() {
               SomStudioPhotography is a professional photography studio in
               Kathmandu, Nepal, focused on creating timeless images for people,
               families, events, and brands. From emotional wedding stories to
-              clean studio portraits and commercial product shoots, we combine
-              careful planning, creative direction, and polished editing to
-              deliver photographs clients are proud to keep, print, and share.
+              newborn, maternity, family, graduation, portrait, and commercial
+              product shoots, we combine careful planning, creative direction,
+              and polished editing to deliver photographs clients are proud to
+              keep, print, and share.
             </p>
 
             <div className="mt-8 flex items-center gap-3">
@@ -57,7 +58,7 @@ export default function About() {
             {highlights.map((item) => (
               <div
                 key={item.title}
-                className="group rounded border border-neutral-200 bg-white p-6 transition-colors hover:border-neutral-300"
+                className="group rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors hover:border-neutral-300"
               >
                 <div aria-hidden="true" className="mb-5 h-px w-6 bg-gold" />
 

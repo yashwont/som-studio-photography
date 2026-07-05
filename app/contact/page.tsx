@@ -4,6 +4,7 @@ import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
+import SocialIcon from "@/src/components/ui/SocialIcon";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import Trust from "@/src/components/sections/Trust";
 import InquiryForm from "@/src/components/forms/InquiryForm";
@@ -30,7 +31,7 @@ function ContactDetail({
 }) {
   return (
     <div>
-      <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-400">
+      <p className="mb-1 text-xs uppercase tracking-[0.15em] text-brand">
         {label}
       </p>
       <div className="flex items-center gap-2">
@@ -63,7 +64,7 @@ export default function ContactPage() {
         subtitle="Tell us what you need and we will guide you with the right package, timing, and plan."
       />
 
-      <section className="border-t border-neutral-200 bg-white">
+      <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="pt-20 sm:pt-28">
             <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-neutral-600">
@@ -103,7 +104,7 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-8">
-                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-neutral-400">
+                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-brand">
                   Studio Hours
                 </p>
                 <div className="space-y-1.5">
@@ -127,7 +128,7 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-8">
-                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-neutral-400">
+                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-brand">
                   Follow Us
                 </p>
                 <div className="flex flex-wrap gap-4">
@@ -137,10 +138,11 @@ export default function ContactPage() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-neutral-500 transition-colors hover:text-gold"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-500 transition-colors hover:border-gold hover:text-gold"
                       aria-label={`${social.label} - opens in new tab`}
+                      title={social.label}
                     >
-                      {social.label}
+                      <SocialIcon platform={social.platform} className="h-4 w-4" />
                     </a>
                   ))}
                 </div>
@@ -152,7 +154,7 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="rounded border border-neutral-200 bg-white p-6 sm:p-8">
+            <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
               <p className="mb-6 text-sm font-semibold text-neutral-950">
                 Send an Inquiry
               </p>
@@ -171,7 +173,7 @@ export default function ContactPage() {
       <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="py-14 sm:py-16">
-            <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               What happens after you send an inquiry
             </p>
             <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">

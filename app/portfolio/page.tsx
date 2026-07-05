@@ -4,7 +4,6 @@ import Link from "next/link";
 import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
-import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
 import { portfolioCategories, portfolioWorks } from "@/src/data/portfolio";
 import type { PortfolioCategory, PortfolioWork } from "@/src/types/site";
@@ -13,7 +12,7 @@ import { absoluteUrl } from "@/src/lib/seo";
 export const metadata: Metadata = {
   title: "Photography Portfolio",
   description:
-    "Browse SomStudioPhotography's portfolio of weddings, pre-weddings, portraits, events, maternity, graduation, kids photoshoots, and product photography in Kathmandu, Nepal.",
+    "Browse SomStudioPhotography's portfolio of newborn, kids, maternity, family, graduation, portrait, wedding, pre-wedding, event, and product photography in Kathmandu, Nepal.",
   alternates: {
     canonical: absoluteUrl("/portfolio"),
   },
@@ -102,7 +101,7 @@ function CategorySection({ category }: { category: PortfolioCategory }) {
     <section id={category.slug} className="scroll-mt-28 border-t border-neutral-200 py-14 sm:py-16">
       <div className="mb-8 grid grid-cols-1 gap-5 lg:grid-cols-[0.7fr_1fr] lg:items-end">
         <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
             {category.title}
           </p>
           <h2 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
@@ -125,8 +124,6 @@ function CategorySection({ category }: { category: PortfolioCategory }) {
 }
 
 export default function PortfolioPage() {
-  const featuredWorks = portfolioWorks.filter((work) => work.featured);
-
   return (
     <>
       <Navbar />
@@ -134,10 +131,10 @@ export default function PortfolioPage() {
       <PageHeader
         eyebrow="Our Work"
         title="Portfolio by session type."
-        subtitle="Browse wedding, portrait, event, maternity, graduation, kids, and product photography from our Kathmandu studio."
+        subtitle="Browse newborn, kids, maternity, family, graduation, portrait, wedding, pre-wedding, event, and product photography from our Kathmandu studio."
       />
 
-      <section className="border-t border-neutral-200 bg-white">
+      <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="py-16 sm:py-20">
             <p className="mx-auto mb-12 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-14">
@@ -149,7 +146,7 @@ export default function PortfolioPage() {
             </p>
             <div className="mb-10">
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
                   Start with a category
                 </p>
                 <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
@@ -167,57 +164,11 @@ export default function PortfolioPage() {
         </Container>
       </section>
 
-      <section className="border-t border-neutral-200 bg-neutral-50">
-        <Container>
-          <div className="py-16 sm:py-20">
-            <div className="mb-10">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-                Featured work
-              </p>
-              <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-                A quick look at our core sessions.
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 gap-5 pb-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-              {featuredWorks.map((work, index) => (
-                <WorkCard key={work.id} work={work} large={index === 0} index={index} />
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
       <section className="bg-white">
         <Container>
           {portfolioCategories.map((category) => (
             <CategorySection key={category.id} category={category} />
           ))}
-        </Container>
-      </section>
-
-      <section className="border-t border-neutral-200 bg-neutral-50">
-        <Container>
-          <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-              Want to see a complete gallery?
-            </p>
-            <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
-              Tell us what you are planning.
-            </h2>
-            <p className="max-w-md text-neutral-600">
-              We can share relevant sample galleries and help you choose the
-              right session plan.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button href="/contact" variant="primary" size="lg">
-                Book a Session
-              </Button>
-              <Button href="/services" variant="secondary" size="lg">
-                View Services
-              </Button>
-            </div>
-          </div>
         </Container>
       </section>
 

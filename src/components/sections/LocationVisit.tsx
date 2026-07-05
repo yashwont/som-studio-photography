@@ -9,8 +9,8 @@ export default function LocationVisit() {
     <section className="border-t border-neutral-200 bg-neutral-50">
       <Container>
         <div className="grid grid-cols-1 gap-8 py-16 sm:py-20 lg:grid-cols-[1fr_0.8fr] lg:items-stretch">
-          <div className="rounded border border-neutral-200 bg-white p-6 sm:p-8">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+          <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               Visit the studio
             </p>
             <h2 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
@@ -23,7 +23,7 @@ export default function LocationVisit() {
 
             <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               <div>
-                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-400">
+                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-brand">
                   Phone
                 </p>
                 <a
@@ -34,7 +34,7 @@ export default function LocationVisit() {
                 </a>
               </div>
               <div>
-                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-400">
+                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-brand">
                   Email
                 </p>
                 <a
@@ -45,7 +45,7 @@ export default function LocationVisit() {
                 </a>
               </div>
               <div>
-                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-400">
+                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-brand">
                   Hours
                 </p>
                 <p className="text-sm font-medium text-neutral-950">
@@ -53,7 +53,7 @@ export default function LocationVisit() {
                 </p>
               </div>
               <div>
-                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-400">
+                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-brand">
                   WhatsApp
                 </p>
                 <a
@@ -75,19 +75,19 @@ export default function LocationVisit() {
             </div>
           </div>
 
-          <div className="relative min-h-72 overflow-hidden rounded border border-neutral-200 bg-white p-6 sm:p-8">
+          <div className="relative min-h-72 overflow-hidden rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
             <div
               aria-hidden="true"
               className="absolute inset-0 opacity-[0.45]"
               style={{
                 backgroundImage:
-                  "linear-gradient(#e5e5e5 1px, transparent 1px), linear-gradient(90deg, #e5e5e5 1px, transparent 1px)",
+                  "linear-gradient(#E5E5E5 1px, transparent 1px), linear-gradient(90deg, #E5E5E5 1px, transparent 1px)",
                 backgroundSize: "28px 28px",
               }}
             />
             <div className="relative flex h-full min-h-60 flex-col justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
                   Map preview
                 </p>
                 <p className="mt-3 max-w-xs text-sm leading-relaxed text-neutral-600">

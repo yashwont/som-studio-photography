@@ -25,11 +25,11 @@ const trustItems = [
 
 export default function Trust() {
   return (
-    <section className="border-t border-neutral-200 bg-white">
+    <section className="border-t border-neutral-200 bg-neutral-50">
       <Container>
         <div className="grid grid-cols-1 gap-12 py-20 sm:py-24 lg:grid-cols-[0.8fr_1fr] lg:items-start">
           <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               Why clients choose us
             </p>
             <h2 className="max-w-xl text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">

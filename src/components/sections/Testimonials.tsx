@@ -5,7 +5,7 @@ import type { Testimonial } from "@/src/types/site";
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <div className="flex flex-col rounded border border-neutral-200 bg-white p-6 sm:p-7">
+    <div className="flex flex-col rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-7">
       <div
         className="mb-5 flex gap-0.5"
         aria-label={`Rating: ${testimonial.rating} out of 5`}

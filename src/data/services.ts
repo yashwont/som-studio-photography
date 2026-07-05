@@ -2,10 +2,101 @@ import type { Service } from "@/src/types/site";
 
 export const services: Service[] = [
   {
+    id: "new-born",
+    title: "New Born Photography",
+    description:
+      "Gentle newborn sessions planned with patience, comfort, and soft styling for your baby's first portraits.",
+    price: "NRS 12,000",
+    highlights: [
+      "Baby-safe posing",
+      "Soft studio lighting",
+      "Family portraits included",
+      "Retouched final images",
+    ],
+    slug: "new-born-photography",
+    featured: true,
+  },
+  {
+    id: "kids",
+    title: "Kids Photography",
+    description:
+      "Fun, playful sessions designed to capture children's natural expressions, energy, and personality.",
+    price: "NRS 8,000",
+    highlights: [
+      "Child-friendly studio setup",
+      "Props & themed setups available",
+      "Natural candid moments",
+      "Family group shots available",
+    ],
+    slug: "kids-photography",
+    featured: true,
+  },
+  {
+    id: "maternity",
+    title: "Maternity Photography",
+    description:
+      "Elegant maternity portraits that celebrate this chapter with guided posing and soft, timeless editing.",
+    price: "NRS 10,000",
+    highlights: [
+      "Studio & outdoor options",
+      "Comfortable guided sessions",
+      "Partner & family included",
+      "Soft editorial editing",
+    ],
+    slug: "maternity-photography",
+    featured: true,
+  },
+  {
+    id: "family",
+    title: "Family Photography",
+    description:
+      "Warm family portraits for parents, children, couples, and generations together in studio or on location.",
+    price: "NRS 9,000",
+    highlights: [
+      "Studio & location sessions",
+      "Guided group posing",
+      "Candid family moments",
+      "Retouched final images",
+    ],
+    slug: "family-photography",
+    featured: false,
+  },
+  {
+    id: "graduation",
+    title: "Graduation Photography",
+    description:
+      "Mark your achievement with polished graduation portraits, cap-and-gown images, and family photos.",
+    price: "NRS 7,000",
+    highlights: [
+      "Studio & outdoor options",
+      "Cap & gown portraits",
+      "Family photos included",
+      "Shareable digital gallery",
+    ],
+    slug: "graduation-photography",
+    featured: false,
+  },
+  {
+    id: "portraits",
+    title: "Portrait Photography",
+    description:
+      "Clean, confident portraits for individuals, professionals, couples, and personal branding needs.",
+    price: "NRS 5,000",
+    highlights: [
+      "Professional studio setup",
+      "Multiple backdrop options",
+      "Creative posing guidance",
+      "Retouched final images",
+    ],
+    slug: "portrait-photography",
+    featured: false,
+  },
+  {
     id: "wedding",
     title: "Wedding Photography",
     description:
-      "Timeless coverage of your wedding day - from the first look to the final dance. Every emotion, beautifully preserved.",
+      "Timeless wedding coverage from rituals and portraits to candid moments with family and guests.",
+    price: "NRS 60,000",
     highlights: [
       "Full-day coverage",
       "Candid & traditional shots",
@@ -13,27 +104,29 @@ export const services: Service[] = [
       "Print-ready high-resolution files",
     ],
     slug: "wedding-photography",
-    featured: true,
+    featured: false,
   },
   {
     id: "pre-wedding",
     title: "Pre-Wedding Photography",
     description:
-      "Tell your love story before the big day. Creative, relaxed sessions at locations that mean the most to you.",
+      "Creative pre-wedding portraits that tell your story with location planning, posing, and styling support.",
+    price: "NRS 25,000",
     highlights: [
       "Indoor & outdoor locations",
-      "Creative direction & posing guidance",
+      "Creative direction",
       "Multiple outfit changes",
-      "Same-week preview delivery",
+      "Edited couple portraits",
     ],
     slug: "pre-wedding-photography",
-    featured: true,
+    featured: false,
   },
   {
-    id: "event",
+    id: "events",
     title: "Event Photography",
     description:
-      "Professional coverage for corporate events, ceremonies, celebrations, and gatherings of all sizes.",
+      "Professional coverage for ceremonies, birthdays, corporate programs, and social gatherings.",
+    price: "NRS 18,000",
     highlights: [
       "Corporate & social events",
       "Quick turnaround delivery",
@@ -44,66 +137,11 @@ export const services: Service[] = [
     featured: false,
   },
   {
-    id: "studio-portrait",
-    title: "Studio Portrait",
-    description:
-      "Polished portraits for professionals, families, and individuals. Controlled lighting, premium results.",
-    highlights: [
-      "Professional studio setup",
-      "Multiple backdrop options",
-      "Individual & group portraits",
-      "Retouched final images",
-    ],
-    slug: "studio-portrait",
-    featured: true,
-  },
-  {
-    id: "maternity",
-    title: "Maternity Photoshoot",
-    description:
-      "Celebrate the journey to motherhood with elegant, heartfelt images that capture this beautiful chapter.",
-    highlights: [
-      "Studio & outdoor options",
-      "Comfortable, guided sessions",
-      "Partner & family included",
-      "Soft, editorial editing style",
-    ],
-    slug: "maternity-photoshoot",
-    featured: false,
-  },
-  {
-    id: "graduation",
-    title: "Graduation Photoshoot",
-    description:
-      "Mark your achievement with striking portraits. A session as memorable as the milestone itself.",
-    highlights: [
-      "Indoor & outdoor settings",
-      "Cap & gown and casual looks",
-      "Same-day preview available",
-      "Shareable digital gallery",
-    ],
-    slug: "graduation-photoshoot",
-    featured: false,
-  },
-  {
-    id: "kids",
-    title: "Kids Photoshoot",
-    description:
-      "Fun, playful sessions designed to capture children's natural personalities. Patience and creativity guaranteed.",
-    highlights: [
-      "Child-friendly studio environment",
-      "Props & themed setups available",
-      "Natural & candid moments",
-      "Family group shots included",
-    ],
-    slug: "kids-photoshoot",
-    featured: false,
-  },
-  {
     id: "product",
     title: "Product Photography",
     description:
-      "High-quality product images for e-commerce, catalogues, and marketing. Clean, detailed, conversion-focused.",
+      "Clean product images for e-commerce, catalogues, menus, and marketing with detail-focused lighting.",
+    price: "NRS 6,000",
     highlights: [
       "White background & lifestyle shots",
       "Detail & close-up photography",
@@ -111,48 +149,6 @@ export const services: Service[] = [
       "E-commerce ready files",
     ],
     slug: "product-photography",
-    featured: false,
-  },
-  {
-    id: "passport",
-    title: "Passport Photo",
-    description:
-      "Compliant passport and visa photos taken and printed on the spot. Fast, professional, and hassle-free.",
-    highlights: [
-      "Government-specification compliant",
-      "Printed in-studio same day",
-      "Multiple countries' formats accepted",
-      "Digital copy provided",
-    ],
-    slug: "passport-photo",
-    featured: false,
-  },
-  {
-    id: "printing-framing",
-    title: "Printing & Framing",
-    description:
-      "Turn your favourite images into premium prints. Fine art paper, canvas, frames, and custom album options.",
-    highlights: [
-      "Fine art & metallic prints",
-      "Canvas & framed prints",
-      "Custom photo albums",
-      "Large format available",
-    ],
-    slug: "printing-framing",
-    featured: false,
-  },
-  {
-    id: "custom",
-    title: "Others / Custom Requests",
-    description:
-      "Have a unique vision? We are happy to discuss custom photography projects tailored to your specific needs.",
-    highlights: [
-      "Flexible scheduling",
-      "Creative collaboration",
-      "Custom packages available",
-      "Contact us to discuss",
-    ],
-    slug: "custom-requests",
     featured: false,
   },
 ];

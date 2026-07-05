@@ -25,7 +25,7 @@ const stats = [
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <div className="flex flex-col rounded border border-neutral-200 bg-white p-6 sm:p-7">
+    <div className="flex flex-col rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-7">
       <div
         className="mb-5 flex gap-0.5"
         aria-label={`Rating: ${testimonial.rating} out of 5`}
@@ -70,7 +70,7 @@ export default function TestimonialsPage() {
         subtitle="Real words from real people across Kathmandu, Lalitpur, and Bhaktapur."
       />
 
-      <section className="bg-white border-t border-neutral-200">
+      <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="grid grid-cols-1 divide-y divide-white/5 py-12 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:py-14">
             {stats.map((stat) => (
@@ -81,7 +81,7 @@ export default function TestimonialsPage() {
                 <span className="text-2xl font-bold text-neutral-950 sm:text-3xl">
                   {stat.value}
                 </span>
-                <span className="text-xs uppercase tracking-[0.15em] text-neutral-400">
+                <span className="text-xs uppercase tracking-[0.15em] text-brand">
                   {stat.label}
                 </span>
               </div>
@@ -112,10 +112,10 @@ export default function TestimonialsPage() {
         </Container>
       </section>
 
-      <section className="bg-white border-t border-neutral-200">
+      <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               Ready to add your own story?
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">

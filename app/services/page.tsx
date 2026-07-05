@@ -11,7 +11,7 @@ import { absoluteUrl } from "@/src/lib/seo";
 export const metadata: Metadata = {
   title: "Photography Services",
   description:
-    "Photography services in Kathmandu, Nepal: weddings, pre-weddings, events, portraits, maternity, graduation, kids, product photography, passport photos, printing, and framing.",
+    "Photography services in Kathmandu, Nepal: newborn, kids, maternity, family, graduation, portraits, weddings, pre-weddings, events, and product photography.",
   alternates: {
     canonical: absoluteUrl("/services"),
   },
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 function ServiceCard({ service }: { service: Service }) {
   return (
-    <div className="group flex flex-col rounded border border-neutral-200 bg-white p-6 transition-colors duration-200 hover:border-neutral-300">
+    <div className="group flex flex-col rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors duration-200 hover:border-neutral-300">
       <div className="mb-4 flex items-start justify-between">
         <div
           aria-hidden="true"
@@ -53,6 +53,13 @@ function ServiceCard({ service }: { service: Service }) {
           </li>
         ))}
       </ul>
+
+      <div className="mt-auto flex items-center justify-between gap-4 border-t border-neutral-200 pt-5">
+        <p className="text-sm font-semibold text-gold">{service.price}</p>
+        <Button href="/contact" variant="secondary" size="sm">
+          Inquiry
+        </Button>
+      </div>
     </div>
   );
 }
@@ -65,10 +72,10 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="What We Offer"
         title="Photography services for every moment."
-        subtitle="From weddings to passport photos, we handle every type of session from our studio in Kathmandu."
+        subtitle="From newborn and family portraits to weddings, events, and product shoots, we handle every session from our studio in Kathmandu."
       />
 
-      <section className="bg-white border-t border-neutral-200">
+      <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
             <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-16">
@@ -90,7 +97,7 @@ export default function ServicesPage() {
       <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               Not sure which service fits?
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">

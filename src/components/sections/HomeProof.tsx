@@ -7,7 +7,7 @@ const proofItems = [
     value: "10+",
     label: "Shoot types",
     detail:
-      "Weddings, portraits, products, events, passport photos, printing, and framing.",
+      "New born, kids, maternity, family, graduation, portraits, weddings, events, and products.",
   },
   {
     value: "KTM",
@@ -36,7 +36,7 @@ export default function HomeProof() {
                 <span className="text-3xl font-bold tracking-tight text-neutral-950">
                   {item.value}
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
                   {item.label}
                 </span>
               </div>

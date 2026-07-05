@@ -8,7 +8,7 @@ export const siteUrl =
 export const siteName = "SomStudioPhotography";
 
 export const defaultDescription =
-  "Professional photography studio in Basundhara, Kathmandu for weddings, pre-weddings, portraits, events, maternity, graduation, kids photoshoots, product photography, passport photos, printing, and framing.";
+  "Professional photography studio in Basundhara, Kathmandu for newborn, kids, maternity, family, graduation, portrait, wedding, pre-wedding, event, and product photography.";
 
 export const defaultOgImage = {
   url: heroImage.src,

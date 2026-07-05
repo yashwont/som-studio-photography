@@ -4,7 +4,7 @@ import { processSteps } from "@/src/data/process";
 
 export default function Process() {
   return (
-    <section id="process" className="bg-white border-t border-neutral-200">
+    <section id="process" className="bg-neutral-50 border-t border-neutral-200">
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader

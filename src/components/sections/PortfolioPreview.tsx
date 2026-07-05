@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/src/components/layout/Container";
 import SectionHeader from "@/src/components/ui/SectionHeader";
-import Button from "@/src/components/ui/Button";
 import { portfolioCategories } from "@/src/data/portfolio";
 import type { PortfolioCategory } from "@/src/types/site";
 
@@ -70,7 +69,7 @@ function SpotlightFrame({ category }: { category: PortfolioCategory }) {
           <div className="flex h-full flex-col justify-between">
             <div className="flex items-center justify-between">
               <span className="rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-700 backdrop-blur-sm">
-                Featured work
+                Session type
               </span>
               <span className="rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500 backdrop-blur-sm">
                 Every 3 sec
@@ -164,15 +163,6 @@ export default function PortfolioPreview() {
                 aria-label={`Show ${category.title}`}
               />
             ))}
-          </div>
-
-          <div className="mt-10 flex flex-col items-center gap-5 border-t border-neutral-200 pt-12 text-center">
-            <p className="text-sm text-neutral-600 sm:text-base">
-              Want to see a complete gallery?
-            </p>
-            <Button href="/portfolio" variant="secondary" size="md">
-              Request Full Portfolio
-            </Button>
           </div>
         </div>
       </Container>

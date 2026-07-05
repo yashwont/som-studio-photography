@@ -38,7 +38,7 @@ export const testimonials: Testimonial[] = [
     content:
       "My maternity session was a beautiful experience. The studio was warm and welcoming, and the photos are something I will treasure for a lifetime.",
     rating: 5,
-    service: "Maternity Photoshoot",
+    service: "Maternity Photography",
     location: "Bhaktapur",
   },
   {
@@ -48,7 +48,7 @@ export const testimonials: Testimonial[] = [
     content:
       "Got my graduation photos done here and they turned out incredible. The photographer knew exactly how to make me look confident and natural.",
     rating: 5,
-    service: "Graduation Photoshoot",
+    service: "Graduation Photography",
     location: "Kathmandu",
   },
   {

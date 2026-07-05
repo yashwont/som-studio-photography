@@ -8,6 +8,7 @@ export interface Service {
   id: string;
   title: string;
   description: string;
+  price: string;
   highlights: string[];
   slug: string;
   featured: boolean;
