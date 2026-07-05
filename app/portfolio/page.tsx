@@ -23,27 +23,30 @@ function CategoryButton({ category }: { category: PortfolioCategory }) {
   return (
     <Link
       href={`#${category.slug}`}
-      className="group relative flex h-28 items-end overflow-hidden rounded-2xl border border-neutral-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:h-32"
+      className="group relative flex items-center justify-between gap-3 overflow-hidden rounded-full border border-neutral-200 bg-white px-5 py-4 shadow-sm transition-colors duration-300 hover:border-neutral-950"
     >
-      <Image
-        src={category.image.src}
-        alt=""
-        fill
-        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-        className="object-cover transition-transform duration-500 group-hover:scale-110"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/35 to-neutral-950/10 transition-colors duration-300 group-hover:from-neutral-950/90" />
-      <div className="relative z-10 flex w-full items-center justify-between gap-2 p-4">
-        <span className="text-sm font-semibold uppercase tracking-[0.1em] text-white">
-          {category.title}
-        </span>
-        <span
-          aria-hidden="true"
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/40 text-xs text-white transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-neutral-950"
-        >
-          &rarr;
-        </span>
-      </div>
+      <span
+        aria-hidden="true"
+        className="absolute inset-y-0 left-0 z-0 w-0 overflow-hidden transition-[width] duration-500 ease-out group-hover:w-full"
+      >
+        <Image
+          src={category.image.src}
+          alt=""
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          className="object-cover"
+        />
+        <span className="absolute inset-0 bg-neutral-950/60" />
+      </span>
+      <span className="relative z-10 text-sm font-semibold uppercase tracking-[0.1em] text-neutral-950 transition-colors duration-300 group-hover:text-white">
+        {category.title}
+      </span>
+      <span
+        aria-hidden="true"
+        className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-xs text-neutral-950 transition-all duration-300 group-hover:translate-x-1 group-hover:border-gold group-hover:bg-gold group-hover:text-neutral-950"
+      >
+        &rarr;
+      </span>
     </Link>
   );
 }
