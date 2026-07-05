@@ -8,7 +8,7 @@ export const siteUrl =
 export const siteName = "SomStudioPhotography";
 
 export const defaultDescription =
-  "Professional photography studio in Lazimpat, Kathmandu for weddings, pre-weddings, portraits, events, maternity, graduation, kids photoshoots, product photography, passport photos, printing, and framing.";
+  "Professional photography studio in Basundhara, Kathmandu for weddings, pre-weddings, portraits, events, maternity, graduation, kids photoshoots, product photography, passport photos, printing, and framing.";
 
 export const defaultOgImage = {
   url: heroImage.src,
@@ -22,7 +22,6 @@ export const siteRoutes = [
   { path: "/about", priority: 0.8 },
   { path: "/services", priority: 0.9 },
   { path: "/portfolio", priority: 0.9 },
-  { path: "/process", priority: 0.7 },
   { path: "/testimonials", priority: 0.7 },
   { path: "/contact", priority: 0.9 },
 ];

@@ -73,6 +73,7 @@ export interface ContactInfo {
   address: string;
   city: string;
   country: string;
+  mapUrl: string;
   socialLinks: SocialLink[];
   businessHours: BusinessHours[];
 }

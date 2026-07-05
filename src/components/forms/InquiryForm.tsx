@@ -178,7 +178,7 @@ export default function InquiryForm({ idPrefix = "inquiry" }: InquiryFormProps) 
         type="submit"
         className="w-full rounded bg-gold px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
       >
-        Send Inquiry on WhatsApp
+        Send Inquiry on WhatsApp: {contactInfo.whatsapp}
       </button>
 
       <p aria-live="polite" className="min-h-5 text-xs text-neutral-500">

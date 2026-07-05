@@ -1,3 +1,4 @@
+import { contactInfo } from "@/src/data/contact";
 import type { ProcessStep } from "@/src/types/site";
 
 export const processSteps: ProcessStep[] = [
@@ -5,7 +6,7 @@ export const processSteps: ProcessStep[] = [
     step: 1,
     title: "Reach Out",
     description:
-      "Contact us via phone, WhatsApp, or the inquiry form. Tell us the type of shoot, your preferred date, and what you have in mind.",
+      `Contact us via phone, WhatsApp (${contactInfo.whatsapp}), or the inquiry form. Tell us the type of shoot, your preferred date, and what you have in mind.`,
     icon: "01",
   },
   {

@@ -69,6 +69,11 @@ export default function Contact() {
                 value={contactInfo.email}
                 href={`mailto:${contactInfo.email}`}
               />
+              <ContactDetail
+                label="WhatsApp"
+                value={contactInfo.whatsapp}
+                href={whatsappUrl}
+              />
             </div>
 
             <div className="mt-8">
@@ -88,7 +93,7 @@ export default function Contact() {
 
             <div className="mt-8">
               <Button href={whatsappUrl} variant="secondary" size="md">
-                Chat on WhatsApp
+                Chat on WhatsApp: {contactInfo.whatsapp}
               </Button>
             </div>
 

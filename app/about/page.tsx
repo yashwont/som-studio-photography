@@ -61,7 +61,7 @@ export default function AboutPage() {
             <div className="space-y-6">
               <p className="text-base leading-relaxed text-neutral-600">
                 SomStudioPhotography is a professional photography studio based
-                in Lazimpat, Kathmandu. We focus on creating timeless images
+                in Basundhara, Kathmandu. We focus on creating timeless images
                 for people, families, events, and brands - photographs that
                 clients are proud to keep, print, and share long after the
                 session is over.

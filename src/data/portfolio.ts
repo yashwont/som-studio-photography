@@ -168,7 +168,7 @@ export const portfolioWorks: PortfolioWork[] = [
     title: "Studio Profile Portraits",
     description:
       "Clean portraits for professional profiles, personal branding, and family keepsakes.",
-    location: "Lazimpat Studio",
+    location: "Basundhara Studio",
     featured: true,
     image: portfolioCategories[2].image,
     gallery: [portfolioStudioImage, editorialPortraitImage],
@@ -199,7 +199,7 @@ export const portfolioWorks: PortfolioWork[] = [
     title: "Kids Milestone Portraits",
     description:
       "Playful portraits built around patience, movement, and genuine expressions.",
-    location: "Lazimpat Studio",
+    location: "Basundhara Studio",
     image: portfolioCategories[5].image,
     gallery: [portfolioCategories[2].image],
   },

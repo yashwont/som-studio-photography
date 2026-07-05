@@ -95,6 +95,11 @@ export default function ContactPage() {
                   value={contactInfo.email}
                   href={`mailto:${contactInfo.email}`}
                 />
+                <ContactDetail
+                  label="WhatsApp"
+                  value={contactInfo.whatsapp}
+                  href={whatsappUrl}
+                />
               </div>
 
               <div className="mt-8">
@@ -114,7 +119,7 @@ export default function ContactPage() {
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button href={whatsappUrl} variant="secondary" size="md">
-                  Chat on WhatsApp
+                  Chat on WhatsApp: {contactInfo.whatsapp}
                 </Button>
                 <Button href="#studio-location" variant="ghost" size="md">
                   View Location
@@ -177,7 +182,7 @@ export default function ContactPage() {
                 },
                 {
                   step: "02",
-                  text: "We reach back via phone or WhatsApp to discuss details and confirm a plan.",
+                  text: `We reach back via phone or WhatsApp (${contactInfo.whatsapp}) to discuss details and confirm a plan.`,
                 },
                 {
                   step: "03",

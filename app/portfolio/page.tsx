@@ -36,14 +36,13 @@ function CategoryButton({ category }: { category: PortfolioCategory }) {
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           className="object-cover"
         />
-        <span className="absolute inset-0 bg-neutral-950/60" />
       </span>
-      <span className="relative z-10 text-sm font-semibold uppercase tracking-[0.1em] text-neutral-950 transition-colors duration-300 group-hover:text-white">
+      <span className="relative z-10 text-sm font-semibold uppercase tracking-[0.1em] text-neutral-950 transition-all duration-300 group-hover:text-white group-hover:[text-shadow:0_1px_8px_rgba(0,0,0,0.7)]">
         {category.title}
       </span>
       <span
         aria-hidden="true"
-        className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-xs text-neutral-950 transition-all duration-300 group-hover:translate-x-1 group-hover:border-gold group-hover:bg-gold group-hover:text-neutral-950"
+        className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-white text-xs text-neutral-950 transition-all duration-300 group-hover:translate-x-1 group-hover:border-gold group-hover:bg-gold group-hover:text-neutral-950"
       >
         &rarr;
       </span>
@@ -148,7 +147,7 @@ export default function PortfolioPage() {
               any single shoot for a closer look at how we approached
               lighting, posing, and pacing for that session.
             </p>
-            <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="mb-10">
               <div>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                   Start with a category
@@ -157,9 +156,6 @@ export default function PortfolioPage() {
                   Find the type of session you want to plan.
                 </h2>
               </div>
-              <Button href="/contact" variant="secondary" size="md">
-                Request Full Gallery
-              </Button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pb-12 sm:grid-cols-4 sm:gap-4">

@@ -2,11 +2,6 @@ import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import { contactInfo } from "@/src/data/contact";
 
-function mapsUrl() {
-  const query = `${contactInfo.address}, ${contactInfo.city}, ${contactInfo.country}`;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-}
-
 export default function LocationVisit() {
   const whatsappUrl = `https://wa.me/${contactInfo.whatsapp.replace("+", "")}`;
 
@@ -26,7 +21,7 @@ export default function LocationVisit() {
               story, lighting, and final image style you want.
             </p>
 
-            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               <div>
                 <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-400">
                   Phone
@@ -57,20 +52,25 @@ export default function LocationVisit() {
                   {contactInfo.businessHours[0]?.hours}
                 </p>
               </div>
+              <div>
+                <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-400">
+                  WhatsApp
+                </p>
+                <a
+                  href={whatsappUrl}
+                  className="text-sm font-medium text-neutral-950"
+                >
+                  {contactInfo.whatsapp}
+                </a>
+              </div>
             </div>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button
-                href={mapsUrl()}
-                variant="primary"
-                size="md"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Button href={contactInfo.mapUrl} variant="primary" size="md">
                 Open Map
               </Button>
               <Button href={whatsappUrl} variant="secondary" size="md">
-                Chat on WhatsApp
+                Chat on WhatsApp: {contactInfo.whatsapp}
               </Button>
             </div>
           </div>
