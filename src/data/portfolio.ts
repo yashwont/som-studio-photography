@@ -8,8 +8,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "weddings",
     image: {
       src: "/images/portfolio/wedding.jpg",
-      alt: "A bride and groom walking together after their wedding ceremony.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "A wedding couple embracing while holding a bouquet.",
+      credit: "Photo by Moose Photos on Pexels",
     },
   },
   {
@@ -19,8 +19,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "pre-wedding",
     image: {
       src: "/images/portfolio/pre-wedding.jpg",
-      alt: "A couple posing together during a romantic outdoor pre-wedding shoot.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "A couple in traditional attire posing outdoors during a pre-wedding shoot.",
+      credit: "Photo by Christy Chacko on Pexels",
     },
   },
   {
@@ -30,8 +30,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "portraits",
     image: {
       src: "/images/portfolio/portraits.jpg",
-      alt: "A clean professional portrait with soft natural light.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "A confident studio portrait of a man in a beige blazer.",
+      credit: "Photo by Duy's House of Photo on Pexels",
     },
   },
   {
@@ -41,8 +41,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "events",
     image: {
       src: "/images/portfolio/events.jpg",
-      alt: "Guests gathered at a warmly lit celebration event.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "A group of colleagues celebrating together at a corporate event.",
+      credit: "Photo by Yan Krukau on Pexels",
     },
   },
   {
@@ -52,8 +52,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "maternity",
     image: {
       src: "/images/portfolio/maternity.jpg",
-      alt: "A soft family portrait suited to a maternity photography session.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "A pregnant woman posing outdoors during a summer maternity photoshoot.",
+      credit: "Photo by Dhemer Goncalves on Pexels",
     },
   },
   {
@@ -63,8 +63,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "kids",
     image: {
       src: "/images/portfolio/kids.jpg",
-      alt: "A child smiling during a playful portrait session.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "A playful studio portrait of a young child.",
+      credit: "Photo by Poppy Martinez on Pexels",
     },
   },
   {
@@ -74,8 +74,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "graduation",
     image: {
       src: "/images/portfolio/graduation.jpg",
-      alt: "Graduates celebrating together in academic gowns.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "Graduates celebrating together in academic gowns outdoors.",
+      credit: "Photo by Max Anderson on Pexels",
     },
   },
   {
@@ -85,8 +85,8 @@ export const portfolioCategories: PortfolioCategory[] = [
     slug: "products",
     image: {
       src: "/images/portfolio/products.jpg",
-      alt: "A clean product photography composition on a minimal background.",
-      credit: "Temporary portfolio visual from Unsplash",
+      alt: "An elegant perfume bottle with a water splash against a blue background.",
+      credit: "Photo by Bolarinwa Olasunkanmi on Pexels",
     },
   },
 ];

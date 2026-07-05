@@ -72,10 +72,16 @@ export default function Hero() {
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
-                Professional wedding, portrait, event, and product photography
-                from our studio in {contactInfo.address}, {contactInfo.city}.
-                We help you plan the session, feel comfortable on camera, and
-                receive polished images ready to share, print, and frame.
+                Established in 1995 A.D. with 30 years of experience, our
+                Professional Digital Studio Photography specializes in
+                capturing timeless moments. Using cutting-edge technology, we
+                create stunning images tailored to your vision. Our studio
+                offers a comfortable environment, exceptional customer
+                service, and quick turnaround times. Choose from customizable
+                packages including digital images, prints, albums, and
+                framing. Enhance your photos with our professional editing
+                services. Contact us today to schedule your session and turn
+                your vision into cherished memories.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">

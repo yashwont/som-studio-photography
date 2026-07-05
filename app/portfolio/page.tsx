@@ -19,44 +19,30 @@ export const metadata: Metadata = {
   },
 };
 
-const categoryOffsets = [
-  "",
-  "sm:translate-y-8",
-  "",
-  "sm:translate-y-12",
-  "sm:-translate-y-4",
-  "sm:translate-y-10",
-  "sm:-translate-y-2",
-  "sm:translate-y-6",
-];
-
-function CategoryCard({
-  category,
-  index,
-}: {
-  category: PortfolioCategory;
-  index: number;
-}) {
+function CategoryButton({ category }: { category: PortfolioCategory }) {
   return (
     <Link
       href={`#${category.slug}`}
-      className={`image-lift-card group relative block overflow-hidden rounded bg-white shadow-sm ${categoryOffsets[index]}`}
+      className="group relative flex h-28 items-end overflow-hidden rounded-2xl border border-neutral-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:h-32"
     >
-      <div className="relative aspect-[3/4] overflow-hidden sm:aspect-[4/5]">
-        <Image
-          src={category.image.src}
-          alt={category.image.alt}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="image-reveal object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/45 to-transparent" />
-      </div>
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <div aria-hidden="true" className="mb-3 h-px w-5 bg-gold" />
-        <h2 className="text-sm font-semibold text-neutral-950">
+      <Image
+        src={category.image.src}
+        alt=""
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/35 to-neutral-950/10 transition-colors duration-300 group-hover:from-neutral-950/90" />
+      <div className="relative z-10 flex w-full items-center justify-between gap-2 p-4">
+        <span className="text-sm font-semibold uppercase tracking-[0.1em] text-white">
           {category.title}
-        </h2>
+        </span>
+        <span
+          aria-hidden="true"
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/40 text-xs text-white transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-neutral-950"
+        >
+          &rarr;
+        </span>
       </div>
     </Link>
   );
@@ -173,9 +159,9 @@ export default function PortfolioPage() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pb-12 sm:grid-cols-4 sm:gap-5 lg:gap-6">
-              {portfolioCategories.map((category, index) => (
-                <CategoryCard key={category.id} category={category} index={index} />
+            <div className="grid grid-cols-2 gap-3 pb-12 sm:grid-cols-4 sm:gap-4">
+              {portfolioCategories.map((category) => (
+                <CategoryButton key={category.id} category={category} />
               ))}
             </div>
           </div>
