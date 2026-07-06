@@ -11,14 +11,15 @@ export default function LocationVisit() {
         <div className="grid grid-cols-1 gap-8 py-16 sm:py-20 lg:grid-cols-[1fr_0.8fr] lg:items-stretch">
           <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-              Visit the studio
+              Studio location
             </p>
             <h2 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
-              Based in {contactInfo.address}, {contactInfo.city}.
+              Visit our Kathmandu studio
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-600">
-              Sessions can be planned in-studio or on location depending on the
-              story, lighting, and final image style you want.
+              Based in {contactInfo.address}, {contactInfo.city}. Sessions can
+              be planned in-studio or on location depending on the story,
+              lighting, and final image style you want.
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -81,7 +82,7 @@ export default function LocationVisit() {
               className="absolute inset-0 opacity-[0.45]"
               style={{
                 backgroundImage:
-                  "linear-gradient(#E5E5E5 1px, transparent 1px), linear-gradient(90deg, #E5E5E5 1px, transparent 1px)",
+                  "linear-gradient(#333333 1px, transparent 1px), linear-gradient(90deg, #333333 1px, transparent 1px)",
                 backgroundSize: "28px 28px",
               }}
             />

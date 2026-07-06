@@ -8,9 +8,9 @@ export default function Process() {
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader
-            eyebrow="How It Works"
-            title="A simple, guided process from start to finish."
-            subtitle="No confusion, no surprises - just clear steps from your first message to your final gallery."
+            eyebrow="How it works"
+            title="Our photoshoot process"
+            subtitle="A simple, guided workflow from your first inquiry to a polished final gallery."
             centered={true}
             className="mb-16 sm:mb-20"
           />

@@ -27,10 +27,10 @@ export default function HomeProof() {
     <section className="border-y border-neutral-200 bg-neutral-50">
       <Container>
         <div className="grid grid-cols-1 gap-0 py-4 sm:grid-cols-3 sm:divide-x sm:divide-neutral-200">
-          {proofItems.map((item) => (
+          {proofItems.map((item, index) => (
             <div
               key={item.label}
-              className="py-6 sm:px-8 first:sm:pl-0 last:sm:pr-0"
+              className={`home-proof-item home-proof-item-${index} py-6 sm:px-8 first:sm:pl-0 last:sm:pr-0`}
             >
               <div className="mb-3 flex items-baseline gap-3">
                 <span className="text-3xl font-bold tracking-tight text-neutral-950">
@@ -47,7 +47,7 @@ export default function HomeProof() {
           ))}
         </div>
 
-        <div className="border-t border-neutral-200 py-5 text-sm text-neutral-600">
+        <div className="home-proof-cta border-t border-neutral-200 py-5 text-sm text-neutral-600">
           Need a date checked first?{" "}
           <Link
             href="/contact"

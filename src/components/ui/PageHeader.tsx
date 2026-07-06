@@ -1,12 +1,14 @@
 import Container from "@/src/components/layout/Container";
+import ScrollReveal from "@/src/components/ui/ScrollReveal";
 
 interface PageHeaderProps {
   eyebrow?: string;
   title: string;
   subtitle?: string;
+  animated?: boolean;
 }
 
-export default function PageHeader({ eyebrow, title, subtitle }: PageHeaderProps) {
+function PageHeaderContent({ eyebrow, title, subtitle }: PageHeaderProps) {
   return (
     <div className="bg-neutral-50 border-b border-neutral-200 pt-16 sm:pt-20">
       <Container>
@@ -27,5 +29,26 @@ export default function PageHeader({ eyebrow, title, subtitle }: PageHeaderProps
         </div>
       </Container>
     </div>
+  );
+}
+
+export default function PageHeader({
+  eyebrow,
+  title,
+  subtitle,
+  animated = true,
+}: PageHeaderProps) {
+  const content = (
+    <PageHeaderContent eyebrow={eyebrow} title={title} subtitle={subtitle} />
+  );
+
+  if (!animated) {
+    return content;
+  }
+
+  return (
+    <ScrollReveal variant="soft-zoom">
+      {content}
+    </ScrollReveal>
   );
 }

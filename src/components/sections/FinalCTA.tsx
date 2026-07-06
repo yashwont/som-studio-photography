@@ -11,14 +11,14 @@ export default function FinalCTA() {
           <div className="flex items-center gap-3">
             <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
             <span className="text-xs font-semibold uppercase tracking-[0.16em] text-brand sm:tracking-[0.2em]">
-              Let&rsquo;s Work Together
+              Booking inquiry
             </span>
             <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
           </div>
 
           {/* Headline */}
           <h2 className="break-words text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl xl:text-5xl">
-            Ready to plan your next photoshoot?
+            Plan your next photoshoot
           </h2>
 
           {/* Subtitle */}

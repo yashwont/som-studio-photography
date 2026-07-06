@@ -48,8 +48,8 @@ export default function Services() {
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader
-            eyebrow="What We Offer"
-            title="Photography services for every moment."
+            eyebrow="Services"
+            title="Photography services"
             subtitle="New born, kids, maternity, family, graduation, portraits, weddings, pre-weddings, events, and product shoots from our studio in Kathmandu."
             centered={true}
             className="mb-14 sm:mb-16"

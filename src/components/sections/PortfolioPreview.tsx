@@ -109,9 +109,9 @@ export default function PortfolioPreview() {
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader
-            eyebrow="Our Work"
-            title="One image in focus, others floating around it."
-            subtitle="A softer editorial layout that keeps the cover image readable while the rest of the gallery stays present but lighter."
+            eyebrow="Portfolio"
+            title="Explore our photography work"
+            subtitle="Browse the session styles we cover, from studio portraits and family milestones to weddings, events, and product shoots."
             centered={true}
             className="mb-12 sm:mb-16"
           />

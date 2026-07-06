@@ -5,6 +5,7 @@ import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import PageHeader from "@/src/components/ui/PageHeader";
+import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import { portfolioCategories, portfolioWorks } from "@/src/data/portfolio";
 import type { PortfolioCategory, PortfolioWork } from "@/src/types/site";
 import { absoluteUrl } from "@/src/lib/seo";
@@ -49,44 +50,29 @@ function CategoryButton({ category }: { category: PortfolioCategory }) {
   );
 }
 
-function WorkCard({
-  work,
-  large = false,
-  index = 0,
-}: {
-  work: PortfolioWork;
-  large?: boolean;
-  index?: number;
-}) {
-  const offset =
-    index % 3 === 1 ? "sm:translate-y-8" : index % 3 === 2 ? "sm:-translate-y-3" : "";
-  const imageHeight = large ? "h-80 sm:h-[520px]" : index % 2 === 0 ? "h-72" : "h-96";
-
+function FeatureWorkLink({ work }: { work: PortfolioWork }) {
   return (
     <Link
       href={`/portfolio/${work.id}`}
-      className={`image-lift-card group block overflow-hidden rounded bg-white shadow-sm ${offset}`}
+      className="group grid grid-cols-[4.5rem_1fr] gap-3 border-t border-neutral-200 py-3 transition-colors hover:border-gold"
     >
-      <div className={`relative overflow-hidden ${imageHeight}`}>
+      <div className="relative h-16 overflow-hidden rounded bg-neutral-100">
         <Image
           src={work.image.src}
           alt={work.image.alt}
           fill
-          sizes={large ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 100vw, 33vw"}
-          className="image-reveal object-cover"
+          sizes="5rem"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
-      <div className="p-5 sm:p-6">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <div aria-hidden="true" className="h-px w-6 shrink-0 bg-gold" />
-          <span className="text-xs uppercase tracking-[0.16em] text-neutral-400">
-            {work.location}
-          </span>
-        </div>
-        <h3 className="text-base font-semibold text-neutral-950 transition-colors group-hover:text-gold">
+      <div>
+        <p className="mb-1 text-[10px] uppercase tracking-[0.16em] text-neutral-400">
+          {work.location}
+        </p>
+        <h3 className="text-sm font-semibold text-neutral-950 transition-colors group-hover:text-gold">
           {work.title}
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-neutral-600">
           {work.description}
         </p>
       </div>
@@ -94,30 +80,126 @@ function WorkCard({
   );
 }
 
-function CategorySection({ category }: { category: PortfolioCategory }) {
+function CategorySection({
+  category,
+  index,
+}: {
+  category: PortfolioCategory;
+  index: number;
+}) {
   const works = portfolioWorks.filter((work) => work.categoryId === category.id);
+  const featuredWork = works[0];
+  const supportingWorks = works.slice(1, 3);
+  const imageOnRight = index % 2 === 0;
+  const collageWorks = supportingWorks.length > 0 ? supportingWorks : works.slice(0, 2);
+  const imagePosition = imageOnRight ? "lg:col-start-6" : "lg:col-start-1";
+  const textPanelPosition = imageOnRight ? "lg:col-start-1" : "lg:col-start-8";
 
   return (
-    <section id={category.slug} className="scroll-mt-28 border-t border-neutral-200 py-14 sm:py-16">
-      <div className="mb-8 grid grid-cols-1 gap-5 lg:grid-cols-[0.7fr_1fr] lg:items-end">
-        <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-            {category.title}
-          </p>
-          <h2 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
-            {category.description}
-          </h2>
-        </div>
-        <p className="max-w-2xl text-sm leading-relaxed text-neutral-600 lg:justify-self-end">
-          Sample gallery direction for this category. Real client galleries can
-          replace these entries later while preserving the same structure.
-        </p>
-      </div>
+    <section
+      id={category.slug}
+      className="scroll-mt-28 border-t border-neutral-200 py-10 sm:py-12"
+    >
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-center">
+        <div className={`relative lg:col-span-7 lg:row-start-1 ${imagePosition}`}>
+          <Link
+            href={featuredWork ? `/portfolio/${featuredWork.id}` : `#${category.slug}`}
+            className="image-lift-card group relative block overflow-hidden rounded bg-neutral-100"
+          >
+            <div className="relative aspect-[16/10] max-h-[25rem] min-h-[14rem] sm:min-h-[18rem]">
+              <Image
+                src={category.image.src}
+                alt={category.image.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="image-reveal object-cover"
+                priority={index < 2}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/35 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 flex items-center gap-3 text-white">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span aria-hidden="true" className="h-px w-8 bg-white/80" />
+                <span className="text-xs font-semibold uppercase tracking-[0.2em]">
+                  {category.title}
+                </span>
+              </div>
+            </div>
+          </Link>
 
-      <div className="grid grid-cols-1 gap-5 pb-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-        {works.map((work, index) => (
-          <WorkCard key={work.id} work={work} index={index} />
-        ))}
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:absolute sm:bottom-4 sm:right-4 sm:mt-0 sm:w-[40%]">
+            {collageWorks.slice(0, 2).map((work) => (
+              <Link
+                key={work.id}
+                href={`/portfolio/${work.id}`}
+                className="group relative aspect-[5/4] max-h-28 overflow-hidden rounded border border-white bg-neutral-100 shadow-sm"
+              >
+                <Image
+                  src={work.image.src}
+                  alt={work.image.alt}
+                  fill
+                  sizes="(max-width: 640px) 45vw, 14rem"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/45 to-transparent" />
+                <p className="absolute bottom-2 left-2 right-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
+                  {work.title}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div
+          className={`rounded border border-neutral-200 bg-neutral-50 p-5 shadow-sm sm:p-6 lg:col-span-5 lg:row-start-1 ${textPanelPosition}`}
+        >
+          <div className="mb-4 flex items-center gap-3">
+            <div aria-hidden="true" className="h-px w-8 bg-gold" />
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              Portfolio {String(index + 1).padStart(2, "0")}
+            </p>
+          </div>
+          <h2 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
+            {category.title}
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+            {category.description}
+          </p>
+
+          {featuredWork && (
+            <div className="mt-5 border-y border-neutral-200 py-4">
+              <p className="mb-2 text-[10px] uppercase tracking-[0.16em] text-neutral-400">
+                Featured Story
+              </p>
+              <Link
+                href={`/portfolio/${featuredWork.id}`}
+                className="group inline-flex flex-col"
+              >
+                <span className="text-base font-semibold text-neutral-950 transition-colors group-hover:text-gold">
+                  {featuredWork.title}
+                </span>
+                <span className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-600">
+                  {featuredWork.description}
+                </span>
+              </Link>
+            </div>
+          )}
+
+          <div className="mt-3">
+            {supportingWorks.map((work) => (
+              <FeatureWorkLink key={work.id} work={work} />
+            ))}
+          </div>
+
+          <Link
+            href={featuredWork ? `/portfolio/${featuredWork.id}` : `#${category.slug}`}
+            className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-gold transition-colors hover:text-neutral-950"
+          >
+            View {category.title} portfolio
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -129,12 +211,13 @@ export default function PortfolioPage() {
       <Navbar />
 
       <PageHeader
-        eyebrow="Our Work"
-        title="Portfolio by session type."
+        eyebrow="Portfolio"
+        title="Photography portfolio"
         subtitle="Browse newborn, kids, maternity, family, graduation, portrait, wedding, pre-wedding, event, and product photography from our Kathmandu studio."
       />
 
-      <section className="border-t border-neutral-200 bg-neutral-50">
+      <ScrollReveal variant="rise">
+        <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="py-16 sm:py-20">
             <p className="mx-auto mb-12 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-14">
@@ -147,10 +230,10 @@ export default function PortfolioPage() {
             <div className="mb-10">
               <div>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-                  Start with a category
+                  Session categories
                 </p>
                 <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-                  Find the type of session you want to plan.
+                  Choose the type of session you want to explore.
                 </h2>
               </div>
             </div>
@@ -162,12 +245,18 @@ export default function PortfolioPage() {
             </div>
           </div>
         </Container>
-      </section>
+        </section>
+      </ScrollReveal>
 
       <section className="bg-white">
         <Container>
-          {portfolioCategories.map((category) => (
-            <CategorySection key={category.id} category={category} />
+          {portfolioCategories.map((category, index) => (
+            <ScrollReveal
+              key={category.id}
+              variant={index % 2 === 0 ? "clip-up" : "soft-zoom"}
+            >
+              <CategorySection category={category} index={index} />
+            </ScrollReveal>
           ))}
         </Container>
       </section>

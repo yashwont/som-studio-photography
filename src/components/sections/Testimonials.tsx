@@ -45,9 +45,9 @@ export default function Testimonials() {
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader
-            eyebrow="Client Stories"
-            title="What our clients say."
-            subtitle="Real words from clients across Kathmandu, Lalitpur, and Bhaktapur."
+            eyebrow="Reviews"
+            title="Client stories"
+            subtitle="Real feedback from clients across Kathmandu, Lalitpur, and Bhaktapur."
             centered={true}
             className="mb-14 sm:mb-16"
           />

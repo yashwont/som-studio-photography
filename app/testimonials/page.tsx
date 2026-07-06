@@ -65,9 +65,10 @@ export default function TestimonialsPage() {
       <Navbar />
 
       <PageHeader
-        eyebrow="Client Stories"
-        title="What our clients say."
+        eyebrow="Reviews"
+        title="Client stories"
         subtitle="Real words from real people across Kathmandu, Lalitpur, and Bhaktapur."
+        animated={false}
       />
 
       <section className="bg-neutral-50 border-t border-neutral-200">
@@ -116,10 +117,10 @@ export default function TestimonialsPage() {
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-              Ready to add your own story?
+              Booking inquiry
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
-              Book your session today.
+              Add your story next.
             </h2>
             <Button href="/contact" variant="primary" size="lg">
               Book a Session

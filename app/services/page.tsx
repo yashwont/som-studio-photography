@@ -4,6 +4,7 @@ import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
+import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import { services } from "@/src/data/services";
 import type { Service } from "@/src/types/site";
 import { absoluteUrl } from "@/src/lib/seo";
@@ -70,12 +71,13 @@ export default function ServicesPage() {
       <Navbar />
 
       <PageHeader
-        eyebrow="What We Offer"
-        title="Photography services for every moment."
+        eyebrow="Services"
+        title="Photography services"
         subtitle="From newborn and family portraits to weddings, events, and product shoots, we handle every session from our studio in Kathmandu."
       />
 
-      <section className="bg-neutral-50 border-t border-neutral-200">
+      <ScrollReveal variant="rise">
+        <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
             <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-16">
@@ -92,9 +94,11 @@ export default function ServicesPage() {
             </div>
           </div>
         </Container>
-      </section>
+        </section>
+      </ScrollReveal>
 
-      <section className="bg-neutral-50 border-t border-neutral-200">
+      <ScrollReveal variant="fade">
+        <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
@@ -112,7 +116,8 @@ export default function ServicesPage() {
             </Button>
           </div>
         </Container>
-      </section>
+        </section>
+      </ScrollReveal>
 
       <Footer />
     </>

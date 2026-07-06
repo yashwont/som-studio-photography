@@ -31,19 +31,17 @@ export default function About() {
         <div className="grid grid-cols-1 items-start gap-14 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20">
           <div>
             <SectionHeader
-              eyebrow="About SomStudioPhotography"
-              title="A studio built for meaningful moments and lasting memories."
+              eyebrow="Studio overview"
+              title="About SomStudioPhotography"
               centered={false}
             />
 
             <p className="mt-6 max-w-lg text-base leading-relaxed text-neutral-600">
-              SomStudioPhotography is a professional photography studio in
-              Kathmandu, Nepal, focused on creating timeless images for people,
-              families, events, and brands. From emotional wedding stories to
-              newborn, maternity, family, graduation, portrait, and commercial
+              A professional photography studio in Kathmandu, Nepal, built for
+              meaningful moments and lasting memories. From wedding stories to
+              newborn, maternity, family, graduation, portrait, event, and
               product shoots, we combine careful planning, creative direction,
-              and polished editing to deliver photographs clients are proud to
-              keep, print, and share.
+              and polished editing.
             </p>
 
             <div className="mt-8 flex items-center gap-3">

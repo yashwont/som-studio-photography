@@ -44,8 +44,8 @@ export default function Contact() {
         <div className="grid grid-cols-1 items-start gap-14 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20">
           <div>
             <SectionHeader
-              eyebrow="Book a Session"
-              title="Let's plan your next photoshoot."
+              eyebrow="Contact"
+              title="Book a photography session"
               centered={false}
             />
 
@@ -105,7 +105,7 @@ export default function Contact() {
 
           <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
             <p className="mb-6 text-sm font-semibold text-neutral-950">
-              Send an Inquiry
+              Send an inquiry
             </p>
             <InquiryForm idPrefix="contact" />
           </div>

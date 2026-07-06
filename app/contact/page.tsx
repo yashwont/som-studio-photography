@@ -6,7 +6,6 @@ import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
 import SocialIcon from "@/src/components/ui/SocialIcon";
 import LocationVisit from "@/src/components/sections/LocationVisit";
-import Trust from "@/src/components/sections/Trust";
 import InquiryForm from "@/src/components/forms/InquiryForm";
 import { contactInfo } from "@/src/data/contact";
 import { absoluteUrl } from "@/src/lib/seo";
@@ -59,9 +58,10 @@ export default function ContactPage() {
       <Navbar />
 
       <PageHeader
-        eyebrow="Book a Session"
-        title="Let's plan your next photoshoot."
+        eyebrow="Contact"
+        title="Book a photography session"
         subtitle="Tell us what you need and we will guide you with the right package, timing, and plan."
+        animated={false}
       />
 
       <section className="border-t border-neutral-200 bg-neutral-50">
@@ -78,7 +78,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 items-start gap-14 pb-20 pt-14 sm:pb-28 sm:pt-16 lg:grid-cols-2 lg:gap-20">
             <div>
               <h2 className="mb-6 text-xl font-bold text-neutral-950 sm:text-2xl">
-                Contact Details
+                Contact details
               </h2>
 
               <div className="space-y-6">
@@ -156,7 +156,7 @@ export default function ContactPage() {
 
             <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
               <p className="mb-6 text-sm font-semibold text-neutral-950">
-                Send an Inquiry
+                Send an inquiry
               </p>
               <InquiryForm idPrefix="page-contact" />
             </div>
@@ -168,13 +168,11 @@ export default function ContactPage() {
         <LocationVisit />
       </div>
 
-      <Trust />
-
       <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="py-14 sm:py-16">
             <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-              What happens after you send an inquiry
+              After your inquiry
             </p>
             <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
               {[

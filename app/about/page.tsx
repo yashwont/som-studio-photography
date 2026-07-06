@@ -4,7 +4,7 @@ import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
-import Trust from "@/src/components/sections/Trust";
+import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import AboutShowcase from "@/src/components/sections/AboutShowcase";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import { contactInfo } from "@/src/data/contact";
@@ -48,65 +48,68 @@ export default function AboutPage() {
       <Navbar />
 
       <PageHeader
-        eyebrow="Our Story"
-        title="Built for meaningful moments."
-        subtitle="A photography studio in Kathmandu, Nepal, focused on images worth keeping."
+        eyebrow="About the studio"
+        title="SomStudioPhotography"
+        subtitle="A Kathmandu photography studio built for meaningful moments and images worth keeping."
       />
 
       {/* Studio story */}
-      <section className="bg-white">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start py-20 sm:py-28">
+      <ScrollReveal variant="rise">
+        <section className="bg-white">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start py-20 sm:py-28">
 
-            <div className="space-y-6">
-              <p className="text-base leading-relaxed text-neutral-600">
-                SomStudioPhotography is a professional photography studio based
-                in Basundhara, Kathmandu. We focus on creating timeless images
-                for people, families, events, and brands - photographs that
-                clients are proud to keep, print, and share long after the
-                session is over.
-              </p>
-              <p className="text-base leading-relaxed text-neutral-600">
-                Our approach is straightforward: careful preparation, genuine
-                creative direction during the session, and clean polished
-                editing afterwards. We don&rsquo;t use a one-size-fits-all
-                formula. Every client gets a personalised experience built
-                around their comfort, their style, and what they want to
-                remember.
-              </p>
-              <p className="text-base leading-relaxed text-neutral-600">
-                We shoot in our private studio and on location across
-                Kathmandu, Lalitpur, and beyond. Whether you need a clean
-                controlled backdrop or an outdoor setting with character,
-                we&rsquo;ll find the right environment for your shoot. From
-                the first message to the final gallery, we keep the experience
-                simple and professional.
-              </p>
+              <div className="space-y-6">
+                <p className="text-base leading-relaxed text-neutral-600">
+                  SomStudioPhotography is a professional photography studio based
+                  in Basundhara, Kathmandu. We focus on creating timeless images
+                  for people, families, events, and brands - photographs that
+                  clients are proud to keep, print, and share long after the
+                  session is over.
+                </p>
+                <p className="text-base leading-relaxed text-neutral-600">
+                  Our approach is straightforward: careful preparation, genuine
+                  creative direction during the session, and clean polished
+                  editing afterwards. We don&rsquo;t use a one-size-fits-all
+                  formula. Every client gets a personalised experience built
+                  around their comfort, their style, and what they want to
+                  remember.
+                </p>
+                <p className="text-base leading-relaxed text-neutral-600">
+                  We shoot in our private studio and on location across
+                  Kathmandu, Lalitpur, and beyond. Whether you need a clean
+                  controlled backdrop or an outdoor setting with character,
+                  we&rsquo;ll find the right environment for your shoot. From
+                  the first message to the final gallery, we keep the experience
+                  simple and professional.
+                </p>
 
-              <div className="pt-4 flex items-center gap-3">
-                <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-                <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-                  {contactInfo.address}, {contactInfo.city}, {contactInfo.country}
-                </span>
+                <div className="pt-4 flex items-center gap-3">
+                  <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
+                  <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
+                    {contactInfo.address}, {contactInfo.city}, {contactInfo.country}
+                  </span>
+                </div>
               </div>
+
+              <AboutShowcase />
+
             </div>
-
-            <AboutShowcase />
-
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      </ScrollReveal>
 
       {/* Highlights */}
-      <section className="bg-neutral-50 border-t border-neutral-200">
-        <Container>
-          <div className="py-20 sm:py-28">
+      <ScrollReveal variant="clip-up">
+        <section className="bg-neutral-50 border-t border-neutral-200">
+          <Container>
+            <div className="py-20 sm:py-28">
             <div className="mb-12 sm:mb-14">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-                What to expect
+                Client experience
               </p>
               <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-                How we work with every client.
+                What to expect
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -125,12 +128,14 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </Container>
-      </section>
+            </div>
+          </Container>
+        </section>
+      </ScrollReveal>
 
       {/* Studio details */}
-      <section className="bg-neutral-50 border-t border-neutral-200">
+      <ScrollReveal variant="lift-wide">
+        <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 py-16 sm:py-20">
             <div>
@@ -171,13 +176,16 @@ export default function AboutPage() {
             </div>
           </div>
         </Container>
-      </section>
+        </section>
+      </ScrollReveal>
 
-      <Trust />
-      <LocationVisit />
+      <ScrollReveal variant="rise">
+        <LocationVisit />
+      </ScrollReveal>
 
       {/* CTA */}
-      <section className="bg-neutral-50 border-t border-neutral-200">
+      <ScrollReveal variant="fade">
+        <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 sm:py-20 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
@@ -194,7 +202,8 @@ export default function AboutPage() {
             </Button>
           </div>
         </Container>
-      </section>
+        </section>
+      </ScrollReveal>
 
       <Footer />
     </>

@@ -72,16 +72,10 @@ export default function Hero() {
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
-                Established in 1995 A.D. with 30 years of experience, our
-                Professional Digital Studio Photography specializes in
-                capturing timeless moments. Using cutting-edge technology, we
-                create stunning images tailored to your vision. Our studio
-                offers a comfortable environment, exceptional customer
-                service, and quick turnaround times. Choose from customizable
-                packages for newborn, kids, maternity, family, graduation,
-                portrait, wedding, pre-wedding, event, and product photography.
-                Contact us today to schedule your session and turn your vision
-                into cherished memories.
+                A Kathmandu studio for newborn, family, portrait, wedding,
+                event, and product photography. We plan each session clearly,
+                guide you calmly, and deliver polished images made to keep,
+                print, and share.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
