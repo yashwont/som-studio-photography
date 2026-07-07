@@ -120,6 +120,8 @@ surface) and should only be built against a stable Order model.
 - Provide a local safe row-count check script for seeded content
 
 ### Phase 4: Admin panel
+- Status: Phase 4A started
+- See `ADMIN_PANEL_PLAN.md` for the route structure and phased rollout
 - `/admin`
 - `/admin/services`
 - `/admin/portfolio`
