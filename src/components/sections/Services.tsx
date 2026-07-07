@@ -1,7 +1,6 @@
 import Container from "@/src/components/layout/Container";
 import SectionHeader from "@/src/components/ui/SectionHeader";
 import Button from "@/src/components/ui/Button";
-import { services } from "@/src/data/services";
 import type { Service } from "@/src/types/site";
 
 function ServiceCard({ service }: { service: Service }) {
@@ -42,7 +41,7 @@ function ServiceCard({ service }: { service: Service }) {
   );
 }
 
-export default function Services() {
+export default function Services({ services }: { services: Service[] }) {
   return (
     <section id="services" className="bg-neutral-50 border-t border-neutral-200">
       <Container>
