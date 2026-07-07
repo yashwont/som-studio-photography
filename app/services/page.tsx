@@ -5,8 +5,7 @@ import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
-import { services } from "@/src/data/services";
-import type { Service } from "@/src/types/site";
+import { getActiveServices } from "@/src/lib/db/services";
 import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
@@ -18,7 +17,19 @@ export const metadata: Metadata = {
   },
 };
 
-function ServiceCard({ service }: { service: Service }) {
+type ServiceWithPackages = Awaited<ReturnType<typeof getActiveServices>>[number];
+
+function formatPrice(service: ServiceWithPackages) {
+  const packagePrice = service.packages[0]?.price;
+
+  if (!packagePrice) {
+    return "Contact for pricing";
+  }
+
+  return `NRS ${packagePrice.toNumber().toLocaleString("en-US")}`;
+}
+
+function ServiceCard({ service }: { service: ServiceWithPackages }) {
   return (
     <div className="group flex flex-col rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors duration-200 hover:border-neutral-300">
       <div className="mb-4 flex items-start justify-between">
@@ -38,7 +49,7 @@ function ServiceCard({ service }: { service: Service }) {
       </h2>
 
       <p className="mb-6 flex-1 text-sm leading-relaxed text-neutral-600">
-        {service.description}
+        {service.shortDescription}
       </p>
 
       <ul className="space-y-2 border-t border-neutral-200 pt-5">
@@ -56,7 +67,7 @@ function ServiceCard({ service }: { service: Service }) {
       </ul>
 
       <div className="mt-auto flex items-center justify-between gap-4 border-t border-neutral-200 pt-5">
-        <p className="text-sm font-semibold text-gold">{service.price}</p>
+        <p className="text-sm font-semibold text-gold">{formatPrice(service)}</p>
         <Button href="/contact" variant="secondary" size="sm">
           Book Now
         </Button>
@@ -65,7 +76,22 @@ function ServiceCard({ service }: { service: Service }) {
   );
 }
 
-export default function ServicesPage() {
+function EmptyServicesFallback() {
+  return (
+    <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded border border-neutral-200 bg-white px-6 py-10 text-center">
+      <p className="text-base leading-relaxed text-neutral-600">
+        Services are being updated. Please contact us for current packages.
+      </p>
+      <Button href="/contact" variant="primary" size="md">
+        Contact Us
+      </Button>
+    </div>
+  );
+}
+
+export default async function ServicesPage() {
+  const services = await getActiveServices();
+
   return (
     <>
       <Navbar />
@@ -87,11 +113,15 @@ export default function ServicesPage() {
               wedding day coverage, you get the same attention to detail and
               a clear plan before the camera comes out.
             </p>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
-                <ServiceCard key={service.id} service={service} />
-              ))}
-            </div>
+            {services.length > 0 ? (
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {services.map((service) => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+              </div>
+            ) : (
+              <EmptyServicesFallback />
+            )}
           </div>
         </Container>
         </section>
