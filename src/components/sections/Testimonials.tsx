@@ -1,6 +1,5 @@
 import Container from "@/src/components/layout/Container";
 import SectionHeader from "@/src/components/ui/SectionHeader";
-import { testimonials } from "@/src/data/testimonials";
 import type { Testimonial } from "@/src/types/site";
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
@@ -39,7 +38,11 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   );
 }
 
-export default function Testimonials() {
+export default function Testimonials({
+  testimonials,
+}: {
+  testimonials: Testimonial[];
+}) {
   return (
     <section id="testimonials" className="bg-neutral-50 border-t border-neutral-200">
       <Container>

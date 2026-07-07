@@ -9,9 +9,15 @@ import Testimonials from "@/src/components/sections/Testimonials";
 import FinalCTA from "@/src/components/sections/FinalCTA";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import { featuredServices as staticFeaturedServices } from "@/src/data/services";
+import { testimonials as staticTestimonials } from "@/src/data/testimonials";
 import { getFeaturedServices } from "@/src/lib/db/services";
+import {
+  getActiveTestimonials,
+  getFeaturedTestimonials,
+} from "@/src/lib/db/testimonials";
 import { absoluteUrl, defaultDescription } from "@/src/lib/seo";
 import type { Service } from "@/src/types/site";
+import type { Testimonial } from "@/src/types/site";
 
 export const metadata: Metadata = {
   title: "Photography Studio in Kathmandu",
@@ -22,6 +28,7 @@ export const metadata: Metadata = {
 };
 
 type DatabaseService = Awaited<ReturnType<typeof getFeaturedServices>>[number];
+type DatabaseTestimonial = Awaited<ReturnType<typeof getFeaturedTestimonials>>[number];
 
 function formatPrice(service: DatabaseService) {
   const packagePrice = service.packages[0]?.price;
@@ -45,12 +52,33 @@ function toHomepageService(service: DatabaseService): Service {
   };
 }
 
+function toHomepageTestimonial(testimonial: DatabaseTestimonial): Testimonial {
+  return {
+    id: testimonial.id,
+    name: testimonial.clientName,
+    role: testimonial.serviceType,
+    content: testimonial.review,
+    rating: testimonial.rating,
+    service: testimonial.serviceType,
+    location: testimonial.location ?? "",
+  };
+}
+
 export default async function Home() {
   const databaseServices = await getFeaturedServices();
+  const featuredTestimonials = await getFeaturedTestimonials();
+  const activeTestimonials =
+    featuredTestimonials.length > 0 ? [] : await getActiveTestimonials();
   const homepageServices =
     databaseServices.length > 0
       ? databaseServices.map(toHomepageService)
       : staticFeaturedServices;
+  const databaseTestimonials =
+    featuredTestimonials.length > 0 ? featuredTestimonials : activeTestimonials.slice(0, 3);
+  const homepageTestimonials =
+    databaseTestimonials.length > 0
+      ? databaseTestimonials.map(toHomepageTestimonial)
+      : staticTestimonials;
 
   return (
     <>
@@ -69,7 +97,7 @@ export default async function Home() {
           <PortfolioPreview />
         </ScrollReveal>
         <ScrollReveal variant="lift-wide">
-          <Testimonials />
+          <Testimonials testimonials={homepageTestimonials} />
         </ScrollReveal>
         <ScrollReveal variant="fade">
           <FinalCTA />
