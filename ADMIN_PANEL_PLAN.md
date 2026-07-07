@@ -26,6 +26,8 @@ backend behavior changes yet.
 
 ### Phase 4B: Admin authentication foundation
 
+- Status: started
+
 - `AdminUser` model already exists
 - Create secure admin login later
 - Use password hashing
@@ -121,4 +123,3 @@ single-purpose admin session.
 1. Admin authentication foundation
 2. Admin dashboard shell
 3. Services CRUD first
-
