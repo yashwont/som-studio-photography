@@ -1,7 +1,8 @@
 "use client";
 
 import { useActionState } from "react";
-import { initialAdminLoginState, loginAdmin } from "./actions";
+import { loginAdmin } from "./actions";
+import { initialAdminLoginState } from "./types";
 
 export default function LoginForm() {
   const [state, formAction, pending] = useActionState(
