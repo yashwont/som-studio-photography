@@ -11,16 +11,16 @@
   --color-neutral-300: #B3B3B3;
   --color-neutral-400: #808080;
   --color-neutral-500: #666666;
-  --color-neutral-600: #000000;
-  --color-neutral-700: #000000;
-  --color-neutral-800: #000000;
-  --color-neutral-900: #000000;
-  --color-neutral-950: #000000;
+  --color-neutral-600: #555555;
+  --color-neutral-700: #444444;
+  --color-neutral-800: #333333;
+  --color-neutral-900: #333333;
+  --color-neutral-950: #333333;
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #000000;
+  --foreground: #333333;
 }
 
 @theme inline {

@@ -57,8 +57,8 @@ function ServiceCard({ service }: { service: Service }) {
 
       <div className="mt-auto flex items-center justify-between gap-4 border-t border-neutral-200 pt-5">
         <p className="text-sm font-semibold text-gold">{service.price}</p>
-        <Button href="/contact" variant="secondary" size="sm">
-          Inquiry
+        <Button href={`/book?service=${service.id}`} variant="secondary" size="sm">
+          Book Now
         </Button>
       </div>
     </div>
