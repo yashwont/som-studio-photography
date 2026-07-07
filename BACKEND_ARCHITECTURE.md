@@ -112,6 +112,13 @@ surface) and should only be built against a stable Order model.
   until those workflows exist
 - Keep public website working during migration
 
+### Phase 3E: Database read layer
+- Status: started
+- Add read-only query helpers under `src/lib/db`
+- Keep public website pages using static `src/data` until the database
+  migration is explicitly planned
+- Provide a local safe row-count check script for seeded content
+
 ### Phase 4: Admin panel
 - `/admin`
 - `/admin/services`
