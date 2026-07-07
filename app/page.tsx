@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Hero from "@/src/components/sections/Hero";
-import HomeProof from "@/src/components/sections/HomeProof";
 import About from "@/src/components/sections/About";
+import Services from "@/src/components/sections/Services";
 import PortfolioPreview from "@/src/components/sections/PortfolioPreview";
-import Process from "@/src/components/sections/Process";
-import LocationVisit from "@/src/components/sections/LocationVisit";
+import Testimonials from "@/src/components/sections/Testimonials";
 import FinalCTA from "@/src/components/sections/FinalCTA";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import { absoluteUrl, defaultDescription } from "@/src/lib/seo";
@@ -27,20 +26,17 @@ export default function Home() {
         <ScrollReveal variant="soft-zoom">
           <Hero />
         </ScrollReveal>
-        <ScrollReveal variant="rise">
-          <HomeProof />
-        </ScrollReveal>
         <ScrollReveal variant="tilt-right">
           <About />
+        </ScrollReveal>
+        <ScrollReveal variant="rise">
+          <Services />
         </ScrollReveal>
         <ScrollReveal variant="clip-up">
           <PortfolioPreview />
         </ScrollReveal>
         <ScrollReveal variant="lift-wide">
-          <Process />
-        </ScrollReveal>
-        <ScrollReveal variant="lift-wide">
-          <LocationVisit />
+          <Testimonials />
         </ScrollReveal>
         <ScrollReveal variant="fade">
           <FinalCTA />

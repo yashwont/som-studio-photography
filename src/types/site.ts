@@ -39,13 +39,6 @@ export interface SiteImage {
   credit?: string;
 }
 
-export interface ProcessStep {
-  step: number;
-  title: string;
-  description: string;
-  icon: string;
-}
-
 export interface Testimonial {
   id: string;
   name: string;
