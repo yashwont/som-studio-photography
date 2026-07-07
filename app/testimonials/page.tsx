@@ -4,8 +4,7 @@ import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import PageHeader from "@/src/components/ui/PageHeader";
-import { testimonials } from "@/src/data/testimonials";
-import type { Testimonial } from "@/src/types/site";
+import { getActiveTestimonials } from "@/src/lib/db/testimonials";
 import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
@@ -23,7 +22,9 @@ const stats = [
   { value: "KTM / LTP / BKT", label: "Kathmandu, Lalitpur, Bhaktapur" },
 ];
 
-function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+type DatabaseTestimonial = Awaited<ReturnType<typeof getActiveTestimonials>>[number];
+
+function TestimonialCard({ testimonial }: { testimonial: DatabaseTestimonial }) {
   return (
     <div className="flex flex-col rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-7">
       <div
@@ -38,28 +39,45 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
       </div>
 
       <blockquote className="mb-6 flex-1 text-sm leading-relaxed text-neutral-700">
-        &ldquo;{testimonial.content}&rdquo;
+        &ldquo;{testimonial.review}&rdquo;
       </blockquote>
 
       <footer className="border-t border-neutral-200 pt-5">
         <div className="mb-1 flex items-center gap-3">
           <div aria-hidden="true" className="h-px w-5 shrink-0 bg-gold" />
           <span className="text-sm font-semibold text-neutral-950">
-            {testimonial.name}
+            {testimonial.clientName}
           </span>
         </div>
         <p className="pl-8 text-xs text-neutral-500">
-          {testimonial.role} &middot; {testimonial.service}
+          {testimonial.serviceType}
         </p>
-        <p className="mt-0.5 pl-8 text-xs text-neutral-400">
-          {testimonial.location}
-        </p>
+        {testimonial.location && (
+          <p className="mt-0.5 pl-8 text-xs text-neutral-400">
+            {testimonial.location}
+          </p>
+        )}
       </footer>
     </div>
   );
 }
 
-export default function TestimonialsPage() {
+function EmptyTestimonialsFallback() {
+  return (
+    <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded border border-neutral-200 bg-white px-6 py-10 text-center">
+      <p className="text-base leading-relaxed text-neutral-600">
+        Client stories are being updated. Please contact us to learn more about our work.
+      </p>
+      <Button href="/contact" variant="primary" size="md">
+        Contact Us
+      </Button>
+    </div>
+  );
+}
+
+export default async function TestimonialsPage() {
+  const testimonials = await getActiveTestimonials();
+
   return (
     <>
       <Navbar />
@@ -101,11 +119,15 @@ export default function TestimonialsPage() {
               because it shapes how we plan future shoots and refine our
               editing style.
             </p>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {testimonials.map((testimonial) => (
-                <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-              ))}
-            </div>
+            {testimonials.length > 0 ? (
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {testimonials.map((testimonial) => (
+                  <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+                ))}
+              </div>
+            ) : (
+              <EmptyTestimonialsFallback />
+            )}
             <p className="mt-14 text-center text-sm text-neutral-400">
               Every session is planned with care, comfort, and attention to detail.
             </p>
