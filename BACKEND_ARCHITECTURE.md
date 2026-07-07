@@ -104,7 +104,12 @@ surface) and should only be built against a stable Order model.
   - `SiteSetting`
 
 ### Phase 3D: Seed data
+- Status: started
 - Convert current `src/data` content into seed data
+- Seed `Service`, `Package`, `PortfolioCategory`, `PortfolioImage`,
+  `Testimonial`, and `SiteSetting` from the current static data files
+- Do not seed `Inquiry`, `Booking`, `Order`, `Payment`, or `AdminUser`
+  until those workflows exist
 - Keep public website working during migration
 
 ### Phase 4: Admin panel
