@@ -8,7 +8,9 @@ import SocialIcon from "@/src/components/ui/SocialIcon";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import InquiryForm from "@/src/components/forms/InquiryForm";
 import { contactInfo } from "@/src/data/contact";
+import { getSiteSetting } from "@/src/lib/db/site-settings";
 import { absoluteUrl } from "@/src/lib/seo";
+import type { ContactInfo } from "@/src/types/site";
 
 export const metadata: Metadata = {
   title: "Book a Photography Session",
@@ -18,6 +20,41 @@ export const metadata: Metadata = {
     canonical: absoluteUrl("/contact"),
   },
 };
+
+function isContactInfo(value: unknown): value is ContactInfo {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const candidate = value as Record<string, unknown>;
+
+  return (
+    typeof candidate.phone === "string" &&
+    typeof candidate.whatsapp === "string" &&
+    typeof candidate.email === "string" &&
+    typeof candidate.address === "string" &&
+    typeof candidate.city === "string" &&
+    typeof candidate.country === "string" &&
+    Array.isArray(candidate.socialLinks) &&
+    Array.isArray(candidate.businessHours)
+  );
+}
+
+async function getContactInfo() {
+  const setting = await getSiteSetting("contact.info");
+
+  if (!setting) {
+    return contactInfo;
+  }
+
+  try {
+    const parsed = JSON.parse(setting.value) as unknown;
+
+    return isContactInfo(parsed) ? parsed : contactInfo;
+  } catch {
+    return contactInfo;
+  }
+}
 
 function ContactDetail({
   label,
@@ -50,8 +87,9 @@ function ContactDetail({
   );
 }
 
-export default function ContactPage() {
-  const whatsappUrl = `https://wa.me/${contactInfo.whatsapp.replace("+", "")}`;
+export default async function ContactPage() {
+  const contact = await getContactInfo();
+  const contactWhatsappUrl = `https://wa.me/${contact.whatsapp.replace("+", "")}`;
 
   return (
     <>
@@ -84,22 +122,22 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <ContactDetail
                   label="Studio Location"
-                  value={`${contactInfo.address}, ${contactInfo.city}, ${contactInfo.country}`}
+                  value={`${contact.address}, ${contact.city}, ${contact.country}`}
                 />
                 <ContactDetail
                   label="Phone"
-                  value={contactInfo.phone}
-                  href={`tel:${contactInfo.phone}`}
+                  value={contact.phone}
+                  href={`tel:${contact.phone}`}
                 />
                 <ContactDetail
                   label="Email"
-                  value={contactInfo.email}
-                  href={`mailto:${contactInfo.email}`}
+                  value={contact.email}
+                  href={`mailto:${contact.email}`}
                 />
                 <ContactDetail
                   label="WhatsApp"
-                  value={contactInfo.whatsapp}
-                  href={whatsappUrl}
+                  value={contact.whatsapp}
+                  href={contactWhatsappUrl}
                 />
               </div>
 
@@ -108,7 +146,7 @@ export default function ContactPage() {
                   Studio Hours
                 </p>
                 <div className="space-y-1.5">
-                  {contactInfo.businessHours.map((slot) => (
+                  {contact.businessHours.map((slot) => (
                     <p key={slot.days} className="text-sm text-neutral-500">
                       <span className="text-neutral-600">{slot.days}</span>
                       {" - "}
@@ -119,8 +157,8 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button href={whatsappUrl} variant="secondary" size="md">
-                  Chat on WhatsApp: {contactInfo.whatsapp}
+                <Button href={contactWhatsappUrl} variant="secondary" size="md">
+                  Chat on WhatsApp: {contact.whatsapp}
                 </Button>
                 <Button href="#studio-location" variant="ghost" size="md">
                   View Location
@@ -132,7 +170,7 @@ export default function ContactPage() {
                   Follow Us
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  {contactInfo.socialLinks.map((social) => (
+                  {contact.socialLinks.map((social) => (
                     <a
                       key={social.platform}
                       href={social.href}
@@ -180,9 +218,9 @@ export default function ContactPage() {
                   step: "01",
                   text: "We review your inquiry and check availability for your preferred date.",
                 },
-                {
-                  step: "02",
-                  text: `We reach back via phone or WhatsApp (${contactInfo.whatsapp}) to discuss details and confirm a plan.`,
+              {
+                step: "02",
+                  text: `We reach back via phone or WhatsApp (${contact.whatsapp}) to discuss details and confirm a plan.`,
                 },
                 {
                   step: "03",
