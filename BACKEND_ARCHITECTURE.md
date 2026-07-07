@@ -81,10 +81,13 @@ surface) and should only be built against a stable Order model.
 - No code changes to app functionality
 
 ### Phase 3B: Prisma/PostgreSQL setup
-- Install Prisma later
+- Status: started
+- Install Prisma packages
 - Create local `.env`
 - Create Prisma schema
-- Connect local PostgreSQL database
+- Prepare local PostgreSQL connection string
+- Connect local PostgreSQL database after the database exists and the local
+  `DATABASE_URL` is confirmed
 
 ### Phase 3C: Database schema
 - Add models:
