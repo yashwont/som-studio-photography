@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/src/components/layout/Container";
 import SectionHeader from "@/src/components/ui/SectionHeader";
-import { portfolioCategories } from "@/src/data/portfolio";
 import type { PortfolioCategory } from "@/src/types/site";
 
 const rotationMs = 3000;
@@ -92,17 +91,21 @@ function SpotlightFrame({ category }: { category: PortfolioCategory }) {
   );
 }
 
-export default function PortfolioPreview() {
+export default function PortfolioPreview({
+  categories,
+}: {
+  categories: PortfolioCategory[];
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeCategory = portfolioCategories[activeIndex];
+  const activeCategory = categories[activeIndex];
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % portfolioCategories.length);
+      setActiveIndex((current) => (current + 1) % categories.length);
     }, rotationMs);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [categories.length]);
 
   return (
     <section id="portfolio" className="border-t border-neutral-200 bg-neutral-50">
@@ -124,25 +127,25 @@ export default function PortfolioPreview() {
             <div className="pointer-events-none absolute inset-0">
               <div className="pointer-events-auto">
                 <SpotlightThumb
-                  category={portfolioCategories[(activeIndex + 1) % portfolioCategories.length]}
+                  category={categories[(activeIndex + 1) % categories.length]}
                   active={false}
                   positionClass="left-2 top-10 sm:left-8 sm:top-14"
                   index={1}
                 />
                 <SpotlightThumb
-                  category={portfolioCategories[(activeIndex + 2) % portfolioCategories.length]}
+                  category={categories[(activeIndex + 2) % categories.length]}
                   active={false}
                   positionClass="right-3 top-20 sm:right-10 sm:top-24"
                   index={2}
                 />
                 <SpotlightThumb
-                  category={portfolioCategories[(activeIndex + 3) % portfolioCategories.length]}
+                  category={categories[(activeIndex + 3) % categories.length]}
                   active={false}
                   positionClass="left-6 bottom-10 sm:left-14 sm:bottom-14"
                   index={3}
                 />
                 <SpotlightThumb
-                  category={portfolioCategories[(activeIndex + 4) % portfolioCategories.length]}
+                  category={categories[(activeIndex + 4) % categories.length]}
                   active={false}
                   positionClass="right-4 bottom-20 sm:right-16 sm:bottom-20"
                   index={4}
@@ -152,7 +155,7 @@ export default function PortfolioPreview() {
           </div>
 
           <div className="mt-10 flex flex-wrap justify-center gap-2">
-            {portfolioCategories.map((category, index) => (
+            {categories.map((category, index) => (
               <button
                 key={category.id}
                 type="button"

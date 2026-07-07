@@ -8,14 +8,20 @@ import PortfolioPreview from "@/src/components/sections/PortfolioPreview";
 import Testimonials from "@/src/components/sections/Testimonials";
 import FinalCTA from "@/src/components/sections/FinalCTA";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
+import { portfolioCategories as staticPortfolioCategories } from "@/src/data/portfolio";
 import { featuredServices as staticFeaturedServices } from "@/src/data/services";
 import { testimonials as staticTestimonials } from "@/src/data/testimonials";
+import {
+  getActivePortfolioImages,
+  getFeaturedPortfolioImages,
+} from "@/src/lib/db/portfolio";
 import { getFeaturedServices } from "@/src/lib/db/services";
 import {
   getActiveTestimonials,
   getFeaturedTestimonials,
 } from "@/src/lib/db/testimonials";
 import { absoluteUrl, defaultDescription } from "@/src/lib/seo";
+import type { PortfolioCategory } from "@/src/types/site";
 import type { Service } from "@/src/types/site";
 import type { Testimonial } from "@/src/types/site";
 
@@ -28,6 +34,7 @@ export const metadata: Metadata = {
 };
 
 type DatabaseService = Awaited<ReturnType<typeof getFeaturedServices>>[number];
+type DatabasePortfolioImage = Awaited<ReturnType<typeof getFeaturedPortfolioImages>>[number];
 type DatabaseTestimonial = Awaited<ReturnType<typeof getFeaturedTestimonials>>[number];
 
 function formatPrice(service: DatabaseService) {
@@ -64,8 +71,26 @@ function toHomepageTestimonial(testimonial: DatabaseTestimonial): Testimonial {
   };
 }
 
+function toHomepagePortfolioCategory(
+  portfolioImage: DatabasePortfolioImage
+): PortfolioCategory {
+  return {
+    id: portfolioImage.category.id,
+    title: portfolioImage.category.name,
+    description: portfolioImage.category.description ?? "",
+    slug: portfolioImage.category.slug,
+    image: {
+      src: portfolioImage.imageUrl,
+      alt: portfolioImage.altText,
+    },
+  };
+}
+
 export default async function Home() {
   const databaseServices = await getFeaturedServices();
+  const featuredPortfolioImages = await getFeaturedPortfolioImages();
+  const activePortfolioImages =
+    featuredPortfolioImages.length > 0 ? [] : await getActivePortfolioImages();
   const featuredTestimonials = await getFeaturedTestimonials();
   const activeTestimonials =
     featuredTestimonials.length > 0 ? [] : await getActiveTestimonials();
@@ -73,6 +98,14 @@ export default async function Home() {
     databaseServices.length > 0
       ? databaseServices.map(toHomepageService)
       : staticFeaturedServices;
+  const databasePortfolioImages =
+    featuredPortfolioImages.length > 0
+      ? featuredPortfolioImages
+      : activePortfolioImages.slice(0, 5);
+  const homepagePortfolioCategories =
+    databasePortfolioImages.length > 0
+      ? databasePortfolioImages.map(toHomepagePortfolioCategory)
+      : staticPortfolioCategories;
   const databaseTestimonials =
     featuredTestimonials.length > 0 ? featuredTestimonials : activeTestimonials.slice(0, 3);
   const homepageTestimonials =
@@ -94,7 +127,7 @@ export default async function Home() {
           <Services services={homepageServices} />
         </ScrollReveal>
         <ScrollReveal variant="clip-up">
-          <PortfolioPreview />
+          <PortfolioPreview categories={homepagePortfolioCategories} />
         </ScrollReveal>
         <ScrollReveal variant="lift-wide">
           <Testimonials testimonials={homepageTestimonials} />

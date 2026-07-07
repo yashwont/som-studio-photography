@@ -33,6 +33,20 @@ export function getFeaturedPortfolioImages() {
   });
 }
 
+export function getActivePortfolioImages() {
+  return prisma.portfolioImage.findMany({
+    where: {
+      active: true,
+    },
+    include: {
+      category: true,
+    },
+    orderBy: {
+      displayOrder: "asc",
+    },
+  });
+}
+
 export function getPortfolioImageBySlug(slug: string) {
   return prisma.portfolioImage.findFirst({
     where: {
