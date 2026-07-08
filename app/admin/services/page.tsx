@@ -33,14 +33,12 @@ function StatusBadge({ active }: { active: boolean }) {
 
 function AddServiceButton({ className = "" }: { className?: string }) {
   return (
-    <button
-      type="button"
-      disabled
-      title="Coming soon"
-      className={`cursor-not-allowed rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 opacity-50 ${className}`}
+    <Link
+      href="/admin/services/new"
+      className={`inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500 ${className}`}
     >
       Add Service
-    </button>
+    </Link>
   );
 }
 
@@ -75,12 +73,7 @@ export default async function AdminServicesPage() {
       <AdminPageHeader
         title="Services"
         description="Manage photography services shown on the website."
-        action={
-          <div className="flex flex-col items-end gap-1">
-            <AddServiceButton />
-            <span className="text-xs text-neutral-500">Coming soon</span>
-          </div>
-        }
+        action={<AddServiceButton />}
       />
 
       <section className="mt-8">
