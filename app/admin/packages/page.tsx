@@ -54,19 +54,6 @@ function AddPackageButton({ className = "" }: { className?: string }) {
   );
 }
 
-function PlaceholderActionButton({ label }: { label: string }) {
-  return (
-    <button
-      type="button"
-      disabled
-      title="Coming soon"
-      className="cursor-not-allowed rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-400 opacity-60"
-    >
-      {label}
-    </button>
-  );
-}
-
 function ViewPackageButton({ packageId }: { packageId: string }) {
   return (
     <Link
@@ -74,6 +61,17 @@ function ViewPackageButton({ packageId }: { packageId: string }) {
       className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
     >
       View
+    </Link>
+  );
+}
+
+function EditPackageButton({ packageId }: { packageId: string }) {
+  return (
+    <Link
+      href={`/admin/packages/${packageId}/edit`}
+      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+    >
+      Edit
     </Link>
   );
 }
@@ -151,7 +149,7 @@ export default async function AdminPackagesPage() {
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-2">
                         <ViewPackageButton packageId={pkg.id} />
-                        <PlaceholderActionButton label="Edit" />
+                        <EditPackageButton packageId={pkg.id} />
                       </div>
                     </td>
                   </tr>

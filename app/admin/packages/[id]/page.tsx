@@ -94,12 +94,20 @@ export default async function AdminPackageDetailPage({
           pkg.active ? "Active" : "Inactive"
         }`}
         action={
-          <Link
-            href="/admin/packages"
-            className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-          >
-            &larr; Back to Packages
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/admin/packages"
+              className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+            >
+              &larr; Back to Packages
+            </Link>
+            <Link
+              href={`/admin/packages/${pkg.id}/edit`}
+              className="inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
+            >
+              Edit Package
+            </Link>
+          </div>
         }
       />
 
