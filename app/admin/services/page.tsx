@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminServices } from "@/src/lib/db/admin-services";
 import AdminShell from "@/src/components/admin/AdminShell";
@@ -53,6 +54,17 @@ function PlaceholderActionButton({ label }: { label: string }) {
     >
       {label}
     </button>
+  );
+}
+
+function ViewServiceButton({ serviceId }: { serviceId: string }) {
+  return (
+    <Link
+      href={`/admin/services/${serviceId}`}
+      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+    >
+      View
+    </Link>
   );
 }
 
@@ -131,7 +143,7 @@ export default async function AdminServicesPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-2">
-                        <PlaceholderActionButton label="View" />
+                        <ViewServiceButton serviceId={service.id} />
                         <PlaceholderActionButton label="Edit" />
                       </div>
                     </td>
