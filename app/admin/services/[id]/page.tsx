@@ -95,12 +95,20 @@ export default async function AdminServiceDetailPage({
           service.active ? "Active" : "Inactive"
         }`}
         action={
-          <Link
-            href="/admin/services"
-            className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-          >
-            &larr; Back to Services
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/admin/services"
+              className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+            >
+              &larr; Back to Services
+            </Link>
+            <Link
+              href={`/admin/services/${service.id}/edit`}
+              className="inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
+            >
+              Edit Service
+            </Link>
+          </div>
         }
       />
 

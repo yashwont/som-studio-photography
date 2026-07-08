@@ -44,19 +44,6 @@ function AddServiceButton({ className = "" }: { className?: string }) {
   );
 }
 
-function PlaceholderActionButton({ label }: { label: string }) {
-  return (
-    <button
-      type="button"
-      disabled
-      title="Coming soon"
-      className="cursor-not-allowed rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-400 opacity-60"
-    >
-      {label}
-    </button>
-  );
-}
-
 function ViewServiceButton({ serviceId }: { serviceId: string }) {
   return (
     <Link
@@ -64,6 +51,17 @@ function ViewServiceButton({ serviceId }: { serviceId: string }) {
       className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
     >
       View
+    </Link>
+  );
+}
+
+function EditServiceButton({ serviceId }: { serviceId: string }) {
+  return (
+    <Link
+      href={`/admin/services/${serviceId}/edit`}
+      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+    >
+      Edit
     </Link>
   );
 }
@@ -144,7 +142,7 @@ export default async function AdminServicesPage() {
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-2">
                         <ViewServiceButton serviceId={service.id} />
-                        <PlaceholderActionButton label="Edit" />
+                        <EditServiceButton serviceId={service.id} />
                       </div>
                     </td>
                   </tr>
