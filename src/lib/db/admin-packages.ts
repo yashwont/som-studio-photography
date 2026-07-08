@@ -24,3 +24,28 @@ export function getAdminPackages() {
     },
   });
 }
+
+export function getAdminPackageById(id: string) {
+  return prisma.package.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      description: true,
+      inclusions: true,
+      active: true,
+      displayOrder: true,
+      createdAt: true,
+      updatedAt: true,
+      service: {
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          active: true,
+        },
+      },
+    },
+  });
+}
