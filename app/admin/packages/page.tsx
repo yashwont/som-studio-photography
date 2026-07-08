@@ -43,14 +43,12 @@ function StatusBadge({ active }: { active: boolean }) {
 
 function AddPackageButton({ className = "" }: { className?: string }) {
   return (
-    <button
-      type="button"
-      disabled
-      title="Coming soon"
-      className={`cursor-not-allowed rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 opacity-50 ${className}`}
+    <Link
+      href="/admin/packages/new"
+      className={`inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500 ${className}`}
     >
       Add Package
-    </button>
+    </Link>
   );
 }
 
@@ -85,21 +83,14 @@ export default async function AdminPackagesPage() {
       <AdminPageHeader
         title="Packages"
         description="Manage service packages and pricing for future service selling."
-        action={
-          <div className="flex flex-col items-end gap-1">
-            <AddPackageButton />
-            <span className="text-xs text-neutral-500">Coming soon</span>
-          </div>
-        }
+        action={<AddPackageButton />}
       />
 
       <section className="mt-8">
         {packages.length === 0 ? (
           <div className="rounded border border-neutral-800 bg-neutral-900 p-8 text-center">
-            <p className="text-sm text-neutral-300">
-              No packages found. Package creation will be added in the next
-              phase.
-            </p>
+            <p className="text-sm text-neutral-300">No packages found.</p>
+            <AddPackageButton className="mt-4" />
           </div>
         ) : (
           <div className="overflow-x-auto rounded border border-neutral-800">
