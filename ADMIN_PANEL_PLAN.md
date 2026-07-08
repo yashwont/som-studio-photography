@@ -66,6 +66,8 @@ backend behavior changes yet.
 
 ### Phase 4E: Portfolio management
 
+- Phase 4E-1 (portfolio categories list, read-only): Status: started
+
 - Portfolio categories
 - Portfolio images
 - Featured images
