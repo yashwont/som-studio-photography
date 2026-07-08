@@ -47,6 +47,8 @@ backend behavior changes yet.
 
 ### Phase 4D: Services CRUD
 
+- Phase 4D-1 (list-only): Status: started
+
 - List services
 - Create service
 - Edit service
