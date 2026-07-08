@@ -51,6 +51,7 @@ backend behavior changes yet.
 - Phase 4D-2 (service detail, read-only): Status: started
 - Phase 4D-3 (service edit): Status: started
 - Phase 4D-4 (service create): Status: started
+- Phase 4D-5 (packages list, read-only): Status: started
 
 - List services
 - Create service
