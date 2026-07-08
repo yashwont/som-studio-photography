@@ -37,6 +37,8 @@ backend behavior changes yet.
 
 ### Phase 4C: Admin dashboard shell
 
+- Status: started
+
 - `/admin`
 - Sidebar layout
 - Topbar
