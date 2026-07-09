@@ -37,7 +37,7 @@ export default function NewPackageForm({
             required
             className={inputClassName}
           >
-            {services.map((service) => (
+            {services.map((service: ServiceOption) => (
               <option key={service.id} value={service.id}>
                 {service.title}
               </option>

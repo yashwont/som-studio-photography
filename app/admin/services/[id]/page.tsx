@@ -186,7 +186,7 @@ export default async function AdminServiceDetailPage({
             <p className="text-sm text-neutral-400">No highlights added.</p>
           ) : (
             <ul className="space-y-2 text-sm text-neutral-200">
-              {service.highlights.map((highlight) => (
+              {service.highlights.map((highlight: string) => (
                 <li key={highlight} className="flex gap-2">
                   <span
                     aria-hidden="true"
@@ -220,7 +220,7 @@ export default async function AdminServiceDetailPage({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-neutral-800">
-                  {service.packages.map((pkg) => (
+                  {service.packages.map((pkg: AdminServicePackage) => (
                     <tr key={pkg.id}>
                       <td className="px-3 py-3 font-medium text-neutral-50">
                         {pkg.name}

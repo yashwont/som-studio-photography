@@ -150,7 +150,7 @@ function CategorySection({
           </Link>
 
           <div className="mt-3 grid grid-cols-2 gap-3 sm:absolute sm:bottom-4 sm:right-4 sm:mt-0 sm:w-[40%]">
-            {collageWorks.slice(0, 2).map((work) => (
+            {collageWorks.slice(0, 2).map((work: PortfolioImageWithCategory) => (
               <Link
                 key={work.id}
                 href={`/portfolio/${work.slug}`}
@@ -208,7 +208,7 @@ function CategorySection({
           )}
 
           <div className="mt-3">
-            {supportingWorks.map((work) => (
+            {supportingWorks.map((work: PortfolioImageWithCategory) => (
               <FeatureWorkLink key={work.id} work={work} category={category} />
             ))}
           </div>
@@ -242,7 +242,7 @@ function EmptyPortfolioFallback() {
 export default async function PortfolioPage() {
   const portfolioCategories = await getPortfolioCategories();
   const hasPortfolioContent = portfolioCategories.some(
-    (category) => category.images.length > 0
+    (category: PortfolioCategoryWithImages) => category.images.length > 0
   );
 
   return (
@@ -279,7 +279,7 @@ export default async function PortfolioPage() {
 
             {hasPortfolioContent ? (
               <div className="grid grid-cols-2 gap-3 pb-12 sm:grid-cols-4 sm:gap-4">
-                {portfolioCategories.map((category) => (
+                {portfolioCategories.map((category: PortfolioCategoryWithImages) => (
                   <CategoryButton key={category.id} category={category} />
                 ))}
               </div>
@@ -294,7 +294,7 @@ export default async function PortfolioPage() {
       {hasPortfolioContent && (
         <section className="bg-white">
           <Container>
-            {portfolioCategories.map((category, index) => (
+            {portfolioCategories.map((category: PortfolioCategoryWithImages, index: number) => (
               <ScrollReveal
                 key={category.id}
                 variant={index % 2 === 0 ? "clip-up" : "soft-zoom"}

@@ -180,7 +180,7 @@ export default async function AdminPackageDetailPage({
             <p className="text-sm text-neutral-400">No inclusions added.</p>
           ) : (
             <ul className="space-y-2 text-sm text-neutral-200">
-              {pkg.inclusions.map((inclusion) => (
+              {pkg.inclusions.map((inclusion: string) => (
                 <li key={inclusion} className="flex gap-2">
                   <span
                     aria-hidden="true"

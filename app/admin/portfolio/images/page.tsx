@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Portfolio Images | Admin | SomStudioPhotography",
 };
 
+type AdminPortfolioImage = Awaited<
+  ReturnType<typeof getAdminPortfolioImages>
+>[number];
+
 function formatDate(date: Date) {
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -124,7 +128,7 @@ export default async function AdminPortfolioImagesPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-800">
-                {images.map((image) => (
+                {images.map((image: AdminPortfolioImage) => (
                   <tr
                     key={image.id}
                     className="bg-neutral-950 hover:bg-neutral-900/60"

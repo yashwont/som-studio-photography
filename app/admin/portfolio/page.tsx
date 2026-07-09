@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Portfolio | Admin | SomStudioPhotography",
 };
 
+type AdminPortfolioCategory = Awaited<
+  ReturnType<typeof getAdminPortfolioCategories>
+>[number];
+
 function formatDate(date: Date) {
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -98,7 +102,7 @@ export default async function AdminPortfolioPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-800">
-                {categories.map((category) => (
+                {categories.map((category: AdminPortfolioCategory) => (
                   <tr
                     key={category.id}
                     className="bg-neutral-950 hover:bg-neutral-900/60"

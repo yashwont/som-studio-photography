@@ -91,7 +91,7 @@ export default function EditPortfolioImageForm({
             defaultValue={image.category.id}
             className={inputClassName}
           >
-            {categories.map((category) => (
+            {categories.map((category: CategoryOption) => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>

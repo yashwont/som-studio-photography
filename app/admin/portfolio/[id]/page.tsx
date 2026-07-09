@@ -263,7 +263,7 @@ export default async function AdminPortfolioCategoryDetailPage({
             </p>
           ) : (
             <div className="space-y-3">
-              {category.images.map((image) => (
+              {category.images.map((image: AdminPortfolioImage) => (
                 <div
                   key={image.id}
                   className="flex flex-col gap-4 rounded border border-neutral-800 bg-neutral-950 p-4 sm:flex-row sm:items-center"

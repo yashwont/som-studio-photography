@@ -109,7 +109,7 @@ export default async function AdminPackagesPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-800">
-                {packages.map((pkg) => (
+                {packages.map((pkg: AdminPackage) => (
                   <tr
                     key={pkg.id}
                     className="bg-neutral-950 hover:bg-neutral-900/60"

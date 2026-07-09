@@ -13,6 +13,8 @@ import { getSiteSetting } from "@/src/lib/db/site-settings";
 import { absoluteUrl } from "@/src/lib/seo";
 import type { ContactInfo } from "@/src/types/site";
 
+type ActiveService = Awaited<ReturnType<typeof getActiveServices>>[number];
+
 export const metadata: Metadata = {
   title: "Book a Photography Session",
   description:
@@ -99,7 +101,7 @@ export default async function ContactPage({
   ]);
   const { service: defaultServiceId } = await searchParams;
   const contactWhatsappUrl = `https://wa.me/${contact.whatsapp.replace("+", "")}`;
-  const services = activeServices.map((service) => ({
+  const services = activeServices.map((service: ActiveService) => ({
     id: service.id,
     title: service.title,
   }));

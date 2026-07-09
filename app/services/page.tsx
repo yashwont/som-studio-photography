@@ -53,7 +53,7 @@ function ServiceCard({ service }: { service: ServiceWithPackages }) {
       </p>
 
       <ul className="space-y-2 border-t border-neutral-200 pt-5">
-        {service.highlights.map((highlight) => (
+        {service.highlights.map((highlight: string) => (
           <li
             key={highlight}
             className="flex items-start gap-2 text-xs text-neutral-500"
@@ -115,7 +115,7 @@ export default async function ServicesPage() {
             </p>
             {services.length > 0 ? (
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {services.map((service) => (
+                {services.map((service: ServiceWithPackages) => (
                   <ServiceCard key={service.id} service={service} />
                 ))}
               </div>

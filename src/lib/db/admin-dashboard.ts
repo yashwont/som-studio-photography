@@ -54,3 +54,7 @@ export async function getAdminDashboardStats() {
     recentInquiries,
   };
 }
+
+export type AdminDashboardRecentInquiry = Awaited<
+  ReturnType<typeof getAdminDashboardStats>
+>["recentInquiries"][number];

@@ -51,7 +51,7 @@ export default function EditPackageForm({
             defaultValue={pkg.service.id}
             className={inputClassName}
           >
-            {services.map((service) => (
+            {services.map((service: ServiceOption) => (
               <option key={service.id} value={service.id}>
                 {service.title}
               </option>

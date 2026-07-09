@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
-import { getAdminDashboardStats } from "@/src/lib/db/admin-dashboard";
+import {
+  getAdminDashboardStats,
+  type AdminDashboardRecentInquiry,
+} from "@/src/lib/db/admin-dashboard";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
 import AdminStatCard from "@/src/components/admin/AdminStatCard";
@@ -120,7 +123,7 @@ export default async function AdminPage() {
             </p>
           ) : (
             <ul className="divide-y divide-neutral-800">
-              {stats.recentInquiries.map((inquiry) => (
+              {stats.recentInquiries.map((inquiry: AdminDashboardRecentInquiry) => (
                 <li key={inquiry.id}>
                   <Link
                     href={`/admin/inquiries/${inquiry.id}`}

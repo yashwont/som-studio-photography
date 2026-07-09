@@ -14,11 +14,21 @@ import {
 } from "@/src/lib/db/portfolio";
 import { absoluteUrl } from "@/src/lib/seo";
 
+type PortfolioCategoryWithImages = Awaited<
+  ReturnType<typeof getPortfolioCategories>
+>[number];
+type PortfolioImageWithCategory = Awaited<
+  ReturnType<typeof getPortfolioImagesByCategorySlug>
+>[number];
+type PortfolioCategoryImage = PortfolioCategoryWithImages["images"][number];
+
 export async function generateStaticParams() {
   const categories = await getPortfolioCategories();
 
-  return categories.flatMap((category) =>
-    category.images.map((image) => ({ work: image.slug }))
+  return categories.flatMap((category: PortfolioCategoryWithImages) =>
+    category.images.map((image: PortfolioCategoryImage) => ({
+      work: image.slug,
+    }))
   );
 }
 
@@ -63,7 +73,7 @@ export default async function PortfolioWorkPage({
   const category = work.category;
   const moreFromCategory = (
     await getPortfolioImagesByCategorySlug(category.slug)
-  ).filter((item) => item.id !== work.id);
+  ).filter((item: PortfolioImageWithCategory) => item.id !== work.id);
 
   return (
     <>
@@ -124,7 +134,7 @@ export default async function PortfolioWorkPage({
                   Other stories in this category.
                 </h2>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-                  {moreFromCategory.map((item) => (
+                  {moreFromCategory.map((item: PortfolioImageWithCategory) => (
                     <Link
                       key={item.id}
                       href={`/portfolio/${item.slug}`}
