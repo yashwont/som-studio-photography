@@ -1,10 +1,31 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
 import { updatePortfolioImage } from "./actions";
 import { initialEditPortfolioImageState } from "./types";
+
+function getSafePreviewUrl(value: string) {
+  const trimmedUrl = value.trim();
+
+  if (!trimmedUrl || trimmedUrl.includes('"') || trimmedUrl.includes("'")) {
+    return null;
+  }
+
+  if (trimmedUrl.startsWith("/") && !trimmedUrl.startsWith("//")) {
+    return trimmedUrl;
+  }
+
+  try {
+    const url = new URL(trimmedUrl);
+    return url.protocol === "http:" || url.protocol === "https:"
+      ? trimmedUrl
+      : null;
+  } catch {
+    return null;
+  }
+}
 
 export type PortfolioImageFormValues = {
   id: string;
@@ -40,6 +61,21 @@ export default function EditPortfolioImageForm({
     updateImageWithId,
     initialEditPortfolioImageState
   );
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [urlPreview, setUrlPreview] = useState<string | null>(
+    getSafePreviewUrl(image.imageUrl)
+  );
+
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    setFilePreview(file ? URL.createObjectURL(file) : null);
+  }
+
+  function handleImageUrlChange(event: ChangeEvent<HTMLInputElement>) {
+    setUrlPreview(getSafePreviewUrl(event.target.value));
+  }
+
+  const previewUrl = filePreview ?? urlPreview;
 
   return (
     <form action={formAction} className="space-y-6">
@@ -107,17 +143,53 @@ export default function EditPortfolioImageForm({
       </div>
 
       <div>
+        <label htmlFor="imageFile" className={labelClassName}>
+          Replace image
+        </label>
+        <input
+          id="imageFile"
+          name="imageFile"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={handleFileChange}
+          className={`${inputClassName} cursor-pointer`}
+        />
+        <p className="mt-1.5 text-xs text-neutral-500">
+          JPG, PNG, or WEBP, up to 5MB. Leave empty to keep the current image.
+        </p>
+      </div>
+
+      <div>
         <label htmlFor="imageUrl" className={labelClassName}>
-          Image URL
+          Image URL{" "}
+          <span className="normal-case text-neutral-500">
+            (used if no file is uploaded)
+          </span>
         </label>
         <input
           id="imageUrl"
           name="imageUrl"
           type="text"
-          required
           defaultValue={image.imageUrl}
+          onChange={handleImageUrlChange}
           className={inputClassName}
         />
+      </div>
+
+      <div>
+        <span className={labelClassName}>Preview</span>
+        {previewUrl ? (
+          <div
+            aria-label="Image preview"
+            role="img"
+            className="h-32 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${JSON.stringify(previewUrl)})` }}
+          />
+        ) : (
+          <div className="flex h-32 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
+            No preview
+          </div>
+        )}
       </div>
 
       <div>

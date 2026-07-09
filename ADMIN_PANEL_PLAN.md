@@ -74,12 +74,12 @@ backend behavior changes yet.
 - Phase 4E-6 (portfolio image detail, read-only): Status: completed
 - Phase 4E-7 (portfolio image create, imageUrl field only): Status: completed
 - Phase 4E-8 (portfolio image edit, imageUrl field only): Status: completed
+- Phase 4E-9 (portfolio image upload/storage via Cloudinary, manual imageUrl kept as fallback): Status: completed
 
 - Portfolio categories
 - Portfolio images
 - Featured images
 - Ordering
-- Image upload/storage later
 
 ### Phase 4F: Testimonials management
 

@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/src/lib/prisma";
+import { uploadPortfolioImage } from "@/src/lib/storage/cloudinary";
 import type { NewPortfolioImageState } from "./types";
 
 function slugify(value: string) {
@@ -22,7 +23,8 @@ export async function createPortfolioImage(
   const categoryId = String(formData.get("categoryId") ?? "").trim();
   const title = String(formData.get("title") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();
-  const imageUrl = String(formData.get("imageUrl") ?? "").trim();
+  const manualImageUrl = String(formData.get("imageUrl") ?? "").trim();
+  const imageFile = formData.get("imageFile");
   const altText = String(formData.get("altText") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const displayOrderRaw = String(formData.get("displayOrder") ?? "");
@@ -41,10 +43,6 @@ export async function createPortfolioImage(
     return { error: "Slug is required." };
   }
 
-  if (!imageUrl) {
-    return { error: "Image URL is required." };
-  }
-
   if (!altText) {
     return { error: "Alt text is required." };
   }
@@ -59,6 +57,22 @@ export async function createPortfolioImage(
 
   if (Number.isNaN(displayOrder)) {
     return { error: "Display order must be a number." };
+  }
+
+  let imageUrl = manualImageUrl;
+
+  if (imageFile instanceof File && imageFile.size > 0) {
+    const uploadResult = await uploadPortfolioImage(imageFile);
+
+    if (!uploadResult.ok) {
+      return { error: uploadResult.error };
+    }
+
+    imageUrl = uploadResult.url;
+  }
+
+  if (!imageUrl) {
+    return { error: "Upload an image or provide an Image URL." };
   }
 
   const category = await prisma.portfolioCategory.findUnique({
