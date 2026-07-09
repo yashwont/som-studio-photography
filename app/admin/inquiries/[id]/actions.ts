@@ -3,15 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
-import type { InquiryStatus } from "@prisma/client";
 import type { UpdateInquiryState } from "./types";
 
-const VALID_STATUSES: InquiryStatus[] = [
-  "NEW",
-  "CONTACTED",
-  "BOOKED",
-  "CLOSED",
-];
+const VALID_STATUSES = ["NEW", "CONTACTED", "BOOKED", "CLOSED"] as const;
+type InquiryStatus = (typeof VALID_STATUSES)[number];
 
 export async function updateInquiry(
   inquiryId: string,
