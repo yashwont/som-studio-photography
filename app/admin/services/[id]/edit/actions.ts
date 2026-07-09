@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
 import type { EditServiceState } from "./types";
 
@@ -20,6 +21,8 @@ export async function updateService(
   _previousState: EditServiceState,
   formData: FormData
 ): Promise<EditServiceState> {
+  await requireAdmin();
+
   const title = String(formData.get("title") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();

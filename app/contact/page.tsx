@@ -8,6 +8,7 @@ import SocialIcon from "@/src/components/ui/SocialIcon";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import InquiryForm from "@/src/components/forms/InquiryForm";
 import { contactInfo } from "@/src/data/contact";
+import { getActiveServices } from "@/src/lib/db/services";
 import { getSiteSetting } from "@/src/lib/db/site-settings";
 import { absoluteUrl } from "@/src/lib/seo";
 import type { ContactInfo } from "@/src/types/site";
@@ -92,9 +93,16 @@ export default async function ContactPage({
 }: {
   searchParams: Promise<{ service?: string }>;
 }) {
-  const contact = await getContactInfo();
+  const [contact, activeServices] = await Promise.all([
+    getContactInfo(),
+    getActiveServices(),
+  ]);
   const { service: defaultServiceId } = await searchParams;
   const contactWhatsappUrl = `https://wa.me/${contact.whatsapp.replace("+", "")}`;
+  const services = activeServices.map((service) => ({
+    id: service.id,
+    title: service.title,
+  }));
 
   return (
     <>
@@ -204,6 +212,7 @@ export default async function ContactPage({
               <InquiryForm
                 idPrefix="page-contact"
                 defaultServiceId={defaultServiceId}
+                services={services}
               />
             </div>
           </div>

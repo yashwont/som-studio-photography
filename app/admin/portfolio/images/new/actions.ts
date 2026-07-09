@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
 import { uploadPortfolioImage } from "@/src/lib/storage/cloudinary";
 import type { NewPortfolioImageState } from "./types";
@@ -20,6 +21,8 @@ export async function createPortfolioImage(
   _previousState: NewPortfolioImageState,
   formData: FormData
 ): Promise<NewPortfolioImageState> {
+  await requireAdmin();
+
   const categoryId = String(formData.get("categoryId") ?? "").trim();
   const title = String(formData.get("title") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();

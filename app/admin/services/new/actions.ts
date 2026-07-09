@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
 import type { NewServiceState } from "./types";
 
@@ -19,6 +20,8 @@ export async function createService(
   _previousState: NewServiceState,
   formData: FormData
 ): Promise<NewServiceState> {
+  await requireAdmin();
+
   const title = String(formData.get("title") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();

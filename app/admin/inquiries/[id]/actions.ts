@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
 import type { InquiryStatus } from "@prisma/client";
 import type { UpdateInquiryState } from "./types";
@@ -17,6 +18,8 @@ export async function updateInquiry(
   _previousState: UpdateInquiryState,
   formData: FormData
 ): Promise<UpdateInquiryState> {
+  await requireAdmin();
+
   const status = String(formData.get("status") ?? "");
   const notes = String(formData.get("notes") ?? "").trim();
 

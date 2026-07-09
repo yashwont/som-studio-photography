@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
 import type { EditPackageState } from "./types";
 
@@ -10,6 +11,8 @@ export async function updatePackage(
   _previousState: EditPackageState,
   formData: FormData
 ): Promise<EditPackageState> {
+  await requireAdmin();
+
   const serviceId = String(formData.get("serviceId") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").trim();

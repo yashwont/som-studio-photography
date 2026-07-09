@@ -1,8 +1,10 @@
 # SomStudioPhotography - Admin Panel Plan
 
-Phase 4 planning document for the future internal admin panel. This is
-planning only: no admin routes, no authentication, no CRUD UI, and no
-backend behavior changes yet.
+Phase 4 planning document for the internal admin panel. Authentication,
+dashboard, and CRUD for services/packages/portfolio/inquiries are now
+implemented — see the status lines under each phase below. Testimonials
+and Settings CRUD remain unbuilt (Phase 4F/4H), and the shop/payments
+phase (4I) is intentionally out of scope for now.
 
 ## Proposed Admin Routes
 
@@ -26,14 +28,13 @@ backend behavior changes yet.
 
 ### Phase 4B: Admin authentication foundation
 
-- Status: started
+- Status: completed
 
-- `AdminUser` model already exists
-- Create secure admin login later
-- Use password hashing
-- Protect all `/admin/*` routes
-- Decide between Auth.js/NextAuth or secure custom session auth before
-  coding
+- `AdminUser` model exists, passwords hashed with bcrypt
+- Custom HMAC-signed, httpOnly, sameSite session cookie (see "Auth Decision" below)
+- Every `/admin/*` page calls `requireAdmin()`; every mutating server action
+  also calls `requireAdmin()` independently (not just the page it's rendered on)
+- Production refuses to boot without `ADMIN_SESSION_SECRET` set (no insecure fallback)
 
 ### Phase 4C: Admin dashboard shell
 
@@ -49,9 +50,9 @@ backend behavior changes yet.
 
 ### Phase 4D: Services CRUD
 
-- Phase 4D-1 (list-only): Status: started
-- Phase 4D-2 (service detail, read-only): Status: started
-- Phase 4D-3 (service edit): Status: started
+- Phase 4D-1 (list-only): Status: completed
+- Phase 4D-2 (service detail, read-only): Status: completed
+- Phase 4D-3 (service edit): Status: completed
 - Phase 4D-4 (service create): Status: completed
 - Phase 4D-5 (packages list, read-only): Status: completed
 - Phase 4D-6 (package detail, read-only): Status: completed
@@ -115,35 +116,35 @@ backend behavior changes yet.
 - Orders
 - Payments later
 
+### Phase 4J: Production readiness QA pass
+
+- Status: completed
+
+- Added `requireAdmin()` to every mutating admin server action (previously only the pages checked auth, not the actions themselves)
+- Fixed public inquiry form's service dropdown to read from the database instead of a static hardcoded list, so admin-created services now appear and prefill correctly from "Book Now"
+- Documented `NEXT_PUBLIC_SITE_URL` in `.env.example` (used for canonical URLs and the inquiry-notification admin link)
+- Corrected stale "started" statuses in this document for Phase 4B and 4D-1/4D-2/4D-3
+- Verified `npx next build` succeeds cleanly
+- Added `DEPLOYMENT_CHECKLIST.md`
+
 ## Admin Safety Rules
 
 - Never expose admin pages without authentication.
 - Never store plain-text passwords.
 - Never commit `.env`.
-- Do not build image upload until storage choice is finalized.
+- Image upload storage choice was finalized as Cloudinary (Phase 4E-9), with manual Image URL kept as a fallback.
 - Do not build payment until orders/packages flow is stable.
 - Keep the public website stable while admin is added gradually.
 - Make small commits per admin phase.
 
-## Auth Decision Needed
+## Auth Decision (made)
 
-### Auth.js / NextAuth
-
-- Pros: established ecosystem, session handling, adapters, provider
-  support, easier future extensibility.
-- Cons: more setup surface, more framework-specific conventions, may be
-  heavier than this project needs for a single admin surface.
-
-### Custom session-based admin auth
-
-- Pros: smaller surface area, easier to tailor to a single admin app,
-  simpler mental model for one internal login.
-- Cons: more security responsibility on this codebase, more to implement
-  correctly, fewer built-in patterns.
-
-Recommended decision point: choose before Phase 4B implementation, based
-on whether the project wants standardized auth plumbing or a minimal
-single-purpose admin session.
+Custom session-based admin auth was chosen over Auth.js/NextAuth, since
+this app has a single internal admin surface with no external providers
+needed. Implemented as an HMAC-signed session token (`src/lib/auth/session.ts`)
+in an httpOnly, sameSite=lax, secure-in-production cookie, verified on
+every admin page and every mutating server action via `requireAdmin()`
+(`src/lib/auth/admin.ts`).
 
 ## First Admin Feature Recommendation
 

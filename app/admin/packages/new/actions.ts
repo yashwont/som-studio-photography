@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
 import type { NewPackageState } from "./types";
 
@@ -9,6 +10,8 @@ export async function createPackage(
   _previousState: NewPackageState,
   formData: FormData
 ): Promise<NewPackageState> {
+  await requireAdmin();
+
   const serviceId = String(formData.get("serviceId") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").trim();

@@ -2,12 +2,17 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { contactInfo } from "@/src/data/contact";
-import { services } from "@/src/data/services";
 import { submitInquiry } from "@/src/lib/actions/inquiry";
+
+type ServiceOption = {
+  id: string;
+  title: string;
+};
 
 interface InquiryFormProps {
   idPrefix?: string;
   defaultServiceId?: string;
+  services: ServiceOption[];
 }
 
 const inputClass =
@@ -17,7 +22,7 @@ function getValue(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
 }
 
-function buildWhatsAppMessage(formData: FormData) {
+function buildWhatsAppMessage(formData: FormData, services: ServiceOption[]) {
   const name = getValue(formData, "name");
   const phone = getValue(formData, "phone");
   const email = getValue(formData, "email");
@@ -43,6 +48,7 @@ function buildWhatsAppMessage(formData: FormData) {
 export default function InquiryForm({
   idPrefix = "inquiry",
   defaultServiceId = "",
+  services,
 }: InquiryFormProps) {
   const [status, setStatus] = useState("");
 
@@ -60,7 +66,7 @@ export default function InquiryForm({
     }
 
     const formData = new FormData(form);
-    const message = buildWhatsAppMessage(formData);
+    const message = buildWhatsAppMessage(formData, services);
     const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
 
     window.open(url, "_blank", "noopener,noreferrer");
@@ -147,17 +153,21 @@ export default function InquiryForm({
           id={`${idPrefix}-service`}
           name="service"
           defaultValue={defaultServiceId}
-          required
+          required={services.length > 0}
           className={inputClass}
         >
-          <option value="" disabled>
-            Select a service
+          <option value="" disabled={services.length > 0}>
+            {services.length > 0 ? "Select a service" : "General inquiry"}
           </option>
           {services.map((service) => (
             <option key={service.id} value={service.id}>
               {service.title}
             </option>
           ))}
+          {defaultServiceId &&
+            !services.some((service) => service.id === defaultServiceId) && (
+              <option value={defaultServiceId}>Selected service</option>
+            )}
         </select>
       </div>
 

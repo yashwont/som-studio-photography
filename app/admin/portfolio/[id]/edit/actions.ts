@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
 import type { EditPortfolioCategoryState } from "./types";
 
@@ -20,6 +21,8 @@ export async function updatePortfolioCategory(
   _previousState: EditPortfolioCategoryState,
   formData: FormData
 ): Promise<EditPortfolioCategoryState> {
+  await requireAdmin();
+
   const name = String(formData.get("name") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
