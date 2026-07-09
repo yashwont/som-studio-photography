@@ -37,13 +37,15 @@ backend behavior changes yet.
 
 ### Phase 4C: Admin dashboard shell
 
-- Status: started
+- Status: completed
 
 - `/admin`
 - Sidebar layout
 - Topbar
-- Summary cards
-- No CRUD yet
+- Summary cards now backed by real database stats (inquiries by status, services, packages, portfolio categories/images, testimonials)
+- Recent inquiries list with links to `/admin/inquiries/[id]`
+- Quick links to Services/Packages/Portfolio/Inquiries
+- No CRUD on this page itself
 
 ### Phase 4D: Services CRUD
 
@@ -92,6 +94,7 @@ backend behavior changes yet.
 - Phase 4G-1 (public contact form saves to database, service inquiry buttons prefill): Status: completed
 - Phase 4G-2 (inquiries list, read-only): Status: completed
 - Phase 4G-3 (inquiry detail with status/notes update): Status: completed
+- Phase 4G-4 (email notification on new inquiry via Resend, with client auto-reply; fails gracefully if unconfigured): Status: completed
 
 - Contact form submissions later
 - Status management

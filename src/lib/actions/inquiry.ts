@@ -2,6 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/src/lib/prisma";
+import {
+  sendInquiryAdminNotification,
+  sendInquiryAutoReply,
+} from "@/src/lib/email/inquiry-notifications";
 
 export type SubmitInquiryResult =
   | { ok: true }
@@ -60,7 +64,7 @@ export async function submitInquiry(
     }
   }
 
-  await prisma.inquiry.create({
+  const inquiry = await prisma.inquiry.create({
     data: {
       name,
       phone,
@@ -70,10 +74,26 @@ export async function submitInquiry(
       preferredDate,
       message,
     },
+    select: { id: true },
   });
 
   revalidatePath("/admin/inquiries");
   revalidatePath("/admin");
+
+  const notificationData = {
+    id: inquiry.id,
+    name,
+    phone,
+    email: email || null,
+    serviceLabel: serviceType,
+    preferredDate,
+    message,
+  };
+
+  await Promise.allSettled([
+    sendInquiryAdminNotification(notificationData),
+    sendInquiryAutoReply(notificationData),
+  ]);
 
   return { ok: true };
 }
