@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/src/lib/auth/admin";
-import { getAdminInquiries } from "@/src/lib/db/admin-inquiries";
+import {
+  getAdminInquiries,
+  type AdminInquiryListItem,
+} from "@/src/lib/db/admin-inquiries";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
 
@@ -82,7 +85,7 @@ export default async function AdminInquiriesPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-800">
-                {inquiries.map((inquiry) => (
+                {inquiries.map((inquiry: AdminInquiryListItem) => (
                   <tr
                     key={inquiry.id}
                     className="bg-neutral-950 hover:bg-neutral-900/60"

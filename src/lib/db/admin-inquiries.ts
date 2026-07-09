@@ -23,6 +23,10 @@ export function getAdminInquiries() {
   });
 }
 
+export type AdminInquiryListItem = Awaited<
+  ReturnType<typeof getAdminInquiries>
+>[number];
+
 export function getAdminInquiryById(id: string) {
   return prisma.inquiry.findUnique({
     where: { id },
