@@ -87,8 +87,13 @@ function ContactDetail({
   );
 }
 
-export default async function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ service?: string }>;
+}) {
   const contact = await getContactInfo();
+  const { service: defaultServiceId } = await searchParams;
   const contactWhatsappUrl = `https://wa.me/${contact.whatsapp.replace("+", "")}`;
 
   return (
@@ -196,7 +201,10 @@ export default async function ContactPage() {
               <p className="mb-6 text-sm font-semibold text-neutral-950">
                 Send an inquiry
               </p>
-              <InquiryForm idPrefix="page-contact" />
+              <InquiryForm
+                idPrefix="page-contact"
+                defaultServiceId={defaultServiceId}
+              />
             </div>
           </div>
         </Container>

@@ -89,6 +89,10 @@ backend behavior changes yet.
 
 ### Phase 4G: Inquiries
 
+- Phase 4G-1 (public contact form saves to database, service inquiry buttons prefill): Status: completed
+- Phase 4G-2 (inquiries list, read-only): Status: completed
+- Phase 4G-3 (inquiry detail with status/notes update): Status: completed
+
 - Contact form submissions later
 - Status management
 - Notes

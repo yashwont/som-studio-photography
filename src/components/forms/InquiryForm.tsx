@@ -3,9 +3,11 @@
 import { FormEvent, useMemo, useState } from "react";
 import { contactInfo } from "@/src/data/contact";
 import { services } from "@/src/data/services";
+import { submitInquiry } from "@/src/lib/actions/inquiry";
 
 interface InquiryFormProps {
   idPrefix?: string;
+  defaultServiceId?: string;
 }
 
 const inputClass =
@@ -38,7 +40,10 @@ function buildWhatsAppMessage(formData: FormData) {
     .join("\n");
 }
 
-export default function InquiryForm({ idPrefix = "inquiry" }: InquiryFormProps) {
+export default function InquiryForm({
+  idPrefix = "inquiry",
+  defaultServiceId = "",
+}: InquiryFormProps) {
   const [status, setStatus] = useState("");
 
   const whatsappBaseUrl = useMemo(
@@ -46,7 +51,7 @@ export default function InquiryForm({ idPrefix = "inquiry" }: InquiryFormProps) 
     [],
   );
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
 
@@ -58,8 +63,21 @@ export default function InquiryForm({ idPrefix = "inquiry" }: InquiryFormProps) 
     const message = buildWhatsAppMessage(formData);
     const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
 
-    setStatus("Opening WhatsApp with your inquiry details.");
     window.open(url, "_blank", "noopener,noreferrer");
+    setStatus("Opening WhatsApp with your inquiry details...");
+
+    const result = await submitInquiry(formData);
+
+    if (result.ok) {
+      setStatus(
+        "Inquiry saved and WhatsApp opened - we'll be in touch shortly.",
+      );
+      form.reset();
+    } else {
+      setStatus(
+        `${result.error} WhatsApp is still open so you can send your message there.`,
+      );
+    }
   }
 
   return (
@@ -128,7 +146,7 @@ export default function InquiryForm({ idPrefix = "inquiry" }: InquiryFormProps) 
         <select
           id={`${idPrefix}-service`}
           name="service"
-          defaultValue=""
+          defaultValue={defaultServiceId}
           required
           className={inputClass}
         >
@@ -169,6 +187,7 @@ export default function InquiryForm({ idPrefix = "inquiry" }: InquiryFormProps) 
           id={`${idPrefix}-message`}
           name="message"
           rows={5}
+          required
           placeholder="Tell us about your shoot - style, location, any special requests..."
           className={`${inputClass} resize-none`}
         />

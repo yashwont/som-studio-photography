@@ -68,7 +68,7 @@ function ServiceCard({ service }: { service: ServiceWithPackages }) {
 
       <div className="mt-auto flex items-center justify-between gap-4 border-t border-neutral-200 pt-5">
         <p className="text-sm font-semibold text-gold">{formatPrice(service)}</p>
-        <Button href="/contact" variant="secondary" size="sm">
+        <Button href={`/contact?service=${service.id}`} variant="secondary" size="sm">
           Book Now
         </Button>
       </div>
