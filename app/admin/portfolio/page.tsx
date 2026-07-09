@@ -19,14 +19,12 @@ function formatDate(date: Date) {
 
 function AddCategoryButton({ className = "" }: { className?: string }) {
   return (
-    <button
-      type="button"
-      disabled
-      title="Coming soon"
-      className={`cursor-not-allowed rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 opacity-50 ${className}`}
+    <Link
+      href="/admin/portfolio/new"
+      className={`inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500 ${className}`}
     >
       Add Category
-    </button>
+    </Link>
   );
 }
 
@@ -61,12 +59,7 @@ export default async function AdminPortfolioPage() {
       <AdminPageHeader
         title="Portfolio"
         description="Manage portfolio categories and image collections."
-        action={
-          <div className="flex flex-col items-end gap-1">
-            <AddCategoryButton />
-            <span className="text-xs text-neutral-500">Coming soon</span>
-          </div>
-        }
+        action={<AddCategoryButton />}
       />
 
       <section className="mt-8">
@@ -76,6 +69,7 @@ export default async function AdminPortfolioPage() {
               No portfolio categories found. Category management will be
               added in the next phase.
             </p>
+            <AddCategoryButton className="mt-4" />
           </div>
         ) : (
           <div className="overflow-x-auto rounded border border-neutral-800">
