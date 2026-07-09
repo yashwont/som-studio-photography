@@ -2,13 +2,21 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import type { getAdminServiceById } from "@/src/lib/db/admin-services";
 import { updateService } from "./actions";
 import { initialEditServiceState } from "./types";
 
-type ServiceDetail = NonNullable<
-  Awaited<ReturnType<typeof getAdminServiceById>>
->;
+export type ServiceFormValues = {
+  id: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  fullDescription: string | null;
+  highlights: string[];
+  category: string | null;
+  featured: boolean;
+  active: boolean;
+  displayOrder: number;
+};
 
 const inputClassName =
   "w-full rounded border border-neutral-700 bg-neutral-900 px-4 py-2.5 text-sm text-neutral-100 placeholder:text-neutral-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/40";
@@ -19,7 +27,7 @@ const labelClassName =
 export default function EditServiceForm({
   service,
 }: {
-  service: ServiceDetail;
+  service: ServiceFormValues;
 }) {
   const updateServiceWithId = updateService.bind(null, service.id);
   const [state, formAction, pending] = useActionState(

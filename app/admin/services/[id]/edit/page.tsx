@@ -5,7 +5,7 @@ import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminServiceById } from "@/src/lib/db/admin-services";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
-import EditServiceForm from "./EditServiceForm";
+import EditServiceForm, { type ServiceFormValues } from "./EditServiceForm";
 
 export async function generateMetadata({
   params,
@@ -35,6 +35,19 @@ export default async function AdminServiceEditPage({
     notFound();
   }
 
+  const serviceFormValues: ServiceFormValues = {
+    id: service.id,
+    title: service.title,
+    slug: service.slug,
+    shortDescription: service.shortDescription,
+    fullDescription: service.fullDescription,
+    highlights: service.highlights,
+    category: service.category,
+    featured: service.featured,
+    active: service.active,
+    displayOrder: service.displayOrder,
+  };
+
   return (
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
       <AdminPageHeader
@@ -59,7 +72,7 @@ export default async function AdminServiceEditPage({
       />
 
       <div className="mt-8 max-w-3xl rounded border border-neutral-800 bg-neutral-900 p-6">
-        <EditServiceForm service={service} />
+        <EditServiceForm service={serviceFormValues} />
       </div>
     </AdminShell>
   );
