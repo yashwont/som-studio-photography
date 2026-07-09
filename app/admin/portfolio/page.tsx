@@ -41,16 +41,14 @@ function ViewCategoryLink({ id }: { id: string }) {
   );
 }
 
-function PlaceholderActionButton({ label }: { label: string }) {
+function EditCategoryLink({ id }: { id: string }) {
   return (
-    <button
-      type="button"
-      disabled
-      title="Coming soon"
-      className="cursor-not-allowed rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-400 opacity-60"
+    <Link
+      href={`/admin/portfolio/${id}/edit`}
+      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
     >
-      {label}
-    </button>
+      Edit
+    </Link>
   );
 }
 
@@ -122,7 +120,7 @@ export default async function AdminPortfolioPage() {
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-2">
                         <ViewCategoryLink id={category.id} />
-                        <PlaceholderActionButton label="Edit" />
+                        <EditCategoryLink id={category.id} />
                       </div>
                     </td>
                   </tr>
