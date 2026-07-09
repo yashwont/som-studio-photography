@@ -26,6 +26,13 @@ npx prisma migrate deploy
 
 Do not use `prisma migrate dev` in production (it can prompt interactively and is meant for local development).
 
+This applies all pending migrations, including
+`20260709064023_add_inquiry_service_package_links` (adds `Inquiry.serviceId`,
+`Inquiry.packageId`, `Inquiry.notes`, and the `BOOKED` status). **This
+migration must be applied before the first production inquiry is
+submitted** — without it, `submitInquiry` will fail because the columns
+it writes to won't exist yet.
+
 ## Build & verification commands
 
 Run these before deploying, in order:
