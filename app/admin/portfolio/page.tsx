@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminPortfolioCategories } from "@/src/lib/db/admin-portfolio";
 import AdminShell from "@/src/components/admin/AdminShell";
@@ -26,6 +27,17 @@ function AddCategoryButton({ className = "" }: { className?: string }) {
     >
       Add Category
     </button>
+  );
+}
+
+function ViewCategoryLink({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/admin/portfolio/${id}`}
+      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+    >
+      View
+    </Link>
   );
 }
 
@@ -109,7 +121,7 @@ export default async function AdminPortfolioPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-2">
-                        <PlaceholderActionButton label="View" />
+                        <ViewCategoryLink id={category.id} />
                         <PlaceholderActionButton label="Edit" />
                       </div>
                     </td>
