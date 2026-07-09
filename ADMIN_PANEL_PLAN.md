@@ -53,7 +53,7 @@ backend behavior changes yet.
 - Phase 4D-4 (service create): Status: completed
 - Phase 4D-5 (packages list, read-only): Status: completed
 - Phase 4D-6 (package detail, read-only): Status: completed
-- Phase 4D-7 (package edit): Status: started
+- Phase 4D-7 (package edit): Status: completed
 - Phase 4D-8 (package create): Status: started
 
 - List services
