@@ -6,6 +6,7 @@ import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import { contactInfo } from "@/src/data/contact";
 import { heroGallery } from "@/src/data/visuals";
+import type { SiteImage } from "@/src/types/site";
 
 const serviceHighlights = [
   "New Born",
@@ -88,7 +89,7 @@ export default function Hero() {
               </div>
 
               <div className="mt-8 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3">
-                {trustPoints.map((point) => (
+                {trustPoints.map((point: string) => (
                   <div
                     key={point}
                     className="border-l border-neutral-200 pl-4 text-sm leading-relaxed text-neutral-600"
@@ -99,7 +100,7 @@ export default function Hero() {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-2">
-                {serviceHighlights.map((tag) => (
+                {serviceHighlights.map((tag: string) => (
                   <span
                     key={tag}
                     className="rounded-full border border-neutral-200 px-3 py-1 text-xs text-neutral-500"
@@ -171,7 +172,7 @@ export default function Hero() {
               </div>
 
               <div className="absolute left-6 bottom-4 flex gap-2 sm:left-10 sm:bottom-8">
-                {heroGallery.map((image, index) => (
+                {heroGallery.map((image: SiteImage, index: number) => (
                   <span
                     key={image.src}
                     aria-hidden="true"

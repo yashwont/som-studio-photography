@@ -11,7 +11,7 @@ import { contactInfo } from "@/src/data/contact";
 import { getActiveServices } from "@/src/lib/db/services";
 import { getSiteSetting } from "@/src/lib/db/site-settings";
 import { absoluteUrl } from "@/src/lib/seo";
-import type { ContactInfo } from "@/src/types/site";
+import type { BusinessHours, ContactInfo, SocialLink } from "@/src/types/site";
 
 type ActiveService = Awaited<ReturnType<typeof getActiveServices>>[number];
 
@@ -161,7 +161,7 @@ export default async function ContactPage({
                   Studio Hours
                 </p>
                 <div className="space-y-1.5">
-                  {contact.businessHours.map((slot) => (
+                  {contact.businessHours.map((slot: BusinessHours) => (
                     <p key={slot.days} className="text-sm text-neutral-500">
                       <span className="text-neutral-600">{slot.days}</span>
                       {" - "}
@@ -185,7 +185,7 @@ export default async function ContactPage({
                   Follow Us
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  {contact.socialLinks.map((social) => (
+                  {contact.socialLinks.map((social: SocialLink) => (
                     <a
                       key={social.platform}
                       href={social.href}
@@ -245,7 +245,7 @@ export default async function ContactPage({
                   step: "03",
                   text: "Once everything is agreed, your session is confirmed and we prepare for the shoot.",
                 },
-              ].map((item) => (
+              ].map((item: { step: string; text: string }) => (
                 <div key={item.step} className="flex flex-col items-center gap-3">
                   <span className="text-2xl font-bold text-neutral-200">
                     {item.step}

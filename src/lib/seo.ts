@@ -1,6 +1,7 @@
 import { contactInfo } from "@/src/data/contact";
 import { services } from "@/src/data/services";
 import { heroImage } from "@/src/data/visuals";
+import type { Service, SocialLink } from "@/src/types/site";
 
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://somstudiophotography.com.np";
@@ -52,7 +53,7 @@ export function localBusinessJsonLd() {
       { "@type": "City", name: "Lalitpur" },
       { "@type": "City", name: "Bhaktapur" },
     ],
-    sameAs: contactInfo.socialLinks.map((link) => link.href),
+    sameAs: contactInfo.socialLinks.map((link: SocialLink) => link.href),
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -70,7 +71,7 @@ export function localBusinessJsonLd() {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Photography services",
-      itemListElement: services.map((service) => ({
+      itemListElement: services.map((service: Service) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",

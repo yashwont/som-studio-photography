@@ -53,7 +53,7 @@ export default function About() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {highlights.map((item) => (
+            {highlights.map((item: { title: string; description: string }) => (
               <div
                 key={item.title}
                 className="group rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors hover:border-neutral-300"

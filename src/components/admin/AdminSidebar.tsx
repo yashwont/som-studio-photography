@@ -55,7 +55,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
           className="flex flex-1 flex-col gap-1"
           aria-label="Admin navigation"
         >
-          {NAV_LINKS.map((link) => {
+          {NAV_LINKS.map((link: AdminNavLink) => {
             const isActive =
               link.href === "/admin"
                 ? pathname === "/admin"

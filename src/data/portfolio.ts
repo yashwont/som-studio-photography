@@ -114,7 +114,9 @@ export const portfolioCategories: PortfolioCategory[] = [
 ];
 
 function categoryImage(id: string) {
-  const category = portfolioCategories.find((item) => item.id === id);
+  const category = portfolioCategories.find(
+    (item: PortfolioCategory) => item.id === id
+  );
   if (!category) {
     throw new Error(`Missing portfolio category: ${id}`);
   }

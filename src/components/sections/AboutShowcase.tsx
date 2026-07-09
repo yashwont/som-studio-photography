@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { studioGallery } from "@/src/data/visuals";
+import type { SiteImage } from "@/src/types/site";
 
 const rotationMs = 3000;
 
@@ -75,7 +76,7 @@ export default function AboutShowcase() {
         </div>
 
         <div className="absolute left-1/2 bottom-16 flex -translate-x-1/2 gap-2 sm:bottom-20">
-          {studioGallery.map((image, index) => (
+          {studioGallery.map((image: SiteImage, index: number) => (
             <span
               key={image.src}
               aria-hidden="true"

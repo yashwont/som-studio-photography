@@ -9,6 +9,7 @@ import AboutShowcase from "@/src/components/sections/AboutShowcase";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import { contactInfo } from "@/src/data/contact";
 import { absoluteUrl } from "@/src/lib/seo";
+import type { BusinessHours } from "@/src/types/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -113,7 +114,7 @@ export default function AboutPage() {
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {highlights.map((item) => (
+              {highlights.map((item: { title: string; description: string }) => (
                 <div
                   key={item.title}
                   className="rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors hover:border-neutral-300"
@@ -151,7 +152,7 @@ export default function AboutPage() {
               <p className="mb-2 text-xs uppercase tracking-[0.15em] text-brand">
                 Studio Hours
               </p>
-              {contactInfo.businessHours.map((slot) => (
+              {contactInfo.businessHours.map((slot: BusinessHours) => (
                 <p key={slot.days} className="text-sm text-neutral-500">
                   <span className="text-neutral-700">{slot.days}</span> - {slot.hours}
                 </p>

@@ -18,7 +18,7 @@ function ServiceCard({ service }: { service: Service }) {
       </p>
 
       <ul aria-label={`${service.title} highlights`} className="mt-5 space-y-1.5">
-        {service.highlights.slice(0, 2).map((highlight) => (
+        {service.highlights.slice(0, 2).map((highlight: string) => (
           <li
             key={highlight}
             className="flex items-start gap-2 text-xs text-neutral-400"
@@ -55,7 +55,7 @@ export default function Services({ services }: { services: Service[] }) {
           />
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
+            {services.map((service: Service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
           </div>

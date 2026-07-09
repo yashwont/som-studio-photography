@@ -92,7 +92,7 @@ export default async function TestimonialsPage() {
       <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="grid grid-cols-1 divide-y divide-white/5 py-12 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:py-14">
-            {stats.map((stat) => (
+            {stats.map((stat: { value: string; label: string }) => (
               <div
                 key={stat.label}
                 className="flex flex-col items-center gap-1 py-6 text-center sm:py-0"

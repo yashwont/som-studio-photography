@@ -155,7 +155,7 @@ export default function PortfolioPreview({
           </div>
 
           <div className="mt-10 flex flex-wrap justify-center gap-2">
-            {categories.map((category, index) => (
+            {categories.map((category: PortfolioCategory, index: number) => (
               <button
                 key={category.id}
                 type="button"

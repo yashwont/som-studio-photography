@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { navLinks, ctaLink } from "@/src/data/navigation";
+import type { NavLink } from "@/src/types/site";
 import Button from "@/src/components/ui/Button";
 import Container from "@/src/components/layout/Container";
 
@@ -24,7 +25,7 @@ export default function Navbar() {
             className="hidden items-center gap-8 md:flex"
             aria-label="Main navigation"
           >
-            {navLinks.map((link) => (
+            {navLinks.map((link: NavLink) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -77,7 +78,7 @@ export default function Navbar() {
             className="border-t border-neutral-200 pb-6 pt-4 md:hidden"
           >
             <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
-              {navLinks.map((link) => (
+              {navLinks.map((link: NavLink) => (
                 <Link
                   key={link.href}
                   href={link.href}

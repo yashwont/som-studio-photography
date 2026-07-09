@@ -29,7 +29,9 @@ function buildWhatsAppMessage(formData: FormData, services: ServiceOption[]) {
   const serviceId = getValue(formData, "service");
   const preferredDate = getValue(formData, "date");
   const message = getValue(formData, "message");
-  const service = services.find((item) => item.id === serviceId)?.title ?? serviceId;
+  const service =
+    services.find((item: ServiceOption) => item.id === serviceId)?.title ??
+    serviceId;
 
   return [
     "New photography inquiry",
@@ -159,13 +161,15 @@ export default function InquiryForm({
           <option value="" disabled={services.length > 0}>
             {services.length > 0 ? "Select a service" : "General inquiry"}
           </option>
-          {services.map((service) => (
+          {services.map((service: ServiceOption) => (
             <option key={service.id} value={service.id}>
               {service.title}
             </option>
           ))}
           {defaultServiceId &&
-            !services.some((service) => service.id === defaultServiceId) && (
+            !services.some(
+              (service: ServiceOption) => service.id === defaultServiceId
+            ) && (
               <option value={defaultServiceId}>Selected service</option>
             )}
         </select>
