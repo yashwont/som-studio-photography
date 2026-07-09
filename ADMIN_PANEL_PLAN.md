@@ -70,6 +70,10 @@ backend behavior changes yet.
 - Phase 4E-2 (portfolio category detail, read-only): Status: completed
 - Phase 4E-3 (portfolio category edit): Status: completed
 - Phase 4E-4 (portfolio category create): Status: completed
+- Phase 4E-5 (portfolio images list, read-only): Status: completed
+- Phase 4E-6 (portfolio image detail, read-only): Status: completed
+- Phase 4E-7 (portfolio image create, imageUrl field only): Status: completed
+- Phase 4E-8 (portfolio image edit, imageUrl field only): Status: completed
 
 - Portfolio categories
 - Portfolio images

@@ -94,16 +94,25 @@ function FeaturedBadge({ featured }: { featured: boolean }) {
   );
 }
 
-function ComingSoonButton({ label }: { label: string }) {
+function ViewImageLink({ id }: { id: string }) {
   return (
-    <button
-      type="button"
-      disabled
-      title="Coming soon"
-      className="cursor-not-allowed rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-400 opacity-60"
+    <Link
+      href={`/admin/portfolio/images/${id}`}
+      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
     >
-      {label}
-    </button>
+      View
+    </Link>
+  );
+}
+
+function EditImageLink({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/admin/portfolio/images/${id}/edit`}
+      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+    >
+      Edit
+    </Link>
   );
 }
 
@@ -292,8 +301,8 @@ export default async function AdminPortfolioCategoryDetailPage({
                   </div>
 
                   <div className="flex shrink-0 gap-2 sm:justify-end">
-                    <ComingSoonButton label="View" />
-                    <ComingSoonButton label="Edit" />
+                    <ViewImageLink id={image.id} />
+                    <EditImageLink id={image.id} />
                   </div>
                 </div>
               ))}
