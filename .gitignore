@@ -44,3 +44,6 @@ next-env.d.ts
 # Claude Code instruction files — local only
 CLAUDE.md
 AGENTS.md
+
+.vercel
+.env*
