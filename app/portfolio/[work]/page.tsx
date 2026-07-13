@@ -180,9 +180,6 @@ export default async function PortfolioWorkPage({
                 <Button href="/contact" variant="primary" size="lg">
                   Book a Session
                 </Button>
-                <Button href="/portfolio" variant="secondary" size="lg">
-                  View Full Portfolio
-                </Button>
               </div>
             </div>
           </Container>
