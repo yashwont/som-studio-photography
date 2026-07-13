@@ -8,6 +8,8 @@ import { makeRoomForServiceDisplayOrder } from "@/src/lib/db/admin-services";
 import { uploadServiceImage } from "@/src/lib/storage/cloudinary";
 import type { NewServiceState } from "./types";
 
+const PHOTO_SLOT_COUNT = 4;
+
 function slugify(value: string) {
   return value
     .trim()
@@ -28,7 +30,6 @@ export async function createService(
   const category = String(formData.get("category") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").trim();
-  const imageFile = formData.get("imageFile");
   const inclusionsRaw = String(formData.get("inclusions") ?? "");
   const displayOrderRaw = String(formData.get("displayOrder") ?? "");
   const featured = formData.get("featured") === "on";
@@ -76,16 +77,20 @@ export async function createService(
     suffix += 1;
   }
 
-  let imageUrl: string | null = null;
+  const imageUrls: string[] = [];
 
-  if (imageFile instanceof File && imageFile.size > 0) {
-    const uploadResult = await uploadServiceImage(imageFile);
+  for (let i = 0; i < PHOTO_SLOT_COUNT; i++) {
+    const file = formData.get(`imageFile${i}`);
 
-    if (!uploadResult.ok) {
-      return { error: uploadResult.error };
+    if (file instanceof File && file.size > 0) {
+      const uploadResult = await uploadServiceImage(file);
+
+      if (!uploadResult.ok) {
+        return { error: uploadResult.error };
+      }
+
+      imageUrls.push(uploadResult.url);
     }
-
-    imageUrl = uploadResult.url;
   }
 
   const inclusions = inclusionsRaw
@@ -102,7 +107,7 @@ export async function createService(
         slug,
         category: category || null,
         description,
-        imageUrl,
+        imageUrls,
         price,
         inclusions,
         featured,

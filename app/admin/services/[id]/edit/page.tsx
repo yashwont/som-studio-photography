@@ -42,7 +42,7 @@ export default async function AdminServiceEditPage({
     id: service.id,
     title: service.title,
     description: service.description,
-    imageUrl: service.imageUrl,
+    imageUrls: service.imageUrls,
     price: service.price ? service.price.toNumber() : null,
     inclusions: service.inclusions,
     category: service.category,

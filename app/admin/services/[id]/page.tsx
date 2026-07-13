@@ -108,7 +108,9 @@ export default async function AdminServiceDetailPage({
     notFound();
   }
 
-  const photoUrl = service.imageUrl ? getSafeImageUrl(service.imageUrl) : null;
+  const photoUrls = service.imageUrls
+    .map((url: string) => getSafeImageUrl(url))
+    .filter((url: string | null): url is string => url !== null);
 
   return (
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
@@ -141,14 +143,19 @@ export default async function AdminServiceDetailPage({
       />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <DetailCard title="Photo">
-          {photoUrl ? (
-            <div
-              aria-label={`${service.title} photo`}
-              role="img"
-              className="h-40 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${JSON.stringify(photoUrl)})` }}
-            />
+        <DetailCard title="Photos">
+          {photoUrls.length > 0 ? (
+            <div className="grid grid-cols-2 gap-3">
+              {photoUrls.map((url: string, index: number) => (
+                <div
+                  key={url}
+                  aria-label={`${service.title} photo ${index + 1}`}
+                  role="img"
+                  className="h-28 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${JSON.stringify(url)})` }}
+                />
+              ))}
+            </div>
           ) : (
             <div className="flex h-40 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-sm text-neutral-500">
               No photo uploaded

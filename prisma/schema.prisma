@@ -11,7 +11,7 @@ model Service {
   title        String
   slug         String    @unique
   description  String
-  imageUrl     String?
+  imageUrls    String[]  @default([])
   price        Decimal?  @db.Decimal(10, 2)
   inclusions   String[]
   category     String?

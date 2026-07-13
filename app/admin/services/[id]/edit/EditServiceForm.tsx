@@ -16,11 +16,13 @@ type PortfolioCategoryOption = Awaited<
   ReturnType<typeof getAdminPortfolioCategoriesForSelect>
 >[number];
 
+const PHOTO_SLOT_COUNT = 4;
+
 export type ServiceFormValues = {
   id: string;
   title: string;
   description: string;
-  imageUrl: string | null;
+  imageUrls: string[];
   price: number | null;
   inclusions: string[];
   category: string | null;
@@ -55,6 +57,66 @@ function getSafePreviewUrl(value: string) {
   }
 }
 
+function PhotoSlot({
+  index,
+  existingUrl,
+  filePreview,
+  removed,
+  onFileChange,
+  onRemoveToggle,
+}: {
+  index: number;
+  existingUrl: string | null;
+  filePreview: string | null;
+  removed: boolean;
+  onFileChange: (index: number, event: ChangeEvent<HTMLInputElement>) => void;
+  onRemoveToggle: (index: number, event: ChangeEvent<HTMLInputElement>) => void;
+}) {
+  const previewUrl = filePreview ?? (removed ? null : existingUrl);
+
+  return (
+    <div className="space-y-2 rounded border border-neutral-800 bg-neutral-950/40 p-3">
+      <label htmlFor={`imageFile${index}`} className={labelClassName}>
+        Photo {index + 1}
+      </label>
+      <input
+        id={`imageFile${index}`}
+        name={`imageFile${index}`}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        onChange={(event) => onFileChange(index, event)}
+        className={`${inputClassName} cursor-pointer`}
+      />
+
+      {previewUrl ? (
+        <div
+          aria-label={`Photo ${index + 1} preview`}
+          role="img"
+          className="h-24 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${JSON.stringify(previewUrl)})` }}
+        />
+      ) : (
+        <div className="flex h-24 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
+          No preview
+        </div>
+      )}
+
+      {existingUrl && (
+        <label className="flex items-center gap-2 text-xs text-neutral-300">
+          <input
+            type="checkbox"
+            name={`removePhoto${index}`}
+            checked={removed}
+            onChange={(event) => onRemoveToggle(index, event)}
+            className="h-3.5 w-3.5 rounded border-neutral-600 bg-neutral-900 text-gold focus:ring-gold/40"
+          />
+          Remove this photo
+        </label>
+      )}
+    </div>
+  );
+}
+
 export default function EditServiceForm({
   service,
   portfolioCategories,
@@ -67,30 +129,71 @@ export default function EditServiceForm({
     updateServiceWithId,
     initialEditServiceState
   );
-  const [filePreview, setFilePreview] = useState<string | null>(null);
-  const existingPreview = getSafePreviewUrl(service.imageUrl ?? "");
-  const filePreviewRef = useRef<string | null>(null);
+
+  const existingUrls = Array.from(
+    { length: PHOTO_SLOT_COUNT },
+    (_, index) => getSafePreviewUrl(service.imageUrls[index] ?? "")
+  );
+
+  const [filePreviews, setFilePreviews] = useState<(string | null)[]>(
+    Array.from({ length: PHOTO_SLOT_COUNT }, () => null)
+  );
+  const [removedSlots, setRemovedSlots] = useState<boolean[]>(
+    Array.from({ length: PHOTO_SLOT_COUNT }, () => false)
+  );
+  const filePreviewRefs = useRef<(string | null)[]>(
+    Array.from({ length: PHOTO_SLOT_COUNT }, () => null)
+  );
 
   useEffect(() => {
     return () => {
-      if (filePreviewRef.current) {
-        URL.revokeObjectURL(filePreviewRef.current);
-      }
+      filePreviewRefs.current.forEach((url) => {
+        if (url) {
+          URL.revokeObjectURL(url);
+        }
+      });
     };
   }, []);
 
-  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
-    if (filePreviewRef.current) {
-      URL.revokeObjectURL(filePreviewRef.current);
+  function handleFileChange(
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) {
+    const previous = filePreviewRefs.current[index];
+
+    if (previous) {
+      URL.revokeObjectURL(previous);
     }
 
     const file = event.target.files?.[0];
     const nextPreview = file ? URL.createObjectURL(file) : null;
-    filePreviewRef.current = nextPreview;
-    setFilePreview(nextPreview);
+    filePreviewRefs.current[index] = nextPreview;
+    setFilePreviews((current) => {
+      const next = [...current];
+      next[index] = nextPreview;
+      return next;
+    });
+
+    if (file) {
+      setRemovedSlots((current) => {
+        const next = [...current];
+        next[index] = false;
+        return next;
+      });
+    }
   }
 
-  const previewUrl = filePreview ?? existingPreview;
+  function handleRemoveToggle(
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) {
+    const checked = event.target.checked;
+    setRemovedSlots((current) => {
+      const next = [...current];
+      next[index] = checked;
+      return next;
+    });
+  }
 
   return (
     <form action={formAction} className="space-y-6">
@@ -162,36 +265,26 @@ export default function EditServiceForm({
       </div>
 
       <div>
-        <label htmlFor="imageFile" className={labelClassName}>
-          Add photo
-        </label>
-        <input
-          id="imageFile"
-          name="imageFile"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          onChange={handleFileChange}
-          className={`${inputClassName} cursor-pointer`}
-        />
-        <p className="mt-1.5 text-xs text-neutral-500">
-          JPG, PNG, or WEBP, up to 5MB. Leave empty to keep the current photo.
-        </p>
-      </div>
-
-      <div>
-        <span className={labelClassName}>Preview</span>
-        {previewUrl ? (
-          <div
-            aria-label="Image preview"
-            role="img"
-            className="h-32 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${JSON.stringify(previewUrl)})` }}
-          />
-        ) : (
-          <div className="flex h-32 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
-            No preview
-          </div>
-        )}
+        <span className={labelClassName}>
+          Photos{" "}
+          <span className="normal-case text-neutral-500">
+            (up to {PHOTO_SLOT_COUNT}, shown as a rotating gallery on the
+            public page)
+          </span>
+        </span>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {Array.from({ length: PHOTO_SLOT_COUNT }, (_, index) => (
+            <PhotoSlot
+              key={index}
+              index={index}
+              existingUrl={existingUrls[index]}
+              filePreview={filePreviews[index]}
+              removed={removedSlots[index]}
+              onFileChange={handleFileChange}
+              onRemoveToggle={handleRemoveToggle}
+            />
+          ))}
+        </div>
       </div>
 
       <div>

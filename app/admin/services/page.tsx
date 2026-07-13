@@ -150,7 +150,7 @@ export default async function AdminServicesPage() {
                     className="bg-neutral-950 hover:bg-neutral-900/60"
                   >
                     <td className="px-4 py-3">
-                      <ServiceThumbnail imageUrl={service.imageUrl} />
+                      <ServiceThumbnail imageUrl={service.imageUrls[0] ?? null} />
                     </td>
                     <td className="px-4 py-3 font-medium text-neutral-50">
                       {service.title}

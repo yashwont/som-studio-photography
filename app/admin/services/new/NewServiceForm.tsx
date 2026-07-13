@@ -16,11 +16,51 @@ type PortfolioCategoryOption = Awaited<
   ReturnType<typeof getAdminPortfolioCategoriesForSelect>
 >[number];
 
+const PHOTO_SLOT_COUNT = 4;
+
 const inputClassName =
   "w-full rounded border border-neutral-700 bg-neutral-900 px-4 py-2.5 text-sm text-neutral-100 placeholder:text-neutral-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/40";
 
 const labelClassName =
   "mb-1.5 block text-xs uppercase tracking-[0.15em] text-neutral-300";
+
+function PhotoSlot({
+  index,
+  previewUrl,
+  onFileChange,
+}: {
+  index: number;
+  previewUrl: string | null;
+  onFileChange: (index: number, event: ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <div className="space-y-2 rounded border border-neutral-800 bg-neutral-950/40 p-3">
+      <label htmlFor={`imageFile${index}`} className={labelClassName}>
+        Photo {index + 1}
+      </label>
+      <input
+        id={`imageFile${index}`}
+        name={`imageFile${index}`}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        onChange={(event) => onFileChange(index, event)}
+        className={`${inputClassName} cursor-pointer`}
+      />
+      {previewUrl ? (
+        <div
+          aria-label={`Photo ${index + 1} preview`}
+          role="img"
+          className="h-24 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${JSON.stringify(previewUrl)})` }}
+        />
+      ) : (
+        <div className="flex h-24 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
+          No preview
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function NewServiceForm({
   portfolioCategories,
@@ -31,26 +71,41 @@ export default function NewServiceForm({
     createService,
     initialNewServiceState
   );
-  const [filePreview, setFilePreview] = useState<string | null>(null);
-  const filePreviewRef = useRef<string | null>(null);
+  const [filePreviews, setFilePreviews] = useState<(string | null)[]>(
+    Array.from({ length: PHOTO_SLOT_COUNT }, () => null)
+  );
+  const filePreviewRefs = useRef<(string | null)[]>(
+    Array.from({ length: PHOTO_SLOT_COUNT }, () => null)
+  );
 
   useEffect(() => {
     return () => {
-      if (filePreviewRef.current) {
-        URL.revokeObjectURL(filePreviewRef.current);
-      }
+      filePreviewRefs.current.forEach((url) => {
+        if (url) {
+          URL.revokeObjectURL(url);
+        }
+      });
     };
   }, []);
 
-  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
-    if (filePreviewRef.current) {
-      URL.revokeObjectURL(filePreviewRef.current);
+  function handleFileChange(
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) {
+    const previous = filePreviewRefs.current[index];
+
+    if (previous) {
+      URL.revokeObjectURL(previous);
     }
 
     const file = event.target.files?.[0];
     const nextPreview = file ? URL.createObjectURL(file) : null;
-    filePreviewRef.current = nextPreview;
-    setFilePreview(nextPreview);
+    filePreviewRefs.current[index] = nextPreview;
+    setFilePreviews((current) => {
+      const next = [...current];
+      next[index] = nextPreview;
+      return next;
+    });
   }
 
   return (
@@ -136,37 +191,23 @@ export default function NewServiceForm({
       </div>
 
       <div>
-        <label htmlFor="imageFile" className={labelClassName}>
-          Add photo
-        </label>
-        <input
-          id="imageFile"
-          name="imageFile"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          onChange={handleFileChange}
-          className={`${inputClassName} cursor-pointer`}
-        />
-        <p className="mt-1.5 text-xs text-neutral-500">
-          JPG, PNG, or WEBP, up to 5MB. Optional - shows a placeholder until
-          set.
-        </p>
-      </div>
-
-      <div>
-        <span className={labelClassName}>Preview</span>
-        {filePreview ? (
-          <div
-            aria-label="Image preview"
-            role="img"
-            className="h-32 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${JSON.stringify(filePreview)})` }}
-          />
-        ) : (
-          <div className="flex h-32 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
-            No preview
-          </div>
-        )}
+        <span className={labelClassName}>
+          Photos{" "}
+          <span className="normal-case text-neutral-500">
+            (up to {PHOTO_SLOT_COUNT}, shown as a rotating gallery on the
+            public page - all optional)
+          </span>
+        </span>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {Array.from({ length: PHOTO_SLOT_COUNT }, (_, index) => (
+            <PhotoSlot
+              key={index}
+              index={index}
+              previewUrl={filePreviews[index]}
+              onFileChange={handleFileChange}
+            />
+          ))}
+        </div>
       </div>
 
       <div>

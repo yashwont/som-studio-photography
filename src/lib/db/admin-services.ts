@@ -9,7 +9,7 @@ export function getAdminServices() {
     select: {
       id: true,
       title: true,
-      imageUrl: true,
+      imageUrls: true,
       featured: true,
       active: true,
       displayOrder: true,
@@ -60,7 +60,7 @@ export function getAdminServiceById(id: string) {
       title: true,
       slug: true,
       description: true,
-      imageUrl: true,
+      imageUrls: true,
       price: true,
       inclusions: true,
       category: true,

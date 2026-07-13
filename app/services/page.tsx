@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
+import ServicePhotoCarousel from "./ServicePhotoCarousel";
 import { getActiveServices } from "@/src/lib/db/services";
 import { getPortfolioCategories } from "@/src/lib/db/portfolio";
 import { absoluteUrl } from "@/src/lib/seo";
@@ -84,57 +84,6 @@ function formatPrice(price: ServiceRecord["price"]) {
   return `NRS ${price.toNumber().toLocaleString("en-US")}`;
 }
 
-function ServicePhotoPlaceholder({ title }: { title: string }) {
-  return (
-    <div
-      role="img"
-      aria-label={`${title} photo placeholder`}
-      className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded border border-dashed border-neutral-300 bg-gradient-to-br from-neutral-100 to-neutral-50 text-neutral-300"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-        aria-hidden="true"
-      >
-        <path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" />
-        <circle cx="12" cy="13.5" r="3.5" />
-      </svg>
-      <span className="text-[10px] font-semibold uppercase tracking-[0.2em]">
-        Photo coming soon
-      </span>
-    </div>
-  );
-}
-
-function ServicePhoto({
-  title,
-  imageUrl,
-}: {
-  title: string;
-  imageUrl: string | null;
-}) {
-  if (!imageUrl) {
-    return <ServicePhotoPlaceholder title={title} />;
-  }
-
-  return (
-    <div className="relative aspect-[16/9] w-full overflow-hidden rounded bg-neutral-100">
-      <Image
-        src={imageUrl}
-        alt={title}
-        fill
-        sizes="(max-width: 1024px) 100vw, 50vw"
-        className="object-cover"
-      />
-    </div>
-  );
-}
-
 function ServicePricing({
   service,
   portfolioHref,
@@ -199,7 +148,10 @@ function ServiceBlock({
         <Container>
           <div className="grid grid-cols-1 items-start gap-8 py-10 sm:py-14 lg:grid-cols-2 lg:gap-12">
             <div className={reversed ? "lg:order-2" : undefined}>
-              <ServicePhoto title={service.title} imageUrl={service.imageUrl} />
+              <ServicePhotoCarousel
+                title={service.title}
+                imageUrls={service.imageUrls}
+              />
             </div>
 
             <div className={reversed ? "lg:order-1" : undefined}>
