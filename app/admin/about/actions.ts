@@ -6,19 +6,15 @@ import { prisma } from "@/src/lib/prisma";
 import { ABOUT_CONTENT_ID } from "@/src/lib/db/about";
 import type { EditAboutContentState } from "./types";
 
-function parseHighlightsInput(raw: string) {
-  const lines = raw
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
+const HIGHLIGHT_COUNT = 4;
 
-  return lines.map((line) => {
-    const [title, ...rest] = line.split("|");
-    return {
-      title: title.trim(),
-      description: rest.join("|").trim(),
-    };
-  });
+function readHighlightsInput(formData: FormData) {
+  return Array.from({ length: HIGHLIGHT_COUNT }, (_, index) => ({
+    title: String(formData.get(`highlight-${index}-title`) ?? "").trim(),
+    description: String(
+      formData.get(`highlight-${index}-description`) ?? ""
+    ).trim(),
+  }));
 }
 
 export async function updateAboutContent(
@@ -35,12 +31,6 @@ export async function updateAboutContent(
   const storyParagraph3 = String(formData.get("storyParagraph3") ?? "").trim();
   const highlightsEyebrow = String(formData.get("highlightsEyebrow") ?? "").trim();
   const highlightsTitle = String(formData.get("highlightsTitle") ?? "").trim();
-  const highlightsRaw = String(formData.get("highlights") ?? "");
-  const ctaEyebrow = String(formData.get("ctaEyebrow") ?? "").trim();
-  const ctaTitle = String(formData.get("ctaTitle") ?? "").trim();
-  const ctaDescription = String(formData.get("ctaDescription") ?? "").trim();
-  const ctaButtonLabel = String(formData.get("ctaButtonLabel") ?? "").trim();
-
   if (!heroTitle) {
     return { error: "Hero title is required.", success: false };
   }
@@ -49,19 +39,11 @@ export async function updateAboutContent(
     return { error: "At least the first story paragraph is required.", success: false };
   }
 
-  if (!ctaTitle) {
-    return { error: "CTA title is required.", success: false };
-  }
-
-  if (!ctaButtonLabel) {
-    return { error: "CTA button label is required.", success: false };
-  }
-
-  const highlights = parseHighlightsInput(highlightsRaw);
+  const highlights = readHighlightsInput(formData);
 
   if (highlights.some((item) => !item.title || !item.description)) {
     return {
-      error: "Each highlight line must be in the format \"Title | Description\".",
+      error: "Each highlight card needs both a title and a description.",
       success: false,
     };
   }
@@ -78,10 +60,6 @@ export async function updateAboutContent(
       highlightsEyebrow,
       highlightsTitle,
       highlights,
-      ctaEyebrow,
-      ctaTitle,
-      ctaDescription,
-      ctaButtonLabel,
     },
     create: {
       id: ABOUT_CONTENT_ID,
@@ -94,10 +72,6 @@ export async function updateAboutContent(
       highlightsEyebrow,
       highlightsTitle,
       highlights,
-      ctaEyebrow,
-      ctaTitle,
-      ctaDescription,
-      ctaButtonLabel,
     },
   });
 

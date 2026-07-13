@@ -17,10 +17,6 @@ export type AboutContentData = {
   highlightsEyebrow: string;
   highlightsTitle: string;
   highlights: AboutHighlight[];
-  ctaEyebrow: string;
-  ctaTitle: string;
-  ctaDescription: string;
-  ctaButtonLabel: string;
 };
 
 export const defaultAboutContent: AboutContentData = {
@@ -58,11 +54,6 @@ export const defaultAboutContent: AboutContentData = {
         "We work in our private studio and on location across Kathmandu. Controlled lighting or natural settings - we adapt to whatever serves your vision.",
     },
   ],
-  ctaEyebrow: "Ready to start?",
-  ctaTitle: "Let’s plan your next session.",
-  ctaDescription:
-    "Reach out and we’ll take it from there - no complicated process.",
-  ctaButtonLabel: "Book a Session",
 };
 
 function parseHighlights(value: unknown): AboutHighlight[] {
@@ -103,9 +94,5 @@ export async function getAboutContent(): Promise<AboutContentData> {
     highlightsEyebrow: record.highlightsEyebrow,
     highlightsTitle: record.highlightsTitle,
     highlights: parseHighlights(record.highlights),
-    ctaEyebrow: record.ctaEyebrow,
-    ctaTitle: record.ctaTitle,
-    ctaDescription: record.ctaDescription,
-    ctaButtonLabel: record.ctaButtonLabel,
   };
 }

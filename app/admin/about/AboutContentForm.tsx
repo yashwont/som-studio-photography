@@ -11,8 +11,10 @@ const inputClassName =
 const labelClassName =
   "mb-1.5 block text-xs uppercase tracking-[0.15em] text-neutral-300";
 
-function highlightsToLines(highlights: AboutContentData["highlights"]) {
-  return highlights.map((item) => `${item.title} | ${item.description}`).join("\n");
+const HIGHLIGHT_COUNT = 4;
+
+function getHighlight(content: AboutContentData, index: number) {
+  return content.highlights[index] ?? { title: "", description: "" };
 }
 
 export default function AboutContentForm({
@@ -154,82 +156,51 @@ export default function AboutContentForm({
           </div>
         </div>
 
-        <div>
-          <label htmlFor="highlights" className={labelClassName}>
-            What to expect cards{" "}
-            <span className="normal-case text-neutral-500">
-              (one per line, format: Title | Description)
-            </span>
-          </label>
-          <textarea
-            id="highlights"
-            name="highlights"
-            rows={8}
-            defaultValue={highlightsToLines(content.highlights)}
-            className={`${inputClassName} font-mono text-xs`}
-          />
-        </div>
-      </section>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {Array.from({ length: HIGHLIGHT_COUNT }, (_, index) => {
+            const highlight = getHighlight(content, index);
 
-      <section className="space-y-4 border-t border-neutral-800 pt-6">
-        <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-gold">
-          Call To Action
-        </h2>
+            return (
+              <div
+                key={index}
+                className="space-y-3 rounded border border-neutral-800 bg-neutral-950/40 p-4"
+              >
+                <p className={labelClassName}>Card {index + 1}</p>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div>
-            <label htmlFor="ctaEyebrow" className={labelClassName}>
-              Eyebrow
-            </label>
-            <input
-              id="ctaEyebrow"
-              name="ctaEyebrow"
-              type="text"
-              defaultValue={content.ctaEyebrow}
-              className={inputClassName}
-            />
-          </div>
+                <div>
+                  <label
+                    htmlFor={`highlight-${index}-title`}
+                    className={labelClassName}
+                  >
+                    Title
+                  </label>
+                  <input
+                    id={`highlight-${index}-title`}
+                    name={`highlight-${index}-title`}
+                    type="text"
+                    defaultValue={highlight.title}
+                    className={inputClassName}
+                  />
+                </div>
 
-          <div>
-            <label htmlFor="ctaTitle" className={labelClassName}>
-              Title
-            </label>
-            <input
-              id="ctaTitle"
-              name="ctaTitle"
-              type="text"
-              required
-              defaultValue={content.ctaTitle}
-              className={inputClassName}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="ctaDescription" className={labelClassName}>
-            Description
-          </label>
-          <textarea
-            id="ctaDescription"
-            name="ctaDescription"
-            rows={2}
-            defaultValue={content.ctaDescription}
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="ctaButtonLabel" className={labelClassName}>
-            Button label
-          </label>
-          <input
-            id="ctaButtonLabel"
-            name="ctaButtonLabel"
-            type="text"
-            required
-            defaultValue={content.ctaButtonLabel}
-            className={inputClassName}
-          />
+                <div>
+                  <label
+                    htmlFor={`highlight-${index}-description`}
+                    className={labelClassName}
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id={`highlight-${index}-description`}
+                    name={`highlight-${index}-description`}
+                    rows={4}
+                    defaultValue={highlight.description}
+                    className={inputClassName}
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

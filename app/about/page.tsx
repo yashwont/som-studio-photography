@@ -111,16 +111,16 @@ export default async function AboutPage() {
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 sm:py-20 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
-              {content.ctaEyebrow}
+              Ready to start?
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
-              {content.ctaTitle}
+              Let&rsquo;s plan your next session.
             </h2>
             <p className="max-w-md text-neutral-900">
-              {content.ctaDescription}
+              Reach out and we&rsquo;ll take it from there - no complicated process.
             </p>
             <Button href="/contact" variant="primary" size="lg">
-              {content.ctaButtonLabel}
+              Book a Session
             </Button>
           </div>
         </Container>
