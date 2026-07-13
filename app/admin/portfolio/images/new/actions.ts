@@ -115,7 +115,6 @@ export async function createPortfolioImage(
   revalidatePath("/portfolio");
   revalidatePath(`/portfolio/${slug}`);
   revalidatePath("/admin/portfolio");
-  revalidatePath("/admin/portfolio/images");
   revalidatePath(`/admin/portfolio/${categoryId}`);
 
   redirect(`/admin/portfolio/images/${image.id}`);

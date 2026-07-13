@@ -128,7 +128,6 @@ export async function updatePortfolioImage(
   revalidatePath("/portfolio");
   revalidatePath(`/portfolio/${slug}`);
   revalidatePath("/admin/portfolio");
-  revalidatePath("/admin/portfolio/images");
   revalidatePath(`/admin/portfolio/images/${imageId}`);
   revalidatePath(`/admin/portfolio/${categoryId}`);
 

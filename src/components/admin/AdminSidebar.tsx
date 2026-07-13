@@ -13,7 +13,6 @@ const NAV_LINKS: AdminNavLink[] = [
   { href: "/admin/about", label: "About Page" },
   { href: "/admin/services", label: "Services" },
   { href: "/admin/portfolio", label: "Portfolio" },
-  { href: "/admin/portfolio/images", label: "Portfolio Images" },
   { href: "/admin/inquiries", label: "Inquiries" },
   { href: "/admin/settings", label: "Settings" },
 ];

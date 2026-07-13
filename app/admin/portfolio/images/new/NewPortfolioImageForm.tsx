@@ -228,7 +228,7 @@ export default function NewPortfolioImageForm({
         </button>
 
         <Link
-          href="/admin/portfolio/images"
+          href="/admin/portfolio"
           className="text-sm text-neutral-300 transition-colors hover:text-gold"
         >
           Cancel

@@ -63,17 +63,7 @@ export default async function AdminPortfolioPage() {
       <AdminPageHeader
         title="Portfolio"
         description="Manage portfolio categories and image collections."
-        action={
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/admin/portfolio/images"
-              className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-            >
-              Manage Images
-            </Link>
-            <AddCategoryButton />
-          </div>
-        }
+        action={<AddCategoryButton />}
       />
 
       <section className="mt-8">

@@ -21,10 +21,10 @@ export default async function AdminNewPortfolioImagePage() {
         description="Add a new image to a portfolio category."
         action={
           <Link
-            href="/admin/portfolio/images"
+            href="/admin/portfolio"
             className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
           >
-            &larr; Back to Images
+            &larr; Back to Portfolio
           </Link>
         }
       />

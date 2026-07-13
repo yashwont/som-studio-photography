@@ -121,10 +121,10 @@ export default async function AdminPortfolioImageDetailPage({
         action={
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/admin/portfolio/images"
+              href={`/admin/portfolio/${image.category.id}`}
               className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
             >
-              &larr; Back to Images
+              &larr; Back to Category
             </Link>
             <Link
               href={`/admin/portfolio/images/${image.id}/edit`}

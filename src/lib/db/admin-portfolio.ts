@@ -64,34 +64,6 @@ export function getAdminPortfolioCategoriesForSelect() {
   });
 }
 
-export function getAdminPortfolioImages() {
-  return prisma.portfolioImage.findMany({
-    orderBy: {
-      displayOrder: "asc",
-    },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      imageUrl: true,
-      altText: true,
-      description: true,
-      featured: true,
-      active: true,
-      displayOrder: true,
-      createdAt: true,
-      updatedAt: true,
-      category: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        },
-      },
-    },
-  });
-}
-
 export function getAdminPortfolioImageById(id: string) {
   return prisma.portfolioImage.findUnique({
     where: { id },
