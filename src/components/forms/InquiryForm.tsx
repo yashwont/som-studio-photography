@@ -16,7 +16,7 @@ interface InquiryFormProps {
 }
 
 const inputClass =
-  "w-full rounded border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-400 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors duration-200";
+  "w-full rounded border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-900 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors duration-200";
 
 function getValue(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
@@ -94,7 +94,7 @@ export default function InquiryForm({
         <div>
           <label
             htmlFor={`${idPrefix}-name`}
-            className="mb-1.5 block text-xs text-neutral-500"
+            className="mb-1.5 block text-xs text-neutral-900"
           >
             Full Name
           </label>
@@ -111,7 +111,7 @@ export default function InquiryForm({
         <div>
           <label
             htmlFor={`${idPrefix}-phone`}
-            className="mb-1.5 block text-xs text-neutral-500"
+            className="mb-1.5 block text-xs text-neutral-900"
           >
             Phone Number
           </label>
@@ -130,7 +130,7 @@ export default function InquiryForm({
       <div>
         <label
           htmlFor={`${idPrefix}-email`}
-          className="mb-1.5 block text-xs text-neutral-500"
+          className="mb-1.5 block text-xs text-neutral-900"
         >
           Email Address
         </label>
@@ -147,7 +147,7 @@ export default function InquiryForm({
       <div>
         <label
           htmlFor={`${idPrefix}-service`}
-          className="mb-1.5 block text-xs text-neutral-500"
+          className="mb-1.5 block text-xs text-neutral-900"
         >
           Service Type
         </label>
@@ -178,7 +178,7 @@ export default function InquiryForm({
       <div>
         <label
           htmlFor={`${idPrefix}-date`}
-          className="mb-1.5 block text-xs text-neutral-500"
+          className="mb-1.5 block text-xs text-neutral-900"
         >
           Preferred Date
         </label>
@@ -193,7 +193,7 @@ export default function InquiryForm({
       <div>
         <label
           htmlFor={`${idPrefix}-message`}
-          className="mb-1.5 block text-xs text-neutral-500"
+          className="mb-1.5 block text-xs text-neutral-900"
         >
           Message
         </label>
@@ -214,7 +214,7 @@ export default function InquiryForm({
         Send Inquiry on WhatsApp: {contactInfo.whatsapp}
       </button>
 
-      <p aria-live="polite" className="min-h-5 text-xs text-neutral-500">
+      <p aria-live="polite" className="min-h-5 text-xs text-neutral-900">
         {status}
       </p>
     </form>

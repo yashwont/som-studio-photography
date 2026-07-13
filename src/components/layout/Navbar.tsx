@@ -18,7 +18,7 @@ export default function Navbar() {
             href="/"
             className="text-xl font-semibold tracking-tight text-neutral-950"
           >
-            Som<span className="text-brand">Studio</span>
+            Som<span className="text-neutral-900">Studio</span>
           </Link>
 
           <nav
@@ -29,7 +29,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-brand transition-colors duration-200 hover:text-neutral-950"
+                className="text-sm text-neutral-900 transition-colors duration-200 hover:text-neutral-950"
               >
                 {link.label}
               </Link>
@@ -43,7 +43,7 @@ export default function Navbar() {
           </div>
 
           <button
-            className="relative flex h-10 w-10 items-center justify-center text-brand transition-colors hover:text-neutral-950 md:hidden"
+            className="relative flex h-10 w-10 items-center justify-center text-neutral-900 transition-colors hover:text-neutral-950 md:hidden"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
@@ -82,7 +82,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="py-2 text-sm text-brand transition-colors hover:text-neutral-950"
+                  className="py-2 text-sm text-neutral-900 transition-colors hover:text-neutral-950"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}

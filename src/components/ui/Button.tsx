@@ -19,7 +19,7 @@ interface ButtonProps {
 const variants: Record<string, string> = {
   primary: "bg-accent text-white font-semibold hover:bg-accent-hover",
   secondary: "border border-accent text-accent hover:bg-accent/10",
-  ghost: "text-neutral-600 hover:text-neutral-950",
+  ghost: "text-neutral-900 hover:text-neutral-950",
 };
 
 const sizes: Record<string, string> = {

@@ -9,20 +9,17 @@ import Testimonials from "@/src/components/sections/Testimonials";
 import FinalCTA from "@/src/components/sections/FinalCTA";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import { portfolioCategories as staticPortfolioCategories } from "@/src/data/portfolio";
-import { featuredServices as staticFeaturedServices } from "@/src/data/services";
 import { testimonials as staticTestimonials } from "@/src/data/testimonials";
 import {
   getActivePortfolioImages,
   getFeaturedPortfolioImages,
 } from "@/src/lib/db/portfolio";
-import { getFeaturedServices } from "@/src/lib/db/services";
 import {
   getActiveTestimonials,
   getFeaturedTestimonials,
 } from "@/src/lib/db/testimonials";
 import { absoluteUrl, defaultDescription } from "@/src/lib/seo";
 import type { PortfolioCategory } from "@/src/types/site";
-import type { Service } from "@/src/types/site";
 import type { Testimonial } from "@/src/types/site";
 
 export const metadata: Metadata = {
@@ -33,31 +30,8 @@ export const metadata: Metadata = {
   },
 };
 
-type DatabaseService = Awaited<ReturnType<typeof getFeaturedServices>>[number];
 type DatabasePortfolioImage = Awaited<ReturnType<typeof getFeaturedPortfolioImages>>[number];
 type DatabaseTestimonial = Awaited<ReturnType<typeof getFeaturedTestimonials>>[number];
-
-function formatPrice(service: DatabaseService) {
-  const packagePrice = service.packages[0]?.price;
-
-  if (!packagePrice) {
-    return "Contact for pricing";
-  }
-
-  return `NRS ${packagePrice.toNumber().toLocaleString("en-US")}`;
-}
-
-function toHomepageService(service: DatabaseService): Service {
-  return {
-    id: service.id,
-    title: service.title,
-    description: service.shortDescription,
-    price: formatPrice(service),
-    highlights: service.highlights,
-    slug: service.slug,
-    featured: service.featured,
-  };
-}
 
 function toHomepageTestimonial(testimonial: DatabaseTestimonial): Testimonial {
   return {
@@ -87,17 +61,12 @@ function toHomepagePortfolioCategory(
 }
 
 export default async function Home() {
-  const databaseServices = await getFeaturedServices();
   const featuredPortfolioImages = await getFeaturedPortfolioImages();
   const activePortfolioImages =
     featuredPortfolioImages.length > 0 ? [] : await getActivePortfolioImages();
   const featuredTestimonials = await getFeaturedTestimonials();
   const activeTestimonials =
     featuredTestimonials.length > 0 ? [] : await getActiveTestimonials();
-  const homepageServices =
-    databaseServices.length > 0
-      ? databaseServices.map(toHomepageService)
-      : staticFeaturedServices;
   const databasePortfolioImages =
     featuredPortfolioImages.length > 0
       ? featuredPortfolioImages
@@ -124,7 +93,7 @@ export default async function Home() {
           <About />
         </ScrollReveal>
         <ScrollReveal variant="rise">
-          <Services services={homepageServices} />
+          <Services />
         </ScrollReveal>
         <ScrollReveal variant="clip-up">
           <PortfolioPreview categories={homepagePortfolioCategories} />

@@ -39,7 +39,7 @@ function SpotlightThumb({
           className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
       </span>
-      <span className="absolute inset-x-0 bottom-0 bg-white/90 px-3 py-2 text-left text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-700 backdrop-blur-sm">
+      <span className="absolute inset-x-0 bottom-0 bg-white/90 px-3 py-2 text-left text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-900 backdrop-blur-sm">
         {category.title}
       </span>
     </Link>
@@ -67,10 +67,10 @@ function SpotlightFrame({ category }: { category: PortfolioCategory }) {
         <div className="absolute left-0 top-0 h-full w-full p-4 sm:p-6 lg:p-8">
           <div className="flex h-full flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-700 backdrop-blur-sm">
+              <span className="rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-900 backdrop-blur-sm">
                 Session type
               </span>
-              <span className="rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500 backdrop-blur-sm">
+              <span className="rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-900 backdrop-blur-sm">
                 Every 3 sec
               </span>
             </div>
@@ -80,7 +80,7 @@ function SpotlightFrame({ category }: { category: PortfolioCategory }) {
               <h3 className="text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl">
                 {category.title}
               </h3>
-              <p className="mt-3 max-w-lg text-sm leading-relaxed text-neutral-600 sm:text-base">
+              <p className="mt-3 max-w-lg text-sm leading-relaxed text-neutral-900 sm:text-base">
                 {category.description}
               </p>
             </div>

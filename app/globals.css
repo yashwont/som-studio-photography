@@ -13,14 +13,14 @@
   --color-neutral-500: #666666;
   --color-neutral-600: #555555;
   --color-neutral-700: #444444;
-  --color-neutral-800: #333333;
-  --color-neutral-900: #333333;
-  --color-neutral-950: #333333;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #333333;
+  --foreground: #171717;
 }
 
 @theme inline {
@@ -267,6 +267,70 @@ section[id] {
 
 .image-lift-card:hover .image-reveal {
   transform: scale(1.05);
+}
+
+.service-card {
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.service-card:hover {
+  box-shadow: 0 18px 50px rgb(15 15 15 / 0.08);
+  transform: translateY(-3px);
+}
+
+.service-grid > * {
+  opacity: 0;
+  transition:
+    opacity 650ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-grid > .service-enter-left {
+  transform: translate3d(-2.5rem, 0, 0);
+}
+
+.service-grid > .service-enter-right {
+  transform: translate3d(2.5rem, 0, 0);
+}
+
+.scroll-reveal.is-visible .service-grid > * {
+  opacity: 1;
+  transform: none;
+}
+
+.service-grid > *:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+.service-grid > *:nth-child(2) {
+  transition-delay: 60ms;
+}
+
+.service-grid > *:nth-child(3) {
+  transition-delay: 120ms;
+}
+
+.service-grid > *:nth-child(4) {
+  transition-delay: 180ms;
+}
+
+.service-grid > *:nth-child(5) {
+  transition-delay: 240ms;
+}
+
+.service-grid > *:nth-child(6) {
+  transition-delay: 300ms;
+}
+
+.service-grid > *:nth-child(7) {
+  transition-delay: 360ms;
+}
+
+.service-grid > *:nth-child(8) {
+  transition-delay: 420ms;
 }
 
 .portfolio-orbit {
@@ -654,7 +718,8 @@ section[id] {
   .about-frame-float-delay,
   .scroll-reveal,
   .home-proof-item,
-  .home-proof-cta {
+  .home-proof-cta,
+  .service-grid > * {
     animation: none;
     clip-path: none;
     filter: none;

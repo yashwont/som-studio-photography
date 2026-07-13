@@ -70,7 +70,7 @@ function ContactDetail({
 }) {
   return (
     <div>
-      <p className="mb-1 text-xs uppercase tracking-[0.15em] text-brand">
+      <p className="mb-1 text-xs uppercase tracking-[0.15em] text-neutral-900">
         {label}
       </p>
       <div className="flex items-center gap-2">
@@ -78,12 +78,12 @@ function ContactDetail({
         {href ? (
           <a
             href={href}
-            className="text-sm text-neutral-700 transition-colors hover:text-neutral-950"
+            className="text-sm text-neutral-900 transition-colors hover:text-neutral-950"
           >
             {value}
           </a>
         ) : (
-          <p className="text-sm text-neutral-700">{value}</p>
+          <p className="text-sm text-neutral-900">{value}</p>
         )}
       </div>
     </div>
@@ -120,7 +120,7 @@ export default async function ContactPage({
       <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="pt-20 sm:pt-28">
-            <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-neutral-600">
+            <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-neutral-900">
               Whether you already have a date in mind or you&rsquo;re still
               exploring options, reaching out costs nothing and commits you
               to nothing. Send a message or call us directly &mdash;
@@ -157,13 +157,13 @@ export default async function ContactPage({
               </div>
 
               <div className="mt-8">
-                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-brand">
+                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-neutral-900">
                   Studio Hours
                 </p>
                 <div className="space-y-1.5">
                   {contact.businessHours.map((slot: BusinessHours) => (
-                    <p key={slot.days} className="text-sm text-neutral-500">
-                      <span className="text-neutral-600">{slot.days}</span>
+                    <p key={slot.days} className="text-sm text-neutral-900">
+                      <span className="text-neutral-900">{slot.days}</span>
                       {" - "}
                       {slot.hours}
                     </p>
@@ -181,7 +181,7 @@ export default async function ContactPage({
               </div>
 
               <div className="mt-8">
-                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-brand">
+                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-neutral-900">
                   Follow Us
                 </p>
                 <div className="flex flex-wrap gap-4">
@@ -191,7 +191,7 @@ export default async function ContactPage({
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-500 transition-colors hover:border-gold hover:text-gold"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-900 transition-colors hover:border-gold hover:text-gold"
                       aria-label={`${social.label} - opens in new tab`}
                       title={social.label}
                     >
@@ -201,7 +201,7 @@ export default async function ContactPage({
                 </div>
               </div>
 
-              <p className="mt-8 max-w-sm text-xs leading-relaxed text-neutral-400">
+              <p className="mt-8 max-w-sm text-xs leading-relaxed text-neutral-900">
                 We typically respond within a few hours during studio hours.
                 All inquiries are handled personally.
               </p>
@@ -228,7 +228,7 @@ export default async function ContactPage({
       <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="py-14 sm:py-16">
-            <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+            <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
               After your inquiry
             </p>
             <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
@@ -250,7 +250,7 @@ export default async function ContactPage({
                   <span className="text-2xl font-bold text-neutral-200">
                     {item.step}
                   </span>
-                  <p className="max-w-xs text-sm leading-relaxed text-neutral-500">
+                  <p className="max-w-xs text-sm leading-relaxed text-neutral-900">
                     {item.text}
                   </p>
                 </div>

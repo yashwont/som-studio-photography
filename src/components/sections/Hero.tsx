@@ -62,21 +62,24 @@ export default function Hero() {
             <div>
               <div className="mb-5 flex items-center gap-3">
                 <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-brand sm:tracking-[0.2em]">
+                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
                   Photography studio in {contactInfo.city}
                 </span>
               </div>
 
               <h1 className="break-words text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl xl:text-7xl">
                 SomStudio
-                <span className="block text-brand">Photography</span>
+                <span className="block text-neutral-900">Photography</span>
               </h1>
 
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
-                A Kathmandu studio for newborn, family, portrait, wedding,
-                event, and product photography. We plan each session clearly,
-                guide you calmly, and deliver polished images made to keep,
-                print, and share.
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-900">
+                Welcome to Som Studio &mdash; where life&rsquo;s most cherished
+                moments have been captured with elegance, artistry, and heart
+                since 1995. For over three decades, We&rsquo;ve had the honor
+                of preserving families&rsquo; most precious chapters &mdash;
+                from the first flutter of maternity to your wedding day and
+                every milestone in between &mdash; creating timeless imagery
+                you&rsquo;ll treasure forever.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
@@ -92,7 +95,7 @@ export default function Hero() {
                 {trustPoints.map((point: string) => (
                   <div
                     key={point}
-                    className="border-l border-neutral-200 pl-4 text-sm leading-relaxed text-neutral-600"
+                    className="border-l border-neutral-200 pl-4 text-sm leading-relaxed text-neutral-900"
                   >
                     {point}
                   </div>
@@ -103,7 +106,7 @@ export default function Hero() {
                 {serviceHighlights.map((tag: string) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-neutral-200 px-3 py-1 text-xs text-neutral-500"
+                    className="rounded-full border border-neutral-200 px-3 py-1 text-xs text-neutral-900"
                   >
                     {tag}
                   </span>
@@ -139,10 +142,10 @@ export default function Hero() {
                 <div className="absolute left-0 top-0 h-full w-full p-4 sm:p-5 lg:p-6">
                   <div className="flex h-full flex-col justify-between">
                     <div className="flex items-center justify-between">
-                      <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-700 backdrop-blur-sm">
+                      <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-900 backdrop-blur-sm">
                         Cover image
                       </span>
-                      <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500 backdrop-blur-sm">
+                      <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-900 backdrop-blur-sm">
                         Changes every 3 sec
                       </span>
                     </div>
@@ -151,7 +154,7 @@ export default function Hero() {
                       <h2 className="text-xl font-semibold text-neutral-950 sm:text-2xl">
                         {heroLabels[activeIndex].title}
                       </h2>
-                      <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+                      <p className="mt-3 text-sm leading-relaxed text-neutral-900">
                         {heroLabels[activeIndex].subtitle}
                       </p>
                     </div>
@@ -181,7 +184,7 @@ export default function Hero() {
                 ))}
               </div>
 
-              <p className="absolute right-4 top-4 max-w-[10rem] text-[10px] uppercase tracking-[0.18em] text-neutral-400 sm:right-8 sm:top-8">
+              <p className="absolute right-4 top-4 max-w-[10rem] text-[10px] uppercase tracking-[0.18em] text-neutral-900 sm:right-8 sm:top-8">
                 Wedding, portrait, and studio stories
               </p>
             </div>

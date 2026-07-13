@@ -38,7 +38,7 @@ function TestimonialCard({ testimonial }: { testimonial: DatabaseTestimonial }) 
         ))}
       </div>
 
-      <blockquote className="mb-6 flex-1 text-sm leading-relaxed text-neutral-700">
+      <blockquote className="mb-6 flex-1 text-sm leading-relaxed text-neutral-900">
         &ldquo;{testimonial.review}&rdquo;
       </blockquote>
 
@@ -49,11 +49,11 @@ function TestimonialCard({ testimonial }: { testimonial: DatabaseTestimonial }) 
             {testimonial.clientName}
           </span>
         </div>
-        <p className="pl-8 text-xs text-neutral-500">
+        <p className="pl-8 text-xs text-neutral-900">
           {testimonial.serviceType}
         </p>
         {testimonial.location && (
-          <p className="mt-0.5 pl-8 text-xs text-neutral-400">
+          <p className="mt-0.5 pl-8 text-xs text-neutral-900">
             {testimonial.location}
           </p>
         )}
@@ -65,7 +65,7 @@ function TestimonialCard({ testimonial }: { testimonial: DatabaseTestimonial }) 
 function EmptyTestimonialsFallback() {
   return (
     <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded border border-neutral-200 bg-white px-6 py-10 text-center">
-      <p className="text-base leading-relaxed text-neutral-600">
+      <p className="text-base leading-relaxed text-neutral-900">
         Client stories are being updated. Please contact us to learn more about our work.
       </p>
       <Button href="/contact" variant="primary" size="md">
@@ -100,7 +100,7 @@ export default async function TestimonialsPage() {
                 <span className="text-2xl font-bold text-neutral-950 sm:text-3xl">
                   {stat.value}
                 </span>
-                <span className="text-xs uppercase tracking-[0.15em] text-brand">
+                <span className="text-xs uppercase tracking-[0.15em] text-neutral-900">
                   {stat.label}
                 </span>
               </div>
@@ -112,7 +112,7 @@ export default async function TestimonialsPage() {
       <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
-            <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-16">
+            <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-900 sm:mb-16">
               These are unedited words from real clients across Kathmandu,
               Lalitpur, and Bhaktapur, shared after their sessions, prints,
               and gallery deliveries. We ask every client for honest feedback
@@ -128,7 +128,7 @@ export default async function TestimonialsPage() {
             ) : (
               <EmptyTestimonialsFallback />
             )}
-            <p className="mt-14 text-center text-sm text-neutral-400">
+            <p className="mt-14 text-center text-sm text-neutral-900">
               Every session is planned with care, comfort, and attention to detail.
             </p>
           </div>
@@ -138,7 +138,7 @@ export default async function TestimonialsPage() {
       <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
               Booking inquiry
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">

@@ -86,13 +86,13 @@ function FeatureWorkLink({
         />
       </div>
       <div>
-        <p className="mb-1 text-[10px] uppercase tracking-[0.16em] text-neutral-400">
+        <p className="mb-1 text-[10px] uppercase tracking-[0.16em] text-neutral-900">
           {category.name}
         </p>
         <h3 className="text-sm font-semibold text-neutral-950 transition-colors group-hover:text-gold">
           {work.title}
         </h3>
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-neutral-600">
+        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-neutral-900">
           {work.description}
         </p>
       </div>
@@ -177,20 +177,20 @@ function CategorySection({
         >
           <div className="mb-4 flex items-center gap-3">
             <div aria-hidden="true" className="h-px w-8 bg-gold" />
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
               Portfolio {String(index + 1).padStart(2, "0")}
             </p>
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
             {category.name}
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+          <p className="mt-3 text-sm leading-relaxed text-neutral-900">
             {category.description}
           </p>
 
           {featuredWork && (
             <div className="mt-5 border-y border-neutral-200 py-4">
-              <p className="mb-2 text-[10px] uppercase tracking-[0.16em] text-neutral-400">
+              <p className="mb-2 text-[10px] uppercase tracking-[0.16em] text-neutral-900">
                 Featured Story
               </p>
               <Link
@@ -200,7 +200,7 @@ function CategorySection({
                 <span className="text-base font-semibold text-neutral-950 transition-colors group-hover:text-gold">
                   {featuredWork.title}
                 </span>
-                <span className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-600">
+                <span className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-900">
                   {featuredWork.description}
                 </span>
               </Link>
@@ -229,7 +229,7 @@ function CategorySection({
 function EmptyPortfolioFallback() {
   return (
     <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded border border-neutral-200 bg-white px-6 py-10 text-center">
-      <p className="text-base leading-relaxed text-neutral-600">
+      <p className="text-base leading-relaxed text-neutral-900">
         Portfolio is being updated. Please contact us to request sample work.
       </p>
       <Button href="/contact" variant="primary" size="md">
@@ -259,7 +259,7 @@ export default async function PortfolioPage() {
         <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
           <div className="py-16 sm:py-20">
-            <p className="mx-auto mb-12 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-14">
+            <p className="mx-auto mb-12 max-w-2xl text-center text-base leading-relaxed text-neutral-900 sm:mb-14">
               Every gallery below reflects real session planning, from first
               consultation to final edit, across weddings, portraits, events,
               and more. Explore a category to see individual stories, or open
@@ -268,7 +268,7 @@ export default async function PortfolioPage() {
             </p>
             <div className="mb-10">
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                   Session categories
                 </p>
                 <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">

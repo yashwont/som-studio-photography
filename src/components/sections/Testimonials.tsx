@@ -16,7 +16,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         ))}
       </div>
 
-      <blockquote className="mb-6 flex-1 text-sm leading-relaxed text-neutral-700">
+      <blockquote className="mb-6 flex-1 text-sm leading-relaxed text-neutral-900">
         &ldquo;{testimonial.content}&rdquo;
       </blockquote>
 
@@ -27,10 +27,10 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
             {testimonial.name}
           </span>
         </div>
-        <p className="pl-8 text-xs text-neutral-500">
+        <p className="pl-8 text-xs text-neutral-900">
           {testimonial.role} &middot; {testimonial.service}
         </p>
-        <p className="mt-0.5 pl-8 text-xs text-neutral-400">
+        <p className="mt-0.5 pl-8 text-xs text-neutral-900">
           {testimonial.location}
         </p>
       </footer>
@@ -61,7 +61,7 @@ export default function Testimonials({
             ))}
           </div>
 
-          <p className="mt-14 text-center text-sm text-neutral-400">
+          <p className="mt-14 text-center text-sm text-neutral-900">
             Every session is planned with care, comfort, and attention to detail.
           </p>
         </div>

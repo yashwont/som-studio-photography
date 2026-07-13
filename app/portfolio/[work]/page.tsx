@@ -85,17 +85,17 @@ export default async function PortfolioWorkPage({
             <div className="py-14 sm:py-20">
               <Link
                 href={`/portfolio#${category.slug}`}
-                className="mb-6 inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-gold"
+                className="mb-6 inline-flex items-center gap-2 text-sm text-neutral-900 transition-colors hover:text-gold"
               >
                 &larr; Back to {category.name}
               </Link>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                 {category.name} &middot; SomStudioPhotography
               </p>
               <h1 className="max-w-3xl break-words text-4xl font-bold tracking-tight text-neutral-950 sm:text-5xl xl:text-6xl">
                 {work.title}
               </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600">
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-900">
                 {work.description}
               </p>
             </div>
@@ -127,7 +127,7 @@ export default async function PortfolioWorkPage({
           <section className="border-t border-neutral-200 bg-neutral-50">
             <Container>
               <div className="py-14 sm:py-16">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                   More from {category.name}
                 </p>
                 <h2 className="mb-8 text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
@@ -153,7 +153,7 @@ export default async function PortfolioWorkPage({
                         <h3 className="text-base font-semibold text-neutral-950 transition-colors group-hover:text-gold">
                           {item.title}
                         </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                        <p className="mt-2 text-sm leading-relaxed text-neutral-900">
                           {item.description}
                         </p>
                       </div>
@@ -170,7 +170,7 @@ export default async function PortfolioWorkPage({
         <section className="border-t border-neutral-200 bg-neutral-50">
           <Container>
             <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                 Planning something similar?
               </p>
               <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">

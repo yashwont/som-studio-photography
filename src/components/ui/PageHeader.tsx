@@ -14,7 +14,7 @@ function PageHeaderContent({ eyebrow, title, subtitle }: PageHeaderProps) {
       <Container>
         <div className="py-14 sm:py-20 text-center">
           {eyebrow && (
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand sm:tracking-[0.2em]">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
               {eyebrow}
             </p>
           )}
@@ -22,7 +22,7 @@ function PageHeaderContent({ eyebrow, title, subtitle }: PageHeaderProps) {
             {title}
           </h1>
           {subtitle && (
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-neutral-900">
               {subtitle}
             </p>
           )}

@@ -48,7 +48,7 @@ function ServiceCard({ service }: { service: ServiceWithPackages }) {
         {service.title}
       </h2>
 
-      <p className="mb-6 flex-1 text-sm leading-relaxed text-neutral-600">
+      <p className="mb-6 flex-1 text-sm leading-relaxed text-neutral-900">
         {service.shortDescription}
       </p>
 
@@ -56,7 +56,7 @@ function ServiceCard({ service }: { service: ServiceWithPackages }) {
         {service.highlights.map((highlight: string) => (
           <li
             key={highlight}
-            className="flex items-start gap-2 text-xs text-neutral-500"
+            className="flex items-start gap-2 text-xs text-neutral-900"
           >
             <span aria-hidden="true" className="mt-px shrink-0 text-gold/50">
               -
@@ -79,7 +79,7 @@ function ServiceCard({ service }: { service: ServiceWithPackages }) {
 function EmptyServicesFallback() {
   return (
     <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded border border-neutral-200 bg-white px-6 py-10 text-center">
-      <p className="text-base leading-relaxed text-neutral-600">
+      <p className="text-base leading-relaxed text-neutral-900">
         Services are being updated. Please contact us for current packages.
       </p>
       <Button href="/contact" variant="primary" size="md">
@@ -106,7 +106,7 @@ export default async function ServicesPage() {
         <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="py-20 sm:py-28">
-            <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-600 sm:mb-16">
+            <p className="mx-auto mb-14 max-w-2xl text-center text-base leading-relaxed text-neutral-900 sm:mb-16">
               Every package below follows the same planning conversation,
               on-site guidance, and editing standard, regardless of session
               type or size. Whether you need a single portrait sitting or full
@@ -131,13 +131,13 @@ export default async function ServicesPage() {
         <section className="bg-neutral-50 border-t border-neutral-200">
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
               Not sure which service fits?
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
               Let us help you decide.
             </h2>
-            <p className="max-w-md text-neutral-600">
+            <p className="max-w-md text-neutral-900">
               Tell us about your shoot and we&rsquo;ll recommend the right
               package, timing, and plan.
             </p>

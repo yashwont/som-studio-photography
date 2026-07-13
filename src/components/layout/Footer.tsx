@@ -15,10 +15,10 @@ export default function Footer() {
             href="/"
             className="text-xl font-semibold tracking-tight text-neutral-950"
           >
-            Som<span className="text-brand">Studio</span>
+            Som<span className="text-neutral-900">Studio</span>
           </Link>
 
-          <p className="max-w-2xl text-sm leading-relaxed text-neutral-500">
+          <p className="max-w-2xl text-sm leading-relaxed text-neutral-900">
             A professional photography studio in {contactInfo.city},{" "}
             {contactInfo.country} with 30 years of experience, specializing in
             weddings, pre-weddings, portraits, events, maternity, kids,
@@ -34,14 +34,14 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${social.label} - opens in new tab`}
-                className="text-neutral-500 transition-colors hover:text-gold"
+                className="text-neutral-900 transition-colors hover:text-gold"
               >
                 <SocialIcon platform={social.platform} />
               </Link>
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-neutral-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-neutral-900">
             <a
               href={`tel:${contactInfo.phone}`}
               className="transition-colors hover:text-neutral-950"
@@ -69,7 +69,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-neutral-200 py-5 text-center">
-          <p className="text-xs text-neutral-400">
+          <p className="text-xs text-neutral-900">
             &copy; {currentYear} SomStudioPhotography. All rights reserved.
           </p>
         </div>

@@ -68,6 +68,7 @@ export interface ContactInfo {
   city: string;
   country: string;
   mapUrl: string;
+  mapEmbedUrl: string;
   socialLinks: SocialLink[];
   businessHours: BusinessHours[];
 }

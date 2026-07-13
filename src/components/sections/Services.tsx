@@ -1,72 +1,103 @@
 import Container from "@/src/components/layout/Container";
 import SectionHeader from "@/src/components/ui/SectionHeader";
 import Button from "@/src/components/ui/Button";
-import type { Service } from "@/src/types/site";
 
-function ServiceCard({ service }: { service: Service }) {
+const services = [
+  {
+    title: "Maternity",
+    tagline: "Celebrating the beauty of new beginnings",
+  },
+  {
+    title: "Newborn",
+    tagline: "Tender, delicate moments in the earliest days",
+  },
+  {
+    title: "Family & Child",
+    tagline: "Authentic connection, elegantly captured",
+  },
+  {
+    title: "Cake Smash",
+    tagline: "Playful milestones with a touch of style",
+  },
+  {
+    title: "Portraits",
+    tagline: "Refined imagery that reflects who you are",
+  },
+  {
+    title: "Weddings",
+    tagline: "Your love story, artfully documented",
+  },
+  {
+    title: "Commercial",
+    tagline: "Polished visuals for brands and businesses",
+  },
+  {
+    title: "Web Profile",
+    tagline: "Professional headshots that make a lasting impression",
+  },
+];
+
+function ServiceCard({
+  service,
+}: {
+  service: (typeof services)[number];
+}) {
   return (
-    <div className="group flex flex-col rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors duration-200 hover:border-neutral-300">
+    <div className="service-card group flex h-full flex-col rounded border border-neutral-200 bg-neutral-50 p-6">
       <div
         aria-hidden="true"
         className="mb-5 h-px w-6 bg-gold transition-all duration-300 group-hover:w-10"
       />
 
-      <h3 className="mb-3 font-semibold text-neutral-950">{service.title}</h3>
+      <h3 className="mb-2 text-base font-semibold text-neutral-950">
+        {service.title}
+      </h3>
 
-      <p className="flex-1 text-sm leading-relaxed text-neutral-600">
-        {service.description}
+      <p className="text-sm leading-relaxed text-neutral-900">
+        {service.tagline}
       </p>
-
-      <ul aria-label={`${service.title} highlights`} className="mt-5 space-y-1.5">
-        {service.highlights.slice(0, 2).map((highlight: string) => (
-          <li
-            key={highlight}
-            className="flex items-start gap-2 text-xs text-neutral-400"
-          >
-            <span aria-hidden="true" className="mt-px shrink-0 text-gold/50">
-              -
-            </span>
-            {highlight}
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-auto flex items-center justify-between gap-4 border-t border-neutral-200 pt-5">
-        <p className="text-sm font-semibold text-gold">{service.price}</p>
-        <Button href="/contact" variant="secondary" size="sm">
-          Book Now
-        </Button>
-      </div>
     </div>
   );
 }
 
-export default function Services({ services }: { services: Service[] }) {
+export default function Services() {
   return (
     <section id="services" className="bg-neutral-50 border-t border-neutral-200">
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader
             eyebrow="Services"
-            title="Photography services"
-            subtitle="New born, kids, maternity, family, graduation, portraits, weddings, pre-weddings, events, and product shoots from our studio in Kathmandu."
+            title="Our Services"
+            subtitle="Every story deserves to be told beautifully."
             centered={true}
             className="mb-14 sm:mb-16"
           />
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service: Service) => (
-              <ServiceCard key={service.id} service={service} />
+          <div className="service-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((service, index) => (
+              <div
+                key={service.title}
+                className={
+                  index % 4 < 2 ? "service-enter-left" : "service-enter-right"
+                }
+              >
+                <ServiceCard service={service} />
+              </div>
             ))}
           </div>
 
           <div className="mt-16 flex flex-col items-center gap-5 border-t border-neutral-200 pt-12 text-center">
-            <p className="text-sm text-neutral-600 sm:text-base">
-              Not sure which package fits your shoot?
+            <p className="text-sm text-neutral-900 sm:text-base">
+              Not sure which service is right for you?
             </p>
-            <Button href="/contact" variant="secondary" size="md">
-              Ask for Guidance
-            </Button>
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <Button href="/services" variant="primary" size="md">
+                View All Services
+              </Button>
+              <Button href="/contact" variant="secondary" size="md">
+                Ask for Guidance
+              </Button>
+            </div>
           </div>
         </div>
       </Container>

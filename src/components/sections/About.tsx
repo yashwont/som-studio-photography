@@ -36,17 +36,19 @@ export default function About() {
               centered={false}
             />
 
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-neutral-600">
-              A professional photography studio in Kathmandu, Nepal, built for
-              meaningful moments and lasting memories. From wedding stories to
-              newborn, maternity, family, graduation, portrait, event, and
-              product shoots, we combine careful planning, creative direction,
-              and polished editing.
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-neutral-900">
+              With over 30 years of experience since 1995, we are passionate
+              about capturing life&rsquo;s most meaningful moments. Combining
+              creativity with modern photography technology, we deliver
+              high-quality images and a friendly, professional experience.
+              From portraits and events to custom prints and albums,
+              we&rsquo;re here to turn your special moments into lasting
+              memories.
             </p>
 
             <div className="mt-8 flex items-center gap-3">
               <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-              <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
+              <span className="text-xs uppercase tracking-[0.2em] text-neutral-900">
                 Kathmandu, Nepal
               </span>
             </div>
@@ -64,7 +66,7 @@ export default function About() {
                   {item.title}
                 </h3>
 
-                <p className="text-sm leading-relaxed text-neutral-500">
+                <p className="text-sm leading-relaxed text-neutral-900">
                   {item.description}
                 </p>
               </div>

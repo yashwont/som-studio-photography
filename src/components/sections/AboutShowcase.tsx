@@ -29,7 +29,7 @@ export default function AboutShowcase() {
         className="absolute -top-px left-0 h-px w-3/4 bg-gradient-to-r from-gold to-transparent"
       />
 
-      <div className="relative overflow-hidden rounded-[2rem] border border-neutral-200 bg-neutral-50 p-4 shadow-[0_20px_60px_rgb(15_15_15_/0.06)] sm:h-[620px] sm:p-6">
+      <div className="relative overflow-hidden rounded-[2rem] border border-neutral-200 bg-neutral-50 p-4 shadow-[0_20px_60px_rgb(15_15_15_/0.06)] sm:h-[360px] sm:p-6">
         <div className="absolute inset-x-4 top-4 h-14 rounded-full border border-neutral-200 bg-white/75 shadow-sm sm:inset-x-6 sm:top-6" />
         <div className="absolute inset-x-4 bottom-4 h-14 rounded-full border border-neutral-200 bg-white/75 shadow-sm sm:inset-x-6 sm:bottom-6" />
         <div className="absolute left-4 top-4 h-[calc(100%-2rem)] w-14 rounded-full border border-neutral-200 bg-white/60 shadow-sm sm:left-6 sm:top-6" />
@@ -47,30 +47,30 @@ export default function AboutShowcase() {
           <div className="absolute inset-0 bg-gradient-to-t from-white/35 via-transparent to-transparent" />
           <div className="about-scanline pointer-events-none absolute left-0 top-0 h-14 w-full border-b border-gold/40 bg-gradient-to-b from-gold/10 to-transparent" />
 
-          <div className="absolute left-4 top-4 rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-700 backdrop-blur-sm">
+          <div className="absolute left-4 top-4 rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-900 backdrop-blur-sm">
             About the studio
           </div>
-          <div className="absolute bottom-4 left-4 rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500 backdrop-blur-sm">
+          <div className="absolute bottom-4 left-4 rounded-full border border-white/80 bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-900 backdrop-blur-sm">
             Slide {activeIndex + 1} of {studioGallery.length}
           </div>
         </div>
 
-        <div className="about-frame-float absolute left-6 top-16 h-40 w-32 overflow-hidden rounded-[1.25rem] border border-white bg-white shadow-lg sm:h-48 sm:w-40">
+        <div className="about-frame-float absolute left-6 top-10 h-24 w-20 overflow-hidden rounded-[1.25rem] border border-white bg-white shadow-lg sm:h-28 sm:w-24">
           <Image
             src={leftImage.src}
             alt={leftImage.alt}
             fill
-            sizes="(max-width: 640px) 128px, 160px"
+            sizes="(max-width: 640px) 80px, 96px"
             className="object-cover"
           />
         </div>
 
-        <div className="about-frame-float-delay absolute bottom-20 right-6 h-44 w-36 overflow-hidden rounded-[1.25rem] border border-white bg-white shadow-lg sm:h-56 sm:w-44">
+        <div className="about-frame-float-delay absolute bottom-12 right-6 h-28 w-24 overflow-hidden rounded-[1.25rem] border border-white bg-white shadow-lg sm:h-32 sm:w-28">
           <Image
             src={rightImage.src}
             alt={rightImage.alt}
             fill
-            sizes="(max-width: 640px) 144px, 176px"
+            sizes="(max-width: 640px) 96px, 112px"
             className="object-cover"
           />
         </div>
@@ -87,7 +87,7 @@ export default function AboutShowcase() {
           ))}
         </div>
 
-        <p className="absolute bottom-7 left-1/2 max-w-[18rem] -translate-x-1/2 text-center text-[10px] uppercase tracking-[0.22em] text-neutral-400">
+        <p className="absolute bottom-7 left-1/2 max-w-[18rem] -translate-x-1/2 text-center text-[10px] uppercase tracking-[0.22em] text-neutral-900">
           Studio, lighting, and guided sessions
         </p>
       </div>

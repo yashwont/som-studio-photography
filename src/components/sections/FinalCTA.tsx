@@ -10,7 +10,7 @@ export default function FinalCTA() {
           {/* Eyebrow */}
           <div className="flex items-center gap-3">
             <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-brand sm:tracking-[0.2em]">
+            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
               Booking inquiry
             </span>
             <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
@@ -22,7 +22,7 @@ export default function FinalCTA() {
           </h2>
 
           {/* Subtitle */}
-          <p className="text-base leading-relaxed text-neutral-600">
+          <p className="text-base leading-relaxed text-neutral-900">
             Tell us about your session, preferred date, and style. We&rsquo;ll
             help you choose the right package, timing, and shoot plan.
           </p>
