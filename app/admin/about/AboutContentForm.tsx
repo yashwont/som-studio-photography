@@ -12,9 +12,24 @@ const labelClassName =
   "mb-1.5 block text-xs uppercase tracking-[0.15em] text-neutral-300";
 
 const HIGHLIGHT_COUNT = 4;
+const TIMELINE_COUNT = 4;
+const EXPERIENCE_STEP_COUNT = 5;
+const STAT_COUNT = 4;
 
 function getHighlight(content: AboutContentData, index: number) {
   return content.highlights[index] ?? { title: "", description: "" };
+}
+
+function getTimelineItem(content: AboutContentData, index: number) {
+  return content.timeline[index] ?? { year: "", title: "", description: "" };
+}
+
+function getExperienceStep(content: AboutContentData, index: number) {
+  return content.experienceSteps[index] ?? { title: "", description: "" };
+}
+
+function getStat(content: AboutContentData, index: number) {
+  return content.stats[index] ?? { value: "", label: "" };
 }
 
 export default function AboutContentForm({
@@ -75,6 +90,23 @@ export default function AboutContentForm({
             className={inputClassName}
           />
         </div>
+
+        <div>
+          <label htmlFor="quoteText" className={labelClassName}>
+            Hero quote{" "}
+            <span className="normal-case text-neutral-500">
+              (shown in the side panel next to the hero)
+            </span>
+          </label>
+          <textarea
+            id="quoteText"
+            name="quoteText"
+            required
+            rows={2}
+            defaultValue={content.quoteText}
+            className={inputClassName}
+          />
+        </div>
       </section>
 
       <section className="space-y-4 border-t border-neutral-800 pt-6">
@@ -120,6 +152,103 @@ export default function AboutContentForm({
             defaultValue={content.storyParagraph3}
             className={inputClassName}
           />
+        </div>
+      </section>
+
+      <section className="space-y-4 border-t border-neutral-800 pt-6">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-gold">
+          Timeline
+        </h2>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="timelineEyebrow" className={labelClassName}>
+              Eyebrow
+            </label>
+            <input
+              id="timelineEyebrow"
+              name="timelineEyebrow"
+              type="text"
+              defaultValue={content.timelineEyebrow}
+              className={inputClassName}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="timelineTitle" className={labelClassName}>
+              Section title
+            </label>
+            <input
+              id="timelineTitle"
+              name="timelineTitle"
+              type="text"
+              defaultValue={content.timelineTitle}
+              className={inputClassName}
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {Array.from({ length: TIMELINE_COUNT }, (_, index) => {
+            const item = getTimelineItem(content, index);
+
+            return (
+              <div
+                key={index}
+                className="space-y-3 rounded border border-neutral-800 bg-neutral-950/40 p-4"
+              >
+                <p className={labelClassName}>Milestone {index + 1}</p>
+
+                <div>
+                  <label
+                    htmlFor={`timeline-${index}-year`}
+                    className={labelClassName}
+                  >
+                    Year
+                  </label>
+                  <input
+                    id={`timeline-${index}-year`}
+                    name={`timeline-${index}-year`}
+                    type="text"
+                    defaultValue={item.year}
+                    className={inputClassName}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`timeline-${index}-title`}
+                    className={labelClassName}
+                  >
+                    Title
+                  </label>
+                  <input
+                    id={`timeline-${index}-title`}
+                    name={`timeline-${index}-title`}
+                    type="text"
+                    defaultValue={item.title}
+                    className={inputClassName}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`timeline-${index}-description`}
+                    className={labelClassName}
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id={`timeline-${index}-description`}
+                    name={`timeline-${index}-description`}
+                    rows={3}
+                    defaultValue={item.description}
+                    className={inputClassName}
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -195,6 +324,140 @@ export default function AboutContentForm({
                     name={`highlight-${index}-description`}
                     rows={4}
                     defaultValue={highlight.description}
+                    className={inputClassName}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="space-y-4 border-t border-neutral-800 pt-6">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-gold">
+          Studio Experience
+        </h2>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="experienceEyebrow" className={labelClassName}>
+              Eyebrow
+            </label>
+            <input
+              id="experienceEyebrow"
+              name="experienceEyebrow"
+              type="text"
+              defaultValue={content.experienceEyebrow}
+              className={inputClassName}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="experienceTitle" className={labelClassName}>
+              Section title
+            </label>
+            <input
+              id="experienceTitle"
+              name="experienceTitle"
+              type="text"
+              defaultValue={content.experienceTitle}
+              className={inputClassName}
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {Array.from({ length: EXPERIENCE_STEP_COUNT }, (_, index) => {
+            const step = getExperienceStep(content, index);
+
+            return (
+              <div
+                key={index}
+                className="space-y-3 rounded border border-neutral-800 bg-neutral-950/40 p-4"
+              >
+                <p className={labelClassName}>Step {index + 1}</p>
+
+                <div>
+                  <label
+                    htmlFor={`experience-${index}-title`}
+                    className={labelClassName}
+                  >
+                    Title
+                  </label>
+                  <input
+                    id={`experience-${index}-title`}
+                    name={`experience-${index}-title`}
+                    type="text"
+                    defaultValue={step.title}
+                    className={inputClassName}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`experience-${index}-description`}
+                    className={labelClassName}
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id={`experience-${index}-description`}
+                    name={`experience-${index}-description`}
+                    rows={3}
+                    defaultValue={step.description}
+                    className={inputClassName}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="space-y-4 border-t border-neutral-800 pt-6">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-gold">
+          Trust Stats
+        </h2>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {Array.from({ length: STAT_COUNT }, (_, index) => {
+            const stat = getStat(content, index);
+
+            return (
+              <div
+                key={index}
+                className="space-y-3 rounded border border-neutral-800 bg-neutral-950/40 p-4"
+              >
+                <p className={labelClassName}>Stat {index + 1}</p>
+
+                <div>
+                  <label
+                    htmlFor={`stat-${index}-value`}
+                    className={labelClassName}
+                  >
+                    Value
+                  </label>
+                  <input
+                    id={`stat-${index}-value`}
+                    name={`stat-${index}-value`}
+                    type="text"
+                    defaultValue={stat.value}
+                    className={inputClassName}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`stat-${index}-label`}
+                    className={labelClassName}
+                  >
+                    Label
+                  </label>
+                  <input
+                    id={`stat-${index}-label`}
+                    name={`stat-${index}-label`}
+                    type="text"
+                    defaultValue={stat.label}
                     className={inputClassName}
                   />
                 </div>

@@ -7,52 +7,140 @@ export type AboutHighlight = {
   description: string;
 };
 
+export type AboutTimelineItem = {
+  year: string;
+  title: string;
+  description: string;
+};
+
+export type AboutExperienceStep = {
+  title: string;
+  description: string;
+};
+
+export type AboutStat = {
+  value: string;
+  label: string;
+};
+
 export type AboutContentData = {
   heroEyebrow: string;
   heroTitle: string;
   heroSubtitle: string;
+  quoteText: string;
   storyParagraph1: string;
   storyParagraph2: string;
   storyParagraph3: string;
+  timelineEyebrow: string;
+  timelineTitle: string;
+  timeline: AboutTimelineItem[];
   highlightsEyebrow: string;
   highlightsTitle: string;
   highlights: AboutHighlight[];
+  experienceEyebrow: string;
+  experienceTitle: string;
+  experienceSteps: AboutExperienceStep[];
+  stats: AboutStat[];
 };
 
 export const defaultAboutContent: AboutContentData = {
-  heroEyebrow: "About the studio",
-  heroTitle: "SomStudioPhotography",
+  heroEyebrow: "About SomStudio",
+  heroTitle: "Capturing Kathmandu’s stories since 1995",
   heroSubtitle:
-    "A Kathmandu photography studio built for meaningful moments and images worth keeping.",
+    "Three decades of professional digital studio photography - weddings, portraits, and everyday milestones, photographed one honest frame at a time.",
+  quoteText:
+    "Every photograph should feel honest, timeless, and worth keeping.",
   storyParagraph1:
-    "Established in 1995 A.D. with 30 years of experience, our Professional Digital Studio Photography specializes in capturing timeless moments. Using cutting-edge technology, we create stunning images tailored to your vision.",
+    "SomStudioPhotography was established in 1995 A.D. and has grown with over 30 years of experience in professional digital studio photography. Based in Kathmandu, we capture meaningful moments through weddings, portraits, events, products, passport photos, printing, framing, and custom photography services.",
   storyParagraph2:
-    "Our studio offers a comfortable environment, exceptional customer service, and quick turnaround times. Choose from customizable packages including digital images, prints, albums, and framing. Enhance your photos with our professional editing services.",
-  storyParagraph3:
-    "Contact us today to schedule your session and turn your vision into cherished memories.",
-  highlightsEyebrow: "Client experience",
-  highlightsTitle: "What to expect",
+    "Our studio focuses on a comfortable experience, careful guidance, professional editing, and photographs that feel natural, timeless, and worth keeping.",
+  storyParagraph3: "",
+  timelineEyebrow: "Our journey",
+  timelineTitle: "Three decades in the making.",
+  timeline: [
+    {
+      year: "1995",
+      title: "Studio established",
+      description:
+        "SomStudioPhotography opens its doors in Kathmandu, beginning three decades of studio and portrait work.",
+    },
+    {
+      year: "2000s",
+      title: "Studio portraits & events grow",
+      description:
+        "The studio expands into event coverage and structured studio portrait sessions as more families and couples find us.",
+    },
+    {
+      year: "2010s",
+      title: "The shift to digital",
+      description:
+        "A move to digital photography and modern editing workflows sharpens our turnaround time without losing the studio's eye for detail.",
+    },
+    {
+      year: "Today",
+      title: "A complete photography studio",
+      description:
+        "Weddings, portraits, products, passport photos, printing, and framing - all under one roof, all held to the same standard.",
+    },
+  ],
+  highlightsEyebrow: "Studio values",
+  highlightsTitle: "What guides every session",
   highlights: [
     {
-      title: "Client-First Planning",
+      title: "Timeless Quality",
       description:
-        "Every session starts with a conversation. We learn what you want, advise on timing and style, and make sure everything is prepared before the camera comes out.",
+        "We aim for photographs that still feel meaningful ten, twenty, even thirty years from now - not just images that look good today.",
     },
     {
-      title: "Creative Direction",
+      title: "Comfortable Studio Experience",
       description:
-        "You don't need posing experience. We guide you through the session naturally so your images feel authentic, relaxed, and true to who you are.",
+        "From the first hello to the final frame, every session is paced around your comfort, not the other way around.",
     },
     {
-      title: "Polished Editing",
+      title: "Professional Editing",
       description:
-        "Every image is individually selected and carefully refined before delivery. No bulk exports - only the best frames, edited to a consistent standard.",
+        "Each photograph is individually reviewed and refined by hand before it ever reaches you.",
     },
     {
-      title: "Studio & Outdoor",
+      title: "Fast & Reliable Delivery",
       description:
-        "We work in our private studio and on location across Kathmandu. Controlled lighting or natural settings - we adapt to whatever serves your vision.",
+        "Digital galleries, prints, and framing - delivered on a timeline you can actually count on.",
     },
+  ],
+  experienceEyebrow: "What to expect",
+  experienceTitle: "Your session, step by step.",
+  experienceSteps: [
+    {
+      title: "Consultation",
+      description:
+        "We start with a conversation about what you want, your timeline, and how to prepare.",
+    },
+    {
+      title: "Guided posing",
+      description:
+        "No experience needed - we direct every session naturally so nothing feels stiff or forced.",
+    },
+    {
+      title: "Comfortable environment",
+      description:
+        "A relaxed studio, or location, built to put you at ease before the camera ever comes out.",
+    },
+    {
+      title: "Careful editing",
+      description:
+        "Every photograph is reviewed and refined by hand, never rushed through in bulk.",
+    },
+    {
+      title: "Delivery",
+      description:
+        "Finished galleries, prints, or framed pieces - delivered the way you actually want them.",
+    },
+  ],
+  stats: [
+    { value: "30+", label: "Years of experience" },
+    { value: "10+", label: "Photography services" },
+    { value: "Studio + Outdoor", label: "Session locations" },
+    { value: "Digital + Print", label: "Delivery formats" },
   ],
 };
 
@@ -75,6 +163,64 @@ function parseHighlights(value: unknown): AboutHighlight[] {
   return highlights.length > 0 ? highlights : defaultAboutContent.highlights;
 }
 
+function parseTimeline(value: unknown): AboutTimelineItem[] {
+  if (!Array.isArray(value)) {
+    return defaultAboutContent.timeline;
+  }
+
+  const timeline = value
+    .filter(
+      (item): item is { year: unknown; title: unknown; description: unknown } =>
+        typeof item === "object" && item !== null
+    )
+    .map((item) => ({
+      year: String((item as { year?: unknown }).year ?? ""),
+      title: String((item as { title?: unknown }).title ?? ""),
+      description: String((item as { description?: unknown }).description ?? ""),
+    }))
+    .filter((item) => item.year || item.title || item.description);
+
+  return timeline.length > 0 ? timeline : defaultAboutContent.timeline;
+}
+
+function parseExperienceSteps(value: unknown): AboutExperienceStep[] {
+  if (!Array.isArray(value)) {
+    return defaultAboutContent.experienceSteps;
+  }
+
+  const steps = value
+    .filter(
+      (item): item is { title: unknown; description: unknown } =>
+        typeof item === "object" && item !== null
+    )
+    .map((item) => ({
+      title: String((item as { title?: unknown }).title ?? ""),
+      description: String((item as { description?: unknown }).description ?? ""),
+    }))
+    .filter((item) => item.title || item.description);
+
+  return steps.length > 0 ? steps : defaultAboutContent.experienceSteps;
+}
+
+function parseStats(value: unknown): AboutStat[] {
+  if (!Array.isArray(value)) {
+    return defaultAboutContent.stats;
+  }
+
+  const stats = value
+    .filter(
+      (item): item is { value: unknown; label: unknown } =>
+        typeof item === "object" && item !== null
+    )
+    .map((item) => ({
+      value: String((item as { value?: unknown }).value ?? ""),
+      label: String((item as { label?: unknown }).label ?? ""),
+    }))
+    .filter((item) => item.value || item.label);
+
+  return stats.length > 0 ? stats : defaultAboutContent.stats;
+}
+
 export async function getAboutContent(): Promise<AboutContentData> {
   const record = await prisma.aboutContent.findUnique({
     where: { id: ABOUT_CONTENT_ID },
@@ -88,11 +234,19 @@ export async function getAboutContent(): Promise<AboutContentData> {
     heroEyebrow: record.heroEyebrow,
     heroTitle: record.heroTitle,
     heroSubtitle: record.heroSubtitle,
+    quoteText: record.quoteText,
     storyParagraph1: record.storyParagraph1,
     storyParagraph2: record.storyParagraph2,
     storyParagraph3: record.storyParagraph3,
+    timelineEyebrow: record.timelineEyebrow,
+    timelineTitle: record.timelineTitle,
+    timeline: parseTimeline(record.timeline),
     highlightsEyebrow: record.highlightsEyebrow,
     highlightsTitle: record.highlightsTitle,
     highlights: parseHighlights(record.highlights),
+    experienceEyebrow: record.experienceEyebrow,
+    experienceTitle: record.experienceTitle,
+    experienceSteps: parseExperienceSteps(record.experienceSteps),
+    stats: parseStats(record.stats),
   };
 }

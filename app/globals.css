@@ -253,38 +253,6 @@ section[id] {
   animation: portfolio-thumb-float 8s ease-in-out infinite;
 }
 
-.about-frame-rail {
-  animation: about-rail-drift 16s ease-in-out infinite;
-}
-
-.about-scanline {
-  animation: about-scanline 4s ease-in-out infinite;
-}
-
-.about-frame {
-  animation: about-frame-cycle 12s ease-in-out infinite;
-}
-
-.about-frame-0 {
-  animation-delay: 0s;
-}
-
-.about-frame-1 {
-  animation-delay: 4s;
-}
-
-.about-frame-2 {
-  animation-delay: 8s;
-}
-
-.about-frame-float {
-  animation: about-frame-float 10s ease-in-out infinite;
-}
-
-.about-frame-float-delay {
-  animation: about-frame-float-delay 12s ease-in-out infinite;
-}
-
 @keyframes image-cycle {
   0% {
     opacity: 0;
@@ -436,78 +404,6 @@ section[id] {
   }
 }
 
-@keyframes about-rail-drift {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-12px) rotate(-0.6deg);
-  }
-}
-
-@keyframes about-scanline {
-  0% {
-    transform: translateY(-10%);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 0.75;
-  }
-
-  50% {
-    transform: translateY(90%);
-    opacity: 0.75;
-  }
-
-  65% {
-    opacity: 0.2;
-  }
-
-  100% {
-    transform: translateY(90%);
-    opacity: 0;
-  }
-}
-
-@keyframes about-frame-cycle {
-  0%,
-  24% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-
-  32%,
-  100% {
-    opacity: 0;
-    transform: scale(1.04) translateY(-1.5%);
-  }
-}
-
-@keyframes about-frame-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-2deg);
-  }
-
-  50% {
-    transform: translateY(-10px) rotate(-1deg);
-  }
-}
-
-@keyframes about-frame-float-delay {
-  0%,
-  100% {
-    transform: translateY(0) rotate(2deg);
-  }
-
-  50% {
-    transform: translateY(10px) rotate(1deg);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -539,17 +435,5 @@ section[id] {
 
   .portfolio-thumb-float {
     animation: none;
-  }
-
-  .about-frame-rail,
-  .about-scanline,
-  .about-frame,
-  .about-frame-float,
-  .about-frame-float-delay {
-    animation: none;
-    clip-path: none;
-    filter: none;
-    opacity: 1;
-    transform: none;
   }
 }

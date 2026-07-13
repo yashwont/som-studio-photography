@@ -196,12 +196,20 @@ model AboutContent {
   heroEyebrow       String
   heroTitle         String
   heroSubtitle      String
+  quoteText         String
   storyParagraph1   String
   storyParagraph2   String
   storyParagraph3   String
+  timelineEyebrow   String
+  timelineTitle     String
+  timeline          Json
   highlightsEyebrow String
   highlightsTitle   String
   highlights        Json
+  experienceEyebrow String
+  experienceTitle   String
+  experienceSteps   Json
+  stats             Json
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
