@@ -54,44 +54,42 @@ export default function AboutPage() {
       />
 
       {/* Studio story */}
-      <ScrollReveal variant="rise">
-        <section className="bg-white">
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start py-20 sm:py-28">
+      <section className="bg-white">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start py-20 sm:py-28">
 
-              <div className="space-y-6">
-                <p className="text-base leading-relaxed text-neutral-900">
-                  Established in 1995 A.D. with 30 years of experience, our
-                  Professional Digital Studio Photography specializes in
-                  capturing timeless moments. Using cutting-edge technology,
-                  we create stunning images tailored to your vision.
-                </p>
-                <p className="text-base leading-relaxed text-neutral-900">
-                  Our studio offers a comfortable environment, exceptional
-                  customer service, and quick turnaround times. Choose from
-                  customizable packages including digital images, prints,
-                  albums, and framing. Enhance your photos with our
-                  professional editing services.
-                </p>
-                <p className="text-base leading-relaxed text-neutral-900">
-                  Contact us today to schedule your session and turn your
-                  vision into cherished memories.
-                </p>
+            <div className="space-y-6">
+              <p className="text-base leading-relaxed text-neutral-900">
+                Established in 1995 A.D. with 30 years of experience, our
+                Professional Digital Studio Photography specializes in
+                capturing timeless moments. Using cutting-edge technology,
+                we create stunning images tailored to your vision.
+              </p>
+              <p className="text-base leading-relaxed text-neutral-900">
+                Our studio offers a comfortable environment, exceptional
+                customer service, and quick turnaround times. Choose from
+                customizable packages including digital images, prints,
+                albums, and framing. Enhance your photos with our
+                professional editing services.
+              </p>
+              <p className="text-base leading-relaxed text-neutral-900">
+                Contact us today to schedule your session and turn your
+                vision into cherished memories.
+              </p>
 
-                <div className="pt-4 flex items-center gap-3">
-                  <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-                  <span className="text-xs uppercase tracking-[0.2em] text-neutral-900">
-                    {contactInfo.address}, {contactInfo.city}, {contactInfo.country}
-                  </span>
-                </div>
+              <div className="pt-4 flex items-center gap-3">
+                <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
+                <span className="text-xs uppercase tracking-[0.2em] text-neutral-900">
+                  {contactInfo.address}, {contactInfo.city}, {contactInfo.country}
+                </span>
               </div>
-
-              <AboutShowcase />
-
             </div>
-          </Container>
-        </section>
-      </ScrollReveal>
+
+            <AboutShowcase />
+
+          </div>
+        </Container>
+      </section>
 
       {/* Highlights */}
       <ScrollReveal variant="clip-up">
