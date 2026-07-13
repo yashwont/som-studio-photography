@@ -4,17 +4,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
+import { uploadServiceImage } from "@/src/lib/storage/cloudinary";
 import type { EditServiceState } from "./types";
-
-function slugify(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
 
 export async function updateService(
   serviceId: string,
@@ -24,12 +15,9 @@ export async function updateService(
   await requireAdmin();
 
   const title = String(formData.get("title") ?? "").trim();
-  const rawSlug = String(formData.get("slug") ?? "").trim();
-  const category = String(formData.get("category") ?? "").trim();
-  const shortDescription = String(formData.get("shortDescription") ?? "").trim();
-  const fullDescription = String(formData.get("fullDescription") ?? "").trim();
+  const description = String(formData.get("description") ?? "").trim();
+  const imageFile = formData.get("imageFile");
   const highlightsRaw = String(formData.get("highlights") ?? "");
-  const displayOrderRaw = String(formData.get("displayOrder") ?? "");
   const featured = formData.get("featured") === "on";
   const active = formData.get("active") === "on";
 
@@ -37,36 +25,20 @@ export async function updateService(
     return { error: "Title is required." };
   }
 
-  if (!rawSlug) {
-    return { error: "Slug is required." };
+  if (!description) {
+    return { error: "Description is required." };
   }
 
-  if (!shortDescription) {
-    return { error: "Short description is required." };
-  }
+  let imageUrl: string | undefined;
 
-  const slug = slugify(rawSlug);
+  if (imageFile instanceof File && imageFile.size > 0) {
+    const uploadResult = await uploadServiceImage(imageFile);
 
-  if (!slug) {
-    return { error: "Slug must contain at least one letter or number." };
-  }
+    if (!uploadResult.ok) {
+      return { error: uploadResult.error };
+    }
 
-  const displayOrder = Number.parseInt(displayOrderRaw, 10);
-
-  if (Number.isNaN(displayOrder)) {
-    return { error: "Display order must be a number." };
-  }
-
-  const slugConflict = await prisma.service.findFirst({
-    where: {
-      slug,
-      NOT: { id: serviceId },
-    },
-    select: { id: true },
-  });
-
-  if (slugConflict) {
-    return { error: "Another service already uses this slug." };
+    imageUrl = uploadResult.url;
   }
 
   const highlights = highlightsRaw
@@ -78,14 +50,11 @@ export async function updateService(
     where: { id: serviceId },
     data: {
       title,
-      slug,
-      category: category || null,
-      shortDescription,
-      fullDescription: fullDescription || null,
+      description,
+      ...(imageUrl !== undefined ? { imageUrl } : {}),
       highlights,
       featured,
       active,
-      displayOrder,
     },
   });
 

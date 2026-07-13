@@ -15,8 +15,9 @@ function isCloudinaryConfigured() {
   );
 }
 
-export async function uploadPortfolioImage(
-  file: File
+async function uploadImage(
+  file: File,
+  folder: string
 ): Promise<ImageUploadResult> {
   if (!ALLOWED_MIME_TYPES.includes(file.type)) {
     return { ok: false, error: "Image must be a JPG, PNG, or WEBP file." };
@@ -46,7 +47,7 @@ export async function uploadPortfolioImage(
 
   try {
     const result = await cloudinary.uploader.upload(dataUri, {
-      folder: "portfolio",
+      folder,
       resource_type: "image",
     });
 
@@ -57,4 +58,16 @@ export async function uploadPortfolioImage(
       error: "Image upload failed. Please try again or use an Image URL.",
     };
   }
+}
+
+export async function uploadPortfolioImage(
+  file: File
+): Promise<ImageUploadResult> {
+  return uploadImage(file, "portfolio");
+}
+
+export async function uploadServiceImage(
+  file: File
+): Promise<ImageUploadResult> {
+  return uploadImage(file, "services");
 }

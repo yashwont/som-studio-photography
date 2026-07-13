@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
@@ -108,22 +109,27 @@ function ServicePhotoPlaceholder({ title }: { title: string }) {
   );
 }
 
-function ServiceHighlights({ highlights }: { highlights: string[] }) {
-  if (highlights.length === 0) {
-    return null;
+function ServicePhoto({
+  title,
+  imageUrl,
+}: {
+  title: string;
+  imageUrl: string | null;
+}) {
+  if (!imageUrl) {
+    return <ServicePhotoPlaceholder title={title} />;
   }
 
   return (
-    <ul className="mt-4 flex flex-wrap gap-2">
-      {highlights.map((highlight: string) => (
-        <li
-          key={highlight}
-          className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-900"
-        >
-          {highlight}
-        </li>
-      ))}
-    </ul>
+    <div className="relative aspect-[16/9] w-full overflow-hidden rounded bg-neutral-100">
+      <Image
+        src={imageUrl}
+        alt={title}
+        fill
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        className="object-cover"
+      />
+    </div>
   );
 }
 
@@ -215,6 +221,10 @@ function ServiceBlock({
         <Container>
           <div className="grid grid-cols-1 items-start gap-8 py-10 sm:py-14 lg:grid-cols-2 lg:gap-12">
             <div className={reversed ? "lg:order-2" : undefined}>
+              <ServicePhoto title={service.title} imageUrl={service.imageUrl} />
+            </div>
+
+            <div className={reversed ? "lg:order-1" : undefined}>
               <div className="mb-3 flex items-center gap-4">
                 <span
                   aria-hidden="true"
@@ -235,18 +245,12 @@ function ServiceBlock({
               </h3>
 
               <p className="mt-3 max-w-xl text-base leading-relaxed text-neutral-900">
-                {service.shortDescription}
+                {service.description}
               </p>
 
-              <ServiceHighlights highlights={service.highlights} />
-
               <div className="mt-5">
-                <ServicePhotoPlaceholder title={service.title} />
+                <SessionIncludes service={service} portfolioHref={portfolioHref} />
               </div>
-            </div>
-
-            <div className={reversed ? "lg:order-1" : undefined}>
-              <SessionIncludes service={service} portfolioHref={portfolioHref} />
             </div>
           </div>
         </Container>

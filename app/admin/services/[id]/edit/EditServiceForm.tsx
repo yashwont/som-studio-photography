@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import { updateService } from "./actions";
 import { initialEditServiceState } from "./types";
@@ -8,14 +8,11 @@ import { initialEditServiceState } from "./types";
 export type ServiceFormValues = {
   id: string;
   title: string;
-  slug: string;
-  shortDescription: string;
-  fullDescription: string | null;
+  description: string;
+  imageUrl: string | null;
   highlights: string[];
-  category: string | null;
   featured: boolean;
   active: boolean;
-  displayOrder: number;
 };
 
 const inputClassName =
@@ -23,6 +20,27 @@ const inputClassName =
 
 const labelClassName =
   "mb-1.5 block text-xs uppercase tracking-[0.15em] text-neutral-300";
+
+function getSafePreviewUrl(value: string) {
+  const trimmedUrl = value.trim();
+
+  if (!trimmedUrl || trimmedUrl.includes('"') || trimmedUrl.includes("'")) {
+    return null;
+  }
+
+  if (trimmedUrl.startsWith("/") && !trimmedUrl.startsWith("//")) {
+    return trimmedUrl;
+  }
+
+  try {
+    const url = new URL(trimmedUrl);
+    return url.protocol === "http:" || url.protocol === "https:"
+      ? trimmedUrl
+      : null;
+  } catch {
+    return null;
+  }
+}
 
 export default function EditServiceForm({
   service,
@@ -34,91 +52,77 @@ export default function EditServiceForm({
     updateServiceWithId,
     initialEditServiceState
   );
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const existingPreview = getSafePreviewUrl(service.imageUrl ?? "");
+
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    setFilePreview(file ? URL.createObjectURL(file) : null);
+  }
+
+  const previewUrl = filePreview ?? existingPreview;
 
   return (
     <form action={formAction} className="space-y-6">
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="title" className={labelClassName}>
-            Title
-          </label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            required
-            defaultValue={service.title}
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="slug" className={labelClassName}>
-            Slug
-          </label>
-          <input
-            id="slug"
-            name="slug"
-            type="text"
-            required
-            defaultValue={service.slug}
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="category" className={labelClassName}>
-            Category
-          </label>
-          <input
-            id="category"
-            name="category"
-            type="text"
-            defaultValue={service.category ?? ""}
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="displayOrder" className={labelClassName}>
-            Display order
-          </label>
-          <input
-            id="displayOrder"
-            name="displayOrder"
-            type="number"
-            required
-            defaultValue={service.displayOrder}
-            className={inputClassName}
-          />
-        </div>
-      </div>
-
       <div>
-        <label htmlFor="shortDescription" className={labelClassName}>
-          Short description
+        <label htmlFor="title" className={labelClassName}>
+          Title
         </label>
-        <textarea
-          id="shortDescription"
-          name="shortDescription"
+        <input
+          id="title"
+          name="title"
+          type="text"
           required
-          rows={2}
-          defaultValue={service.shortDescription}
+          defaultValue={service.title}
           className={inputClassName}
         />
       </div>
 
       <div>
-        <label htmlFor="fullDescription" className={labelClassName}>
-          Full description
+        <label htmlFor="description" className={labelClassName}>
+          Description
         </label>
         <textarea
-          id="fullDescription"
-          name="fullDescription"
+          id="description"
+          name="description"
+          required
           rows={4}
-          defaultValue={service.fullDescription ?? ""}
+          defaultValue={service.description}
           className={inputClassName}
         />
+      </div>
+
+      <div>
+        <label htmlFor="imageFile" className={labelClassName}>
+          Add photo
+        </label>
+        <input
+          id="imageFile"
+          name="imageFile"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={handleFileChange}
+          className={`${inputClassName} cursor-pointer`}
+        />
+        <p className="mt-1.5 text-xs text-neutral-500">
+          JPG, PNG, or WEBP, up to 5MB. Leave empty to keep the current photo.
+        </p>
+      </div>
+
+      <div>
+        <span className={labelClassName}>Preview</span>
+        {previewUrl ? (
+          <div
+            aria-label="Image preview"
+            role="img"
+            className="h-32 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${JSON.stringify(previewUrl)})` }}
+          />
+        ) : (
+          <div className="flex h-32 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
+            No preview
+          </div>
+        )}
       </div>
 
       <div>

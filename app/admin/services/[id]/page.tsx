@@ -116,18 +116,6 @@ export default async function AdminServiceDetailPage({
         <DetailCard title="Basic Details">
           <dl className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <dt className="text-neutral-500">Category</dt>
-              <dd className="mt-1 text-neutral-100">
-                {service.category ?? "—"}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-neutral-500">Display order</dt>
-              <dd className="mt-1 text-neutral-100">
-                {service.displayOrder}
-              </dd>
-            </div>
-            <div>
               <dt className="text-neutral-500">Created</dt>
               <dd className="mt-1 text-neutral-100">
                 {formatDate(service.createdAt)}
@@ -157,28 +145,10 @@ export default async function AdminServiceDetailPage({
           </div>
         </DetailCard>
 
-        <DetailCard title="Descriptions">
-          <div className="space-y-4 text-sm">
-            <div>
-              <p className="text-xs uppercase tracking-wide text-neutral-500">
-                Short description
-              </p>
-              <p className="mt-1 leading-relaxed text-neutral-200">
-                {service.shortDescription}
-              </p>
-            </div>
-
-            {service.fullDescription && (
-              <div>
-                <p className="text-xs uppercase tracking-wide text-neutral-500">
-                  Full description
-                </p>
-                <p className="mt-1 leading-relaxed text-neutral-200">
-                  {service.fullDescription}
-                </p>
-              </div>
-            )}
-          </div>
+        <DetailCard title="Description">
+          <p className="text-sm leading-relaxed text-neutral-200">
+            {service.description}
+          </p>
         </DetailCard>
 
         <DetailCard title="Highlights">

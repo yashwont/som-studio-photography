@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
+import { uploadServiceImage } from "@/src/lib/storage/cloudinary";
 import type { NewServiceState } from "./types";
 
 function slugify(value: string) {
@@ -23,10 +24,9 @@ export async function createService(
   await requireAdmin();
 
   const title = String(formData.get("title") ?? "").trim();
-  const rawSlug = String(formData.get("slug") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
-  const shortDescription = String(formData.get("shortDescription") ?? "").trim();
-  const fullDescription = String(formData.get("fullDescription") ?? "").trim();
+  const description = String(formData.get("description") ?? "").trim();
+  const imageFile = formData.get("imageFile");
   const highlightsRaw = String(formData.get("highlights") ?? "");
   const displayOrderRaw = String(formData.get("displayOrder") ?? "");
   const featured = formData.get("featured") === "on";
@@ -36,18 +36,14 @@ export async function createService(
     return { error: "Title is required." };
   }
 
-  if (!rawSlug) {
-    return { error: "Slug is required." };
+  if (!description) {
+    return { error: "Description is required." };
   }
 
-  if (!shortDescription) {
-    return { error: "Short description is required." };
-  }
+  const baseSlug = slugify(title);
 
-  const slug = slugify(rawSlug);
-
-  if (!slug) {
-    return { error: "Slug must contain at least one letter or number." };
+  if (!baseSlug) {
+    return { error: "Title must contain at least one letter or number." };
   }
 
   const displayOrder = Number.parseInt(displayOrderRaw, 10);
@@ -56,13 +52,26 @@ export async function createService(
     return { error: "Display order must be a number." };
   }
 
-  const slugConflict = await prisma.service.findUnique({
-    where: { slug },
-    select: { id: true },
-  });
+  let slug = baseSlug;
+  let suffix = 2;
 
-  if (slugConflict) {
-    return { error: "A service with this slug already exists." };
+  while (
+    await prisma.service.findUnique({ where: { slug }, select: { id: true } })
+  ) {
+    slug = `${baseSlug}-${suffix}`;
+    suffix += 1;
+  }
+
+  let imageUrl: string | null = null;
+
+  if (imageFile instanceof File && imageFile.size > 0) {
+    const uploadResult = await uploadServiceImage(imageFile);
+
+    if (!uploadResult.ok) {
+      return { error: uploadResult.error };
+    }
+
+    imageUrl = uploadResult.url;
   }
 
   const highlights = highlightsRaw
@@ -75,8 +84,8 @@ export async function createService(
       title,
       slug,
       category: category || null,
-      shortDescription,
-      fullDescription: fullDescription || null,
+      description,
+      imageUrl,
       highlights,
       featured,
       active,

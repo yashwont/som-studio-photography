@@ -38,14 +38,11 @@ export default async function AdminServiceEditPage({
   const serviceFormValues: ServiceFormValues = {
     id: service.id,
     title: service.title,
-    slug: service.slug,
-    shortDescription: service.shortDescription,
-    fullDescription: service.fullDescription,
+    description: service.description,
+    imageUrl: service.imageUrl,
     highlights: service.highlights,
-    category: service.category,
     featured: service.featured,
     active: service.active,
-    displayOrder: service.displayOrder,
   };
 
   return (

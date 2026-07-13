@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import { createService } from "./actions";
 import { initialNewServiceState } from "./types";
@@ -16,6 +16,12 @@ export default function NewServiceForm() {
     createService,
     initialNewServiceState
   );
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    setFilePreview(file ? URL.createObjectURL(file) : null);
+  }
 
   return (
     <form action={formAction} className="space-y-6">
@@ -27,19 +33,6 @@ export default function NewServiceForm() {
           <input
             id="title"
             name="title"
-            type="text"
-            required
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="slug" className={labelClassName}>
-            Slug
-          </label>
-          <input
-            id="slug"
-            name="slug"
             type="text"
             required
             className={inputClassName}
@@ -69,28 +62,50 @@ export default function NewServiceForm() {
       </div>
 
       <div>
-        <label htmlFor="shortDescription" className={labelClassName}>
-          Short description
+        <label htmlFor="description" className={labelClassName}>
+          Description
         </label>
         <textarea
-          id="shortDescription"
-          name="shortDescription"
+          id="description"
+          name="description"
           required
-          rows={2}
+          rows={4}
           className={inputClassName}
         />
       </div>
 
       <div>
-        <label htmlFor="fullDescription" className={labelClassName}>
-          Full description
+        <label htmlFor="imageFile" className={labelClassName}>
+          Add photo
         </label>
-        <textarea
-          id="fullDescription"
-          name="fullDescription"
-          rows={4}
-          className={inputClassName}
+        <input
+          id="imageFile"
+          name="imageFile"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={handleFileChange}
+          className={`${inputClassName} cursor-pointer`}
         />
+        <p className="mt-1.5 text-xs text-neutral-500">
+          JPG, PNG, or WEBP, up to 5MB. Optional - shows a placeholder until
+          set.
+        </p>
+      </div>
+
+      <div>
+        <span className={labelClassName}>Preview</span>
+        {filePreview ? (
+          <div
+            aria-label="Image preview"
+            role="img"
+            className="h-32 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${JSON.stringify(filePreview)})` }}
+          />
+        ) : (
+          <div className="flex h-32 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
+            No preview
+          </div>
+        )}
       </div>
 
       <div>
