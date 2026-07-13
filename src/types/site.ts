@@ -39,16 +39,6 @@ export interface SiteImage {
   credit?: string;
 }
 
-export interface Testimonial {
-  id: string;
-  name: string;
-  role: string;
-  content: string;
-  rating: number;
-  service: string;
-  location: string;
-}
-
 export interface SocialLink {
   platform: string;
   label: string;

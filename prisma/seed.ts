@@ -5,7 +5,6 @@ import { contactInfo } from "../src/data/contact";
 import { navLinks, ctaLink } from "../src/data/navigation";
 import { portfolioCategories, portfolioWorks } from "../src/data/portfolio";
 import { services } from "../src/data/services";
-import { testimonials } from "../src/data/testimonials";
 import { heroGallery, heroImage, studioGallery, studioImage } from "../src/data/visuals";
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -138,35 +137,6 @@ async function seedPortfolio() {
   }
 }
 
-async function seedTestimonials() {
-  for (const [index, testimonial] of testimonials.entries()) {
-    await prisma.testimonial.upsert({
-      where: { id: testimonial.id },
-      update: {
-        clientName: testimonial.name,
-        serviceType: testimonial.service,
-        review: testimonial.content,
-        rating: testimonial.rating,
-        location: testimonial.location,
-        featured: index < 3,
-        active: true,
-        displayOrder: index,
-      },
-      create: {
-        id: testimonial.id,
-        clientName: testimonial.name,
-        serviceType: testimonial.service,
-        review: testimonial.content,
-        rating: testimonial.rating,
-        location: testimonial.location,
-        featured: index < 3,
-        active: true,
-        displayOrder: index,
-      },
-    });
-  }
-}
-
 async function seedSiteSettings() {
   const settings = [
     ["contact.info", contactInfo],
@@ -195,7 +165,6 @@ async function seedSiteSettings() {
 async function main() {
   await seedServicesAndPackages();
   await seedPortfolio();
-  await seedTestimonials();
   await seedSiteSettings();
 }
 

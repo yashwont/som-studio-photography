@@ -18,7 +18,6 @@ async function main() {
     packages: await prisma.package.count(),
     portfolioCategories: await prisma.portfolioCategory.count(),
     portfolioImages: await prisma.portfolioImage.count(),
-    testimonials: await prisma.testimonial.count(),
     siteSettings: await prisma.siteSetting.count(),
     inquiries: await prisma.inquiry.count(),
     bookings: await prisma.booking.count(),

@@ -84,24 +84,6 @@ model PortfolioImage {
   @@map("portfolio_images")
 }
 
-model Testimonial {
-  id           String   @id @default(cuid())
-  clientName   String
-  serviceType  String
-  review       String
-  rating       Int      @default(5)
-  location     String?
-  featured     Boolean  @default(false)
-  active       Boolean  @default(true)
-  displayOrder Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@index([active, displayOrder])
-  @@index([featured, active])
-  @@map("testimonials")
-}
-
 model Inquiry {
   id            String        @id @default(cuid())
   name          String

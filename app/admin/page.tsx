@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/src/lib/auth/admin";
-import { prisma } from "@/src/lib/prisma";
 import {
   getAdminDashboardStats,
   type AdminDashboardRecentInquiry,
@@ -63,10 +62,7 @@ function SectionHeading({ children }: { children: string }) {
 export default async function AdminPage() {
   const admin = await requireAdmin();
 
-  const [stats, testimonialsCount] = await Promise.all([
-    getAdminDashboardStats(),
-    prisma.testimonial.count(),
-  ]);
+  const stats = await getAdminDashboardStats();
 
   return (
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
@@ -99,7 +95,6 @@ export default async function AdminPage() {
             label="Portfolio images"
             value={stats.portfolioImagesCount}
           />
-          <AdminStatCard label="Testimonials" value={testimonialsCount} />
         </div>
       </section>
 
