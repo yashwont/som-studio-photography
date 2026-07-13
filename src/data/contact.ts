@@ -10,7 +10,7 @@ export const contactInfo: ContactInfo = {
   mapUrl:
     "https://www.google.com/maps/place/SOM+PHOTO+STUDIO/@27.7424254,85.3317994,17z/data=!4m15!1m8!3m7!1s0x39eb19370a975f3d:0x46e16a975c9ca45d!2sSOM+PHOTO+STUDIO!8m2!3d27.7424254!4d85.3317994!10e1!16s%2Fg%2F11df7_tgfg!3m5!1s0x39eb19370a975f3d:0x46e16a975c9ca45d!8m2!3d27.7424254!4d85.3317994!16s%2Fg%2F11df7_tgfg?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",
   mapEmbedUrl:
-    "https://www.google.com/maps?q=SOM+PHOTO+STUDIO,27.7424254,85.3317994&z=17&output=embed",
+    "https://www.google.com/maps?q=27.7424254,85.3317994&z=17&output=embed",
   socialLinks: [
     {
       platform: "instagram",
