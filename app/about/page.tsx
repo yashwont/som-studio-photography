@@ -8,6 +8,7 @@ import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import AboutShowcase from "@/src/components/sections/AboutShowcase";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import { contactInfo } from "@/src/data/contact";
+import { getAboutContent } from "@/src/lib/db/about";
 import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
@@ -19,38 +20,17 @@ export const metadata: Metadata = {
   },
 };
 
-const highlights = [
-  {
-    title: "Client-First Planning",
-    description:
-      "Every session starts with a conversation. We learn what you want, advise on timing and style, and make sure everything is prepared before the camera comes out.",
-  },
-  {
-    title: "Creative Direction",
-    description:
-      "You don't need posing experience. We guide you through the session naturally so your images feel authentic, relaxed, and true to who you are.",
-  },
-  {
-    title: "Polished Editing",
-    description:
-      "Every image is individually selected and carefully refined before delivery. No bulk exports - only the best frames, edited to a consistent standard.",
-  },
-  {
-    title: "Studio & Outdoor",
-    description:
-      "We work in our private studio and on location across Kathmandu. Controlled lighting or natural settings - we adapt to whatever serves your vision.",
-  },
-];
+export default async function AboutPage() {
+  const content = await getAboutContent();
 
-export default function AboutPage() {
   return (
     <>
       <Navbar />
 
       <PageHeader
-        eyebrow="About the studio"
-        title="SomStudioPhotography"
-        subtitle="A Kathmandu photography studio built for meaningful moments and images worth keeping."
+        eyebrow={content.heroEyebrow}
+        title={content.heroTitle}
+        subtitle={content.heroSubtitle}
       />
 
       {/* Studio story */}
@@ -60,22 +40,18 @@ export default function AboutPage() {
 
             <div className="space-y-6">
               <p className="text-base leading-relaxed text-neutral-900">
-                Established in 1995 A.D. with 30 years of experience, our
-                Professional Digital Studio Photography specializes in
-                capturing timeless moments. Using cutting-edge technology,
-                we create stunning images tailored to your vision.
+                {content.storyParagraph1}
               </p>
-              <p className="text-base leading-relaxed text-neutral-900">
-                Our studio offers a comfortable environment, exceptional
-                customer service, and quick turnaround times. Choose from
-                customizable packages including digital images, prints,
-                albums, and framing. Enhance your photos with our
-                professional editing services.
-              </p>
-              <p className="text-base leading-relaxed text-neutral-900">
-                Contact us today to schedule your session and turn your
-                vision into cherished memories.
-              </p>
+              {content.storyParagraph2 && (
+                <p className="text-base leading-relaxed text-neutral-900">
+                  {content.storyParagraph2}
+                </p>
+              )}
+              {content.storyParagraph3 && (
+                <p className="text-base leading-relaxed text-neutral-900">
+                  {content.storyParagraph3}
+                </p>
+              )}
 
               <div className="pt-4 flex items-center gap-3">
                 <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
@@ -98,14 +74,14 @@ export default function AboutPage() {
             <div className="py-20 sm:py-28">
             <div className="mb-12 sm:mb-14">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
-                Client experience
+                {content.highlightsEyebrow}
               </p>
               <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-                What to expect
+                {content.highlightsTitle}
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {highlights.map((item: { title: string; description: string }) => (
+              {content.highlights.map((item) => (
                 <div
                   key={item.title}
                   className="rounded border border-neutral-200 bg-neutral-50 p-6 transition-colors hover:border-neutral-300"
@@ -135,16 +111,16 @@ export default function AboutPage() {
         <Container>
           <div className="flex flex-col items-center gap-6 py-16 sm:py-20 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
-              Ready to start?
+              {content.ctaEyebrow}
             </p>
             <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
-              Let&rsquo;s plan your next session.
+              {content.ctaTitle}
             </h2>
             <p className="max-w-md text-neutral-900">
-              Reach out and we&rsquo;ll take it from there - no complicated process.
+              {content.ctaDescription}
             </p>
             <Button href="/contact" variant="primary" size="lg">
-              Book a Session
+              {content.ctaButtonLabel}
             </Button>
           </div>
         </Container>

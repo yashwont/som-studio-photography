@@ -10,6 +10,7 @@ type AdminNavLink = {
 
 const NAV_LINKS: AdminNavLink[] = [
   { href: "/admin", label: "Dashboard" },
+  { href: "/admin/about", label: "About Page" },
   { href: "/admin/services", label: "Services" },
   { href: "/admin/packages", label: "Packages" },
   { href: "/admin/portfolio", label: "Portfolio" },

@@ -191,6 +191,27 @@ model SiteSetting {
   @@map("site_settings")
 }
 
+model AboutContent {
+  id                String   @id
+  heroEyebrow       String
+  heroTitle         String
+  heroSubtitle      String
+  storyParagraph1   String
+  storyParagraph2   String
+  storyParagraph3   String
+  highlightsEyebrow String
+  highlightsTitle   String
+  highlights        Json
+  ctaEyebrow        String
+  ctaTitle          String
+  ctaDescription    String
+  ctaButtonLabel    String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("about_content")
+}
+
 enum InquiryStatus {
   NEW
   CONTACTED
