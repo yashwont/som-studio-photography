@@ -8,7 +8,23 @@ import { prisma } from "@/src/lib/prisma";
 export async function deleteService(serviceId: string) {
   await requireAdmin();
 
-  await prisma.service.delete({ where: { id: serviceId } });
+  await prisma.$transaction(async (tx) => {
+    const service = await tx.service.findUnique({
+      where: { id: serviceId },
+      select: { displayOrder: true },
+    });
+
+    if (!service) {
+      return;
+    }
+
+    await tx.service.delete({ where: { id: serviceId } });
+
+    await tx.service.updateMany({
+      where: { displayOrder: { gt: service.displayOrder } },
+      data: { displayOrder: { decrement: 1 } },
+    });
+  });
 
   revalidatePath("/");
   revalidatePath("/services");

@@ -1,9 +1,20 @@
 "use client";
 
-import { useActionState, useState, type ChangeEvent } from "react";
+import {
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from "react";
 import Link from "next/link";
+import type { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
 import { createService } from "./actions";
 import { initialNewServiceState } from "./types";
+
+type PortfolioCategoryOption = Awaited<
+  ReturnType<typeof getAdminPortfolioCategoriesForSelect>
+>[number];
 
 const inputClassName =
   "w-full rounded border border-neutral-700 bg-neutral-900 px-4 py-2.5 text-sm text-neutral-100 placeholder:text-neutral-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/40";
@@ -11,16 +22,35 @@ const inputClassName =
 const labelClassName =
   "mb-1.5 block text-xs uppercase tracking-[0.15em] text-neutral-300";
 
-export default function NewServiceForm() {
+export default function NewServiceForm({
+  portfolioCategories,
+}: {
+  portfolioCategories: PortfolioCategoryOption[];
+}) {
   const [state, formAction, pending] = useActionState(
     createService,
     initialNewServiceState
   );
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const filePreviewRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (filePreviewRef.current) {
+        URL.revokeObjectURL(filePreviewRef.current);
+      }
+    };
+  }, []);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    if (filePreviewRef.current) {
+      URL.revokeObjectURL(filePreviewRef.current);
+    }
+
     const file = event.target.files?.[0];
-    setFilePreview(file ? URL.createObjectURL(file) : null);
+    const nextPreview = file ? URL.createObjectURL(file) : null;
+    filePreviewRef.current = nextPreview;
+    setFilePreview(nextPreview);
   }
 
   return (
@@ -52,6 +82,29 @@ export default function NewServiceForm() {
             className={inputClassName}
           />
         </div>
+      </div>
+
+      <div>
+        <label htmlFor="category" className={labelClassName}>
+          Portfolio Category
+        </label>
+        <select
+          id="category"
+          name="category"
+          defaultValue=""
+          className={inputClassName}
+        >
+          <option value="">No matching gallery (links to /portfolio)</option>
+          {portfolioCategories.map((category: PortfolioCategoryOption) => (
+            <option key={category.id} value={category.slug}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <p className="mt-1.5 text-xs text-neutral-500">
+          Controls where this service&rsquo;s &ldquo;View Portfolio&rdquo;
+          button links to.
+        </p>
       </div>
 
       <div>

@@ -39,8 +39,11 @@ function getServicePortfolioHref(
   service: ServiceRecord,
   portfolioMap: Map<string, string>
 ) {
-  const categorySlug = service.category ?? service.id;
-  const workSlug = portfolioMap.get(categorySlug);
+  if (!service.category) {
+    return "/portfolio";
+  }
+
+  const workSlug = portfolioMap.get(service.category);
 
   return workSlug ? `/portfolio/${workSlug}` : "/portfolio";
 }

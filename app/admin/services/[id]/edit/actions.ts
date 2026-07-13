@@ -15,6 +15,7 @@ export async function updateService(
   await requireAdmin();
 
   const title = String(formData.get("title") ?? "").trim();
+  const category = String(formData.get("category") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").trim();
   const imageFile = formData.get("imageFile");
@@ -63,6 +64,7 @@ export async function updateService(
     where: { id: serviceId },
     data: {
       title,
+      category: category || null,
       description,
       price,
       ...(imageUrl !== undefined ? { imageUrl } : {}),

@@ -43,6 +43,27 @@ function formatPrice(price: AdminServiceDetail["price"]) {
   return `NRS ${price.toNumber().toLocaleString("en-US")}`;
 }
 
+function getSafeImageUrl(imageUrl: string) {
+  const trimmedUrl = imageUrl.trim();
+
+  if (!trimmedUrl || trimmedUrl.includes('"') || trimmedUrl.includes("'")) {
+    return null;
+  }
+
+  if (trimmedUrl.startsWith("/") && !trimmedUrl.startsWith("//")) {
+    return trimmedUrl;
+  }
+
+  try {
+    const url = new URL(trimmedUrl);
+    return url.protocol === "http:" || url.protocol === "https:"
+      ? trimmedUrl
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 function StatusBadge({ active }: { active: boolean }) {
   return (
     <span
@@ -87,6 +108,8 @@ export default async function AdminServiceDetailPage({
     notFound();
   }
 
+  const photoUrl = service.imageUrl ? getSafeImageUrl(service.imageUrl) : null;
+
   return (
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
       <AdminPageHeader
@@ -118,6 +141,21 @@ export default async function AdminServiceDetailPage({
       />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        <DetailCard title="Photo">
+          {photoUrl ? (
+            <div
+              aria-label={`${service.title} photo`}
+              role="img"
+              className="h-40 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${JSON.stringify(photoUrl)})` }}
+            />
+          ) : (
+            <div className="flex h-40 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-sm text-neutral-500">
+              No photo uploaded
+            </div>
+          )}
+        </DetailCard>
+
         <DetailCard title="Basic Details">
           <dl className="grid grid-cols-2 gap-4 text-sm">
             <div>

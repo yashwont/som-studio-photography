@@ -1,9 +1,20 @@
 "use client";
 
-import { useActionState, useState, type ChangeEvent } from "react";
+import {
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from "react";
 import Link from "next/link";
+import type { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
 import { updateService } from "./actions";
 import { initialEditServiceState } from "./types";
+
+type PortfolioCategoryOption = Awaited<
+  ReturnType<typeof getAdminPortfolioCategoriesForSelect>
+>[number];
 
 export type ServiceFormValues = {
   id: string;
@@ -12,6 +23,7 @@ export type ServiceFormValues = {
   imageUrl: string | null;
   price: number | null;
   inclusions: string[];
+  category: string | null;
   featured: boolean;
   active: boolean;
 };
@@ -45,8 +57,10 @@ function getSafePreviewUrl(value: string) {
 
 export default function EditServiceForm({
   service,
+  portfolioCategories,
 }: {
   service: ServiceFormValues;
+  portfolioCategories: PortfolioCategoryOption[];
 }) {
   const updateServiceWithId = updateService.bind(null, service.id);
   const [state, formAction, pending] = useActionState(
@@ -55,10 +69,25 @@ export default function EditServiceForm({
   );
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const existingPreview = getSafePreviewUrl(service.imageUrl ?? "");
+  const filePreviewRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (filePreviewRef.current) {
+        URL.revokeObjectURL(filePreviewRef.current);
+      }
+    };
+  }, []);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    if (filePreviewRef.current) {
+      URL.revokeObjectURL(filePreviewRef.current);
+    }
+
     const file = event.target.files?.[0];
-    setFilePreview(file ? URL.createObjectURL(file) : null);
+    const nextPreview = file ? URL.createObjectURL(file) : null;
+    filePreviewRef.current = nextPreview;
+    setFilePreview(nextPreview);
   }
 
   const previewUrl = filePreview ?? existingPreview;
@@ -91,6 +120,29 @@ export default function EditServiceForm({
           defaultValue={service.description}
           className={inputClassName}
         />
+      </div>
+
+      <div>
+        <label htmlFor="category" className={labelClassName}>
+          Portfolio Category
+        </label>
+        <select
+          id="category"
+          name="category"
+          defaultValue={service.category ?? ""}
+          className={inputClassName}
+        >
+          <option value="">No matching gallery (links to /portfolio)</option>
+          {portfolioCategories.map((category: PortfolioCategoryOption) => (
+            <option key={category.id} value={category.slug}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <p className="mt-1.5 text-xs text-neutral-500">
+          Controls where this service&rsquo;s &ldquo;View Portfolio&rdquo;
+          button links to.
+        </p>
       </div>
 
       <div>

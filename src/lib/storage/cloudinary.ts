@@ -17,7 +17,8 @@ function isCloudinaryConfigured() {
 
 async function uploadImage(
   file: File,
-  folder: string
+  folder: string,
+  { suggestUrlFallback = true }: { suggestUrlFallback?: boolean } = {}
 ): Promise<ImageUploadResult> {
   if (!ALLOWED_MIME_TYPES.includes(file.type)) {
     return { ok: false, error: "Image must be a JPG, PNG, or WEBP file." };
@@ -30,7 +31,9 @@ async function uploadImage(
   if (!isCloudinaryConfigured()) {
     return {
       ok: false,
-      error: "Image upload is not configured. Enter an Image URL instead.",
+      error: suggestUrlFallback
+        ? "Image upload is not configured. Enter an Image URL instead."
+        : "Image upload is not configured.",
     };
   }
 
@@ -55,7 +58,9 @@ async function uploadImage(
   } catch {
     return {
       ok: false,
-      error: "Image upload failed. Please try again or use an Image URL.",
+      error: suggestUrlFallback
+        ? "Image upload failed. Please try again or use an Image URL."
+        : "Image upload failed. Please try again.",
     };
   }
 }
@@ -69,5 +74,5 @@ export async function uploadPortfolioImage(
 export async function uploadServiceImage(
   file: File
 ): Promise<ImageUploadResult> {
-  return uploadImage(file, "services");
+  return uploadImage(file, "services", { suggestUrlFallback: false });
 }

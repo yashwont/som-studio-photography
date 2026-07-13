@@ -20,6 +20,48 @@ function formatDate(date: Date) {
   });
 }
 
+function getSafeThumbnailUrl(imageUrl: string) {
+  const trimmedUrl = imageUrl.trim();
+
+  if (!trimmedUrl || trimmedUrl.includes('"') || trimmedUrl.includes("'")) {
+    return null;
+  }
+
+  if (trimmedUrl.startsWith("/") && !trimmedUrl.startsWith("//")) {
+    return trimmedUrl;
+  }
+
+  try {
+    const url = new URL(trimmedUrl);
+    return url.protocol === "http:" || url.protocol === "https:"
+      ? trimmedUrl
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function ServiceThumbnail({ imageUrl }: { imageUrl: string | null }) {
+  const thumbnailUrl = imageUrl ? getSafeThumbnailUrl(imageUrl) : null;
+
+  if (!thumbnailUrl) {
+    return (
+      <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-[10px] text-neutral-500">
+        No photo
+      </div>
+    );
+  }
+
+  return (
+    <div
+      aria-label="Service photo"
+      role="img"
+      className="h-12 w-16 shrink-0 rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${JSON.stringify(thumbnailUrl)})` }}
+    />
+  );
+}
+
 function StatusBadge({ active }: { active: boolean }) {
   return (
     <span
@@ -82,9 +124,7 @@ export default async function AdminServicesPage() {
       <section className="mt-8">
         {services.length === 0 ? (
           <div className="rounded border border-neutral-800 bg-neutral-900 p-8 text-center">
-            <p className="text-sm text-neutral-300">
-              No services found. Services can be added in the next phase.
-            </p>
+            <p className="text-sm text-neutral-300">No services yet.</p>
             <AddServiceButton className="mt-4" />
           </div>
         ) : (
@@ -92,6 +132,7 @@ export default async function AdminServicesPage() {
             <table className="w-full min-w-[860px] text-left text-sm">
               <thead className="bg-neutral-900 text-xs uppercase tracking-wide text-neutral-400">
                 <tr>
+                  <th className="px-4 py-3 font-semibold">Photo</th>
                   <th className="px-4 py-3 font-semibold">Title</th>
                   <th className="px-4 py-3 font-semibold">Status</th>
                   <th className="px-4 py-3 font-semibold">Featured</th>
@@ -108,6 +149,9 @@ export default async function AdminServicesPage() {
                     key={service.id}
                     className="bg-neutral-950 hover:bg-neutral-900/60"
                   >
+                    <td className="px-4 py-3">
+                      <ServiceThumbnail imageUrl={service.imageUrl} />
+                    </td>
                     <td className="px-4 py-3 font-medium text-neutral-50">
                       {service.title}
                     </td>

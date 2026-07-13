@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminServiceById } from "@/src/lib/db/admin-services";
+import { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
 import EditServiceForm, { type ServiceFormValues } from "./EditServiceForm";
@@ -35,6 +36,8 @@ export default async function AdminServiceEditPage({
     notFound();
   }
 
+  const portfolioCategories = await getAdminPortfolioCategoriesForSelect();
+
   const serviceFormValues: ServiceFormValues = {
     id: service.id,
     title: service.title,
@@ -42,6 +45,7 @@ export default async function AdminServiceEditPage({
     imageUrl: service.imageUrl,
     price: service.price ? service.price.toNumber() : null,
     inclusions: service.inclusions,
+    category: service.category,
     featured: service.featured,
     active: service.active,
   };
@@ -70,7 +74,10 @@ export default async function AdminServiceEditPage({
       />
 
       <div className="mt-8 max-w-3xl rounded border border-neutral-800 bg-neutral-900 p-6">
-        <EditServiceForm service={serviceFormValues} />
+        <EditServiceForm
+          service={serviceFormValues}
+          portfolioCategories={portfolioCategories}
+        />
       </div>
     </AdminShell>
   );

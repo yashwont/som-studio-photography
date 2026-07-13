@@ -16,9 +16,7 @@ export default function DeleteServiceButton({
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     if (
-      !window.confirm(
-        `Delete "${serviceTitle}"? This cannot be undone and will also remove its packages.`
-      )
+      !window.confirm(`Delete "${serviceTitle}"? This cannot be undone.`)
     ) {
       event.preventDefault();
     }

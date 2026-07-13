@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
+import { makeRoomForServiceDisplayOrder } from "@/src/lib/db/admin-services";
 import { uploadServiceImage } from "@/src/lib/storage/cloudinary";
 import type { NewServiceState } from "./types";
 
@@ -24,6 +25,7 @@ export async function createService(
   await requireAdmin();
 
   const title = String(formData.get("title") ?? "").trim();
+  const category = String(formData.get("category") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").trim();
   const imageFile = formData.get("imageFile");
@@ -91,19 +93,24 @@ export async function createService(
     .map((line) => line.trim())
     .filter(Boolean);
 
-  const service = await prisma.service.create({
-    data: {
-      title,
-      slug,
-      description,
-      imageUrl,
-      price,
-      inclusions,
-      featured,
-      active,
-      displayOrder,
-    },
-    select: { id: true },
+  const service = await prisma.$transaction(async (tx) => {
+    await makeRoomForServiceDisplayOrder(tx, displayOrder);
+
+    return tx.service.create({
+      data: {
+        title,
+        slug,
+        category: category || null,
+        description,
+        imageUrl,
+        price,
+        inclusions,
+        featured,
+        active,
+        displayOrder,
+      },
+      select: { id: true },
+    });
   });
 
   revalidatePath("/");
