@@ -5,6 +5,7 @@ import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import { getActiveServices } from "@/src/lib/db/services";
+import { getPortfolioCategories } from "@/src/lib/db/portfolio";
 import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
@@ -18,6 +19,31 @@ export const metadata: Metadata = {
 
 type ServiceWithPackages = Awaited<ReturnType<typeof getActiveServices>>[number];
 type ServicePackage = ServiceWithPackages["packages"][number];
+type PortfolioCategoryWithImages = Awaited<ReturnType<typeof getPortfolioCategories>>[number];
+
+function buildServicePortfolioMap(categories: PortfolioCategoryWithImages[]) {
+  const map = new Map<string, string>();
+
+  categories.forEach((category: PortfolioCategoryWithImages) => {
+    const firstImage = category.images[0];
+
+    if (firstImage) {
+      map.set(category.slug, firstImage.slug);
+    }
+  });
+
+  return map;
+}
+
+function getServicePortfolioHref(
+  service: ServiceWithPackages,
+  portfolioMap: Map<string, string>
+) {
+  const categorySlug = service.category ?? service.id;
+  const workSlug = portfolioMap.get(categorySlug);
+
+  return workSlug ? `/portfolio/${workSlug}` : "/portfolio";
+}
 
 const faqs = [
   {
@@ -55,13 +81,40 @@ function formatPackagePrice(price: ServicePackage["price"]) {
   return `NRS ${price.toNumber().toLocaleString("en-US")}`;
 }
 
+function ServicePhotoPlaceholder({ title }: { title: string }) {
+  return (
+    <div
+      role="img"
+      aria-label={`${title} photo placeholder`}
+      className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded border border-dashed border-neutral-300 bg-gradient-to-br from-neutral-100 to-neutral-50 text-neutral-300"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-7 w-7"
+        aria-hidden="true"
+      >
+        <path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" />
+        <circle cx="12" cy="13.5" r="3.5" />
+      </svg>
+      <span className="text-[10px] font-semibold uppercase tracking-[0.2em]">
+        Photo coming soon
+      </span>
+    </div>
+  );
+}
+
 function ServiceHighlights({ highlights }: { highlights: string[] }) {
   if (highlights.length === 0) {
     return null;
   }
 
   return (
-    <ul className="mt-6 flex flex-wrap gap-2">
+    <ul className="mt-4 flex flex-wrap gap-2">
       {highlights.map((highlight: string) => (
         <li
           key={highlight}
@@ -74,14 +127,20 @@ function ServiceHighlights({ highlights }: { highlights: string[] }) {
   );
 }
 
-function SessionIncludes({ service }: { service: ServiceWithPackages }) {
+function SessionIncludes({
+  service,
+  portfolioHref,
+}: {
+  service: ServiceWithPackages;
+  portfolioHref: string;
+}) {
   if (service.packages.length === 0) {
     return (
-      <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
-        <p className="mb-2 text-sm font-semibold text-neutral-950">
+      <div className="rounded border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
+        <p className="mb-1.5 text-sm font-semibold text-neutral-950">
           Custom quote available
         </p>
-        <p className="mb-6 text-sm leading-relaxed text-neutral-900">
+        <p className="mb-4 text-sm leading-relaxed text-neutral-900">
           Pricing depends on your specific requirements. Tell us what you need
           and we&rsquo;ll send a tailored quote.
         </p>
@@ -93,22 +152,22 @@ function SessionIncludes({ service }: { service: ServiceWithPackages }) {
   }
 
   return (
-    <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
-      <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+    <div className="rounded border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
+      <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
         Session includes
       </p>
 
-      <div className="space-y-5">
+      <div className="space-y-3">
         {service.packages.map((pkg: ServicePackage) => (
-          <div key={pkg.id} className="rounded border border-neutral-200 bg-white p-5">
-            <div className="mb-3 flex items-center justify-between gap-3">
+          <div key={pkg.id} className="rounded border border-neutral-200 bg-white p-4">
+            <div className="mb-2 flex items-center justify-between gap-3">
               <p className="text-sm font-semibold text-neutral-950">{pkg.name}</p>
               <p className="text-sm font-semibold text-gold">
                 {formatPackagePrice(pkg.price)}
               </p>
             </div>
             {pkg.inclusions.length > 0 && (
-              <ul className="space-y-1.5">
+              <ul className="space-y-1">
                 {pkg.inclusions.slice(0, 5).map((inclusion: string) => (
                   <li
                     key={inclusion}
@@ -126,11 +185,11 @@ function SessionIncludes({ service }: { service: ServiceWithPackages }) {
         ))}
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-4 flex flex-wrap gap-3">
         <Button href={`/contact?service=${service.id}`} variant="primary" size="sm">
           Book Now
         </Button>
-        <Button href="/portfolio" variant="ghost" size="sm">
+        <Button href={portfolioHref} variant="secondary" size="sm">
           View Portfolio
         </Button>
       </div>
@@ -141,9 +200,11 @@ function SessionIncludes({ service }: { service: ServiceWithPackages }) {
 function ServiceBlock({
   service,
   index,
+  portfolioHref,
 }: {
   service: ServiceWithPackages;
   index: number;
+  portfolioHref: string;
 }) {
   const number = String(index + 1).padStart(2, "0");
   const reversed = index % 2 === 1;
@@ -152,12 +213,12 @@ function ServiceBlock({
     <ScrollReveal variant={reversed ? "slide-right" : "slide-left"}>
       <section className={`border-t border-neutral-200 ${reversed ? "bg-white" : "bg-neutral-50"}`}>
         <Container>
-          <div className="grid grid-cols-1 items-start gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:gap-16">
+          <div className="grid grid-cols-1 items-start gap-8 py-10 sm:py-14 lg:grid-cols-2 lg:gap-12">
             <div className={reversed ? "lg:order-2" : undefined}>
-              <div className="mb-4 flex items-center gap-4">
+              <div className="mb-3 flex items-center gap-4">
                 <span
                   aria-hidden="true"
-                  className="text-4xl font-bold text-neutral-200 sm:text-5xl"
+                  className="text-3xl font-bold text-neutral-200 sm:text-4xl"
                 >
                   {number}
                 </span>
@@ -173,24 +234,19 @@ function ServiceBlock({
                 {service.title}
               </h3>
 
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-900">
+              <p className="mt-3 max-w-xl text-base leading-relaxed text-neutral-900">
                 {service.shortDescription}
               </p>
 
               <ServiceHighlights highlights={service.highlights} />
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button href={`/contact?service=${service.id}`} variant="primary" size="md">
-                  Book Now
-                </Button>
-                <Button href="/portfolio" variant="secondary" size="md">
-                  View Portfolio
-                </Button>
+              <div className="mt-5">
+                <ServicePhotoPlaceholder title={service.title} />
               </div>
             </div>
 
             <div className={reversed ? "lg:order-1" : undefined}>
-              <SessionIncludes service={service} />
+              <SessionIncludes service={service} portfolioHref={portfolioHref} />
             </div>
           </div>
         </Container>
@@ -219,7 +275,11 @@ function EmptyServicesFallback() {
 }
 
 export default async function ServicesPage() {
-  const services = await getActiveServices();
+  const [services, portfolioCategories] = await Promise.all([
+    getActiveServices(),
+    getPortfolioCategories(),
+  ]);
+  const portfolioMap = buildServicePortfolioMap(portfolioCategories);
 
   return (
     <>
@@ -233,12 +293,13 @@ export default async function ServicesPage() {
                 Our Services
               </p>
               <h1 className="break-words text-4xl font-bold tracking-tight text-neutral-950 sm:text-5xl xl:text-6xl">
-                Photography Services for Every Moment
+                Choose your session
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-neutral-900">
-                From weddings and portraits to product shoots and professional
-                printing, SomStudio helps you preserve every important story
-                with care and detail.
+                Each service below can be tailored to your needs &mdash; location,
+                timing, coverage, and final deliverables all flex around your
+                plans. Tell us your vision and we&rsquo;ll help shape the right
+                session around it.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button href="/contact" variant="primary" size="lg">
@@ -253,27 +314,14 @@ export default async function ServicesPage() {
         </section>
       </ScrollReveal>
 
-      <ScrollReveal variant="fade">
-        <section className="border-t border-neutral-200 bg-white">
-          <Container size="narrow">
-            <div className="py-16 text-center sm:py-20">
-              <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-                Choose your session
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-neutral-900">
-                Each service below can be tailored to your needs &mdash; location,
-                timing, coverage, and final deliverables all flex around your
-                plans. Tell us your vision and we&rsquo;ll help shape the right
-                session around it.
-              </p>
-            </div>
-          </Container>
-        </section>
-      </ScrollReveal>
-
       {services.length > 0 ? (
         services.map((service: ServiceWithPackages, index: number) => (
-          <ServiceBlock key={service.id} service={service} index={index} />
+          <ServiceBlock
+            key={service.id}
+            service={service}
+            index={index}
+            portfolioHref={getServicePortfolioHref(service, portfolioMap)}
+          />
         ))
       ) : (
         <EmptyServicesFallback />
