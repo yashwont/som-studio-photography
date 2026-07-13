@@ -40,13 +40,6 @@ export default function NewServiceForm() {
         </div>
 
         <div>
-          <label htmlFor="category" className={labelClassName}>
-            Category
-          </label>
-          <input id="category" name="category" type="text" className={inputClassName} />
-        </div>
-
-        <div>
           <label htmlFor="displayOrder" className={labelClassName}>
             Display order
           </label>

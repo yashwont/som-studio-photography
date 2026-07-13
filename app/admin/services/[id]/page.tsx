@@ -6,6 +6,7 @@ import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminServiceById } from "@/src/lib/db/admin-services";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
+import DeleteServiceButton from "../DeleteServiceButton";
 
 type AdminServiceDetail = NonNullable<
   Awaited<ReturnType<typeof getAdminServiceById>>
@@ -107,6 +108,11 @@ export default async function AdminServiceDetailPage({
             >
               Edit Service
             </Link>
+            <DeleteServiceButton
+              serviceId={service.id}
+              serviceTitle={service.title}
+              className="px-4 py-2"
+            />
           </div>
         }
       />

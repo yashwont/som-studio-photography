@@ -4,6 +4,7 @@ import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminServices } from "@/src/lib/db/admin-services";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
+import DeleteServiceButton from "./DeleteServiceButton";
 
 export const metadata: Metadata = {
   title: "Services | Admin | SomStudioPhotography",
@@ -126,6 +127,10 @@ export default async function AdminServicesPage() {
                       <div className="flex justify-end gap-2">
                         <ViewServiceButton serviceId={service.id} />
                         <EditServiceButton serviceId={service.id} />
+                        <DeleteServiceButton
+                          serviceId={service.id}
+                          serviceTitle={service.title}
+                        />
                       </div>
                     </td>
                   </tr>

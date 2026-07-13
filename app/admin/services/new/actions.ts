@@ -24,7 +24,6 @@ export async function createService(
   await requireAdmin();
 
   const title = String(formData.get("title") ?? "").trim();
-  const category = String(formData.get("category") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").trim();
   const imageFile = formData.get("imageFile");
@@ -96,7 +95,6 @@ export async function createService(
     data: {
       title,
       slug,
-      category: category || null,
       description,
       imageUrl,
       price,
