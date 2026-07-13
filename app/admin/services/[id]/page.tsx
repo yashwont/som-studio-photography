@@ -10,7 +10,6 @@ import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
 type AdminServiceDetail = NonNullable<
   Awaited<ReturnType<typeof getAdminServiceById>>
 >;
-type AdminServicePackage = AdminServiceDetail["packages"][number];
 
 export async function generateMetadata({
   params,
@@ -35,7 +34,7 @@ function formatDate(date: Date) {
   });
 }
 
-function formatPrice(price: AdminServicePackage["price"]) {
+function formatPrice(price: AdminServiceDetail["price"]) {
   if (!price) {
     return "Contact for pricing";
   }
@@ -116,6 +115,12 @@ export default async function AdminServiceDetailPage({
         <DetailCard title="Basic Details">
           <dl className="grid grid-cols-2 gap-4 text-sm">
             <div>
+              <dt className="text-neutral-500">Price</dt>
+              <dd className="mt-1 text-neutral-100">
+                {formatPrice(service.price)}
+              </dd>
+            </div>
+            <div>
               <dt className="text-neutral-500">Created</dt>
               <dd className="mt-1 text-neutral-100">
                 {formatDate(service.createdAt)}
@@ -151,72 +156,21 @@ export default async function AdminServiceDetailPage({
           </p>
         </DetailCard>
 
-        <DetailCard title="Highlights">
-          {service.highlights.length === 0 ? (
-            <p className="text-sm text-neutral-400">No highlights added.</p>
+        <DetailCard title="Inclusions">
+          {service.inclusions.length === 0 ? (
+            <p className="text-sm text-neutral-400">No inclusions added.</p>
           ) : (
             <ul className="space-y-2 text-sm text-neutral-200">
-              {service.highlights.map((highlight: string) => (
-                <li key={highlight} className="flex gap-2">
+              {service.inclusions.map((inclusion: string) => (
+                <li key={inclusion} className="flex gap-2">
                   <span
                     aria-hidden="true"
                     className="mt-2 h-1 w-1 shrink-0 rounded-full bg-gold"
                   />
-                  {highlight}
+                  {inclusion}
                 </li>
               ))}
             </ul>
-          )}
-        </DetailCard>
-      </div>
-
-      <div className="mt-6">
-        <DetailCard title="Packages">
-          {service.packages.length === 0 ? (
-            <p className="text-sm text-neutral-400">
-              No packages added yet.
-            </p>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[720px] text-left text-sm">
-                <thead className="text-xs uppercase tracking-wide text-neutral-500">
-                  <tr>
-                    <th className="px-3 py-2 font-semibold">Name</th>
-                    <th className="px-3 py-2 font-semibold">Price</th>
-                    <th className="px-3 py-2 font-semibold">Description</th>
-                    <th className="px-3 py-2 font-semibold">Inclusions</th>
-                    <th className="px-3 py-2 font-semibold">Status</th>
-                    <th className="px-3 py-2 font-semibold">Order</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-800">
-                  {service.packages.map((pkg: AdminServicePackage) => (
-                    <tr key={pkg.id}>
-                      <td className="px-3 py-3 font-medium text-neutral-50">
-                        {pkg.name}
-                      </td>
-                      <td className="px-3 py-3 text-neutral-300">
-                        {formatPrice(pkg.price)}
-                      </td>
-                      <td className="px-3 py-3 text-neutral-300">
-                        {pkg.description ?? "—"}
-                      </td>
-                      <td className="px-3 py-3 text-neutral-300">
-                        {pkg.inclusions.length > 0
-                          ? pkg.inclusions.join(", ")
-                          : "—"}
-                      </td>
-                      <td className="px-3 py-3">
-                        <StatusBadge active={pkg.active} />
-                      </td>
-                      <td className="px-3 py-3 text-neutral-300">
-                        {pkg.displayOrder}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
           )}
         </DetailCard>
       </div>

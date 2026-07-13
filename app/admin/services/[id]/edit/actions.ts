@@ -16,8 +16,9 @@ export async function updateService(
 
   const title = String(formData.get("title") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
+  const priceRaw = String(formData.get("price") ?? "").trim();
   const imageFile = formData.get("imageFile");
-  const highlightsRaw = String(formData.get("highlights") ?? "");
+  const inclusionsRaw = String(formData.get("inclusions") ?? "");
   const featured = formData.get("featured") === "on";
   const active = formData.get("active") === "on";
 
@@ -27,6 +28,18 @@ export async function updateService(
 
   if (!description) {
     return { error: "Description is required." };
+  }
+
+  let price: number | null = null;
+
+  if (priceRaw) {
+    const parsedPrice = Number(priceRaw);
+
+    if (Number.isNaN(parsedPrice) || parsedPrice < 0) {
+      return { error: "Price must be a valid non-negative number." };
+    }
+
+    price = parsedPrice;
   }
 
   let imageUrl: string | undefined;
@@ -41,7 +54,7 @@ export async function updateService(
     imageUrl = uploadResult.url;
   }
 
-  const highlights = highlightsRaw
+  const inclusions = inclusionsRaw
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
@@ -51,8 +64,9 @@ export async function updateService(
     data: {
       title,
       description,
+      price,
       ...(imageUrl !== undefined ? { imageUrl } : {}),
-      highlights,
+      inclusions,
       featured,
       active,
     },

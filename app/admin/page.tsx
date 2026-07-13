@@ -102,7 +102,6 @@ export default async function AdminPage() {
         <SectionHeading>Quick Links</SectionHeading>
         <div className="mt-4 flex flex-wrap gap-3">
           <QuickLink href="/admin/services" label="Manage Services" />
-          <QuickLink href="/admin/packages" label="Manage Packages" />
           <QuickLink href="/admin/portfolio" label="Manage Portfolio" />
           <QuickLink href="/admin/inquiries" label="View Inquiries" />
         </div>

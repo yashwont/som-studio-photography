@@ -10,7 +10,8 @@ export type ServiceFormValues = {
   title: string;
   description: string;
   imageUrl: string | null;
-  highlights: string[];
+  price: number | null;
+  inclusions: string[];
   featured: boolean;
   active: boolean;
 };
@@ -93,6 +94,22 @@ export default function EditServiceForm({
       </div>
 
       <div>
+        <label htmlFor="price" className={labelClassName}>
+          Price (NRS)
+        </label>
+        <input
+          id="price"
+          name="price"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Leave blank for contact pricing"
+          defaultValue={service.price ?? ""}
+          className={inputClassName}
+        />
+      </div>
+
+      <div>
         <label htmlFor="imageFile" className={labelClassName}>
           Add photo
         </label>
@@ -126,15 +143,15 @@ export default function EditServiceForm({
       </div>
 
       <div>
-        <label htmlFor="highlights" className={labelClassName}>
-          Highlights{" "}
+        <label htmlFor="inclusions" className={labelClassName}>
+          Inclusions{" "}
           <span className="normal-case text-neutral-500">(one per line)</span>
         </label>
         <textarea
-          id="highlights"
-          name="highlights"
+          id="inclusions"
+          name="inclusions"
           rows={5}
-          defaultValue={service.highlights.join("\n")}
+          defaultValue={service.inclusions.join("\n")}
           className={inputClassName}
         />
       </div>
@@ -159,10 +176,6 @@ export default function EditServiceForm({
           />
           Active
         </label>
-      </div>
-
-      <div className="rounded border border-neutral-800 bg-neutral-900/60 p-4 text-sm text-neutral-400">
-        Package management will be added later.
       </div>
 
       <div className="flex flex-wrap items-center gap-4 border-t border-neutral-800 pt-6">

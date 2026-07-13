@@ -92,12 +92,9 @@ export default async function AdminServicesPage() {
               <thead className="bg-neutral-900 text-xs uppercase tracking-wide text-neutral-400">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Title</th>
-                  <th className="px-4 py-3 font-semibold">Slug</th>
-                  <th className="px-4 py-3 font-semibold">Category</th>
                   <th className="px-4 py-3 font-semibold">Status</th>
                   <th className="px-4 py-3 font-semibold">Featured</th>
                   <th className="px-4 py-3 font-semibold">Order</th>
-                  <th className="px-4 py-3 font-semibold">Packages</th>
                   <th className="px-4 py-3 font-semibold">Updated</th>
                   <th className="px-4 py-3 font-semibold text-right">
                     Actions
@@ -113,12 +110,6 @@ export default async function AdminServicesPage() {
                     <td className="px-4 py-3 font-medium text-neutral-50">
                       {service.title}
                     </td>
-                    <td className="px-4 py-3 text-neutral-400">
-                      {service.slug}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {service.category ?? "—"}
-                    </td>
                     <td className="px-4 py-3">
                       <StatusBadge active={service.active} />
                     </td>
@@ -127,9 +118,6 @@ export default async function AdminServicesPage() {
                     </td>
                     <td className="px-4 py-3 text-neutral-300">
                       {service.displayOrder}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {service._count.packages}
                     </td>
                     <td className="px-4 py-3 text-neutral-400">
                       {formatDate(service.updatedAt)}

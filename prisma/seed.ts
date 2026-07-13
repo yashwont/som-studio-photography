@@ -24,12 +24,15 @@ function priceToDecimal(price: string) {
 
 async function seedServicesAndPackages() {
   for (const [index, service] of services.entries()) {
+    const price = priceToDecimal(service.price);
+
     await prisma.service.upsert({
       where: { slug: service.slug },
       update: {
         title: service.title,
         description: service.description,
-        highlights: service.highlights,
+        price,
+        inclusions: service.highlights,
         featured: service.featured,
         active: true,
         displayOrder: index,
@@ -39,39 +42,11 @@ async function seedServicesAndPackages() {
         title: service.title,
         slug: service.slug,
         description: service.description,
-        highlights: service.highlights,
+        price,
+        inclusions: service.highlights,
         featured: service.featured,
         active: true,
         displayOrder: index,
-      },
-    });
-
-    const packagePrice = priceToDecimal(service.price);
-
-    await prisma.package.upsert({
-      where: { id: `${service.id}-standard` },
-      update: {
-        name: "Standard Session",
-        price: packagePrice,
-        description: service.description,
-        inclusions: service.highlights,
-        active: true,
-        displayOrder: 0,
-        service: {
-          connect: { slug: service.slug },
-        },
-      },
-      create: {
-        id: `${service.id}-standard`,
-        name: "Standard Session",
-        price: packagePrice,
-        description: service.description,
-        inclusions: service.highlights,
-        active: true,
-        displayOrder: 0,
-        service: {
-          connect: { slug: service.slug },
-        },
       },
     });
   }

@@ -5,16 +5,6 @@ export function getActiveServices() {
     where: {
       active: true,
     },
-    include: {
-      packages: {
-        where: {
-          active: true,
-        },
-        orderBy: {
-          displayOrder: "asc",
-        },
-      },
-    },
     orderBy: {
       displayOrder: "asc",
     },
@@ -27,16 +17,6 @@ export function getFeaturedServices() {
       active: true,
       featured: true,
     },
-    include: {
-      packages: {
-        where: {
-          active: true,
-        },
-        orderBy: {
-          displayOrder: "asc",
-        },
-      },
-    },
     orderBy: {
       displayOrder: "asc",
     },
@@ -48,16 +28,6 @@ export function getServiceBySlug(slug: string) {
     where: {
       slug,
       active: true,
-    },
-    include: {
-      packages: {
-        where: {
-          active: true,
-        },
-        orderBy: {
-          displayOrder: "asc",
-        },
-      },
     },
   });
 }

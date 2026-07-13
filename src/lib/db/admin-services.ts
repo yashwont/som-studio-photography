@@ -8,16 +8,11 @@ export function getAdminServices() {
     select: {
       id: true,
       title: true,
-      slug: true,
-      category: true,
       featured: true,
       active: true,
       displayOrder: true,
       createdAt: true,
       updatedAt: true,
-      _count: {
-        select: { packages: true },
-      },
     },
   });
 }
@@ -31,25 +26,14 @@ export function getAdminServiceById(id: string) {
       slug: true,
       description: true,
       imageUrl: true,
-      highlights: true,
+      price: true,
+      inclusions: true,
       category: true,
       featured: true,
       active: true,
       displayOrder: true,
       createdAt: true,
       updatedAt: true,
-      packages: {
-        orderBy: { displayOrder: "asc" },
-        select: {
-          id: true,
-          name: true,
-          price: true,
-          description: true,
-          inclusions: true,
-          active: true,
-          displayOrder: true,
-        },
-      },
     },
   });
 }

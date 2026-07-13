@@ -12,7 +12,8 @@ model Service {
   slug         String    @unique
   description  String
   imageUrl     String?
-  highlights   String[]
+  price        Decimal?  @db.Decimal(10, 2)
+  inclusions   String[]
   category     String?
   featured     Boolean   @default(false)
   active       Boolean   @default(true)

@@ -18,8 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-type ServiceWithPackages = Awaited<ReturnType<typeof getActiveServices>>[number];
-type ServicePackage = ServiceWithPackages["packages"][number];
+type ServiceRecord = Awaited<ReturnType<typeof getActiveServices>>[number];
 type PortfolioCategoryWithImages = Awaited<ReturnType<typeof getPortfolioCategories>>[number];
 
 function buildServicePortfolioMap(categories: PortfolioCategoryWithImages[]) {
@@ -37,7 +36,7 @@ function buildServicePortfolioMap(categories: PortfolioCategoryWithImages[]) {
 }
 
 function getServicePortfolioHref(
-  service: ServiceWithPackages,
+  service: ServiceRecord,
   portfolioMap: Map<string, string>
 ) {
   const categorySlug = service.category ?? service.id;
@@ -74,7 +73,7 @@ const faqs = [
   },
 ];
 
-function formatPackagePrice(price: ServicePackage["price"]) {
+function formatPrice(price: ServiceRecord["price"]) {
   if (!price) {
     return "Contact for pricing";
   }
@@ -133,63 +132,39 @@ function ServicePhoto({
   );
 }
 
-function SessionIncludes({
+function ServicePricing({
   service,
   portfolioHref,
 }: {
-  service: ServiceWithPackages;
+  service: ServiceRecord;
   portfolioHref: string;
 }) {
-  if (service.packages.length === 0) {
-    return (
-      <div className="rounded border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
-        <p className="mb-1.5 text-sm font-semibold text-neutral-950">
-          Custom quote available
-        </p>
-        <p className="mb-4 text-sm leading-relaxed text-neutral-900">
-          Pricing depends on your specific requirements. Tell us what you need
-          and we&rsquo;ll send a tailored quote.
-        </p>
-        <Button href={`/contact?service=${service.id}`} variant="primary" size="sm">
-          Request a Quote
-        </Button>
-      </div>
-    );
-  }
-
   return (
     <div className="rounded border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
-      <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-        Session includes
-      </p>
-
-      <div className="space-y-3">
-        {service.packages.map((pkg: ServicePackage) => (
-          <div key={pkg.id} className="rounded border border-neutral-200 bg-white p-4">
-            <div className="mb-2 flex items-center justify-between gap-3">
-              <p className="text-sm font-semibold text-neutral-950">{pkg.name}</p>
-              <p className="text-sm font-semibold text-gold">
-                {formatPackagePrice(pkg.price)}
-              </p>
-            </div>
-            {pkg.inclusions.length > 0 && (
-              <ul className="space-y-1">
-                {pkg.inclusions.slice(0, 5).map((inclusion: string) => (
-                  <li
-                    key={inclusion}
-                    className="flex items-start gap-2 text-xs text-neutral-900"
-                  >
-                    <span aria-hidden="true" className="mt-px shrink-0 text-gold/60">
-                      -
-                    </span>
-                    {inclusion}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+          Session includes
+        </p>
+        <p className="text-sm font-semibold text-neutral-950">
+          {formatPrice(service.price)}
+        </p>
       </div>
+
+      {service.inclusions.length > 0 && (
+        <ul className="space-y-1.5">
+          {service.inclusions.map((inclusion: string) => (
+            <li
+              key={inclusion}
+              className="flex items-start gap-2 text-sm text-neutral-900"
+            >
+              <span aria-hidden="true" className="mt-px shrink-0 text-gold/60">
+                -
+              </span>
+              {inclusion}
+            </li>
+          ))}
+        </ul>
+      )}
 
       <div className="mt-4 flex flex-wrap gap-3">
         <Button href={`/contact?service=${service.id}`} variant="primary" size="sm">
@@ -208,7 +183,7 @@ function ServiceBlock({
   index,
   portfolioHref,
 }: {
-  service: ServiceWithPackages;
+  service: ServiceRecord;
   index: number;
   portfolioHref: string;
 }) {
@@ -249,7 +224,7 @@ function ServiceBlock({
               </p>
 
               <div className="mt-5">
-                <SessionIncludes service={service} portfolioHref={portfolioHref} />
+                <ServicePricing service={service} portfolioHref={portfolioHref} />
               </div>
             </div>
           </div>
@@ -319,7 +294,7 @@ export default async function ServicesPage() {
       </ScrollReveal>
 
       {services.length > 0 ? (
-        services.map((service: ServiceWithPackages, index: number) => (
+        services.map((service: ServiceRecord, index: number) => (
           <ServiceBlock
             key={service.id}
             service={service}

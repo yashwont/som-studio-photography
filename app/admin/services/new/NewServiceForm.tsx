@@ -75,6 +75,21 @@ export default function NewServiceForm() {
       </div>
 
       <div>
+        <label htmlFor="price" className={labelClassName}>
+          Price (NRS)
+        </label>
+        <input
+          id="price"
+          name="price"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Leave blank for contact pricing"
+          className={inputClassName}
+        />
+      </div>
+
+      <div>
         <label htmlFor="imageFile" className={labelClassName}>
           Add photo
         </label>
@@ -109,13 +124,13 @@ export default function NewServiceForm() {
       </div>
 
       <div>
-        <label htmlFor="highlights" className={labelClassName}>
-          Highlights{" "}
+        <label htmlFor="inclusions" className={labelClassName}>
+          Inclusions{" "}
           <span className="normal-case text-neutral-500">(one per line)</span>
         </label>
         <textarea
-          id="highlights"
-          name="highlights"
+          id="inclusions"
+          name="inclusions"
           rows={5}
           className={inputClassName}
         />
