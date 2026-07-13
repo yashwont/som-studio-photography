@@ -17,7 +17,8 @@ interface ButtonProps {
 }
 
 const variants: Record<string, string> = {
-  primary: "bg-accent text-white font-semibold hover:bg-accent-hover",
+  primary:
+    "bg-accent-hover text-white font-semibold shadow-sm hover:bg-neutral-950 hover:shadow-lg hover:shadow-accent/20",
   secondary: "border border-accent text-accent hover:bg-accent/10",
   ghost: "text-neutral-900 hover:text-neutral-950",
 };
@@ -29,7 +30,7 @@ const sizes: Record<string, string> = {
 };
 
 const base =
-  "inline-flex items-center justify-center rounded transition-all duration-200 " +
+  "inline-flex items-center justify-center rounded-full transition-all duration-300 " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 " +
   "disabled:opacity-50 disabled:cursor-not-allowed";
 
