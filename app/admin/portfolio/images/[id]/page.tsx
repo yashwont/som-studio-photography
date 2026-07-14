@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminPortfolioImageById } from "@/src/lib/db/admin-portfolio";
+import { storyStateFrom } from "@/src/lib/db/admin-portfolio-story";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
 
@@ -128,9 +129,15 @@ export default async function AdminPortfolioImageDetailPage({
             </Link>
             <Link
               href={`/admin/portfolio/images/${image.id}/edit`}
-              className="inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
+              className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
             >
               Edit Image
+            </Link>
+            <Link
+              href={`/admin/portfolio/images/${image.id}/story`}
+              className="inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
+            >
+              Edit Story
             </Link>
           </div>
         }
@@ -216,6 +223,39 @@ export default async function AdminPortfolioImageDetailPage({
               </dd>
             </div>
           </dl>
+        </DetailCard>
+
+        <DetailCard title="Story Content">
+          <dl className="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <dt className="text-neutral-500">Status</dt>
+              <dd className="mt-1 text-neutral-100">
+                {
+                  { "not-created": "Not created", basic: "Basic content", complete: "Complete" }[
+                    storyStateFrom(image.story)
+                  ]
+                }
+              </dd>
+            </div>
+            <div>
+              <dt className="text-neutral-500">Blocks</dt>
+              <dd className="mt-1 text-neutral-100">
+                {image.story?._count.blocks ?? 0}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-neutral-500">Story updated</dt>
+              <dd className="mt-1 text-neutral-100">
+                {image.story ? formatDateTime(image.story.updatedAt) : "—"}
+              </dd>
+            </div>
+          </dl>
+          <Link
+            href={`/admin/portfolio/images/${image.id}/story`}
+            className="mt-4 inline-flex rounded border border-gold/40 px-4 py-2 text-sm font-semibold text-gold transition-colors hover:border-gold hover:bg-gold/10"
+          >
+            Edit Story
+          </Link>
         </DetailCard>
       </div>
     </AdminShell>

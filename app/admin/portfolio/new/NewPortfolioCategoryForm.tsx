@@ -22,24 +22,11 @@ export default function NewPortfolioCategoryForm() {
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelClassName}>
-            Name
+            Title
           </label>
           <input
             id="name"
             name="name"
-            type="text"
-            required
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="slug" className={labelClassName}>
-            Slug
-          </label>
-          <input
-            id="slug"
-            name="slug"
             type="text"
             required
             className={inputClassName}

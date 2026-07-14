@@ -12,6 +12,7 @@ type ServiceOption = {
 interface InquiryFormProps {
   idPrefix?: string;
   defaultServiceId?: string;
+  defaultMessage?: string;
   services: ServiceOption[];
 }
 
@@ -50,6 +51,7 @@ function buildWhatsAppMessage(formData: FormData, services: ServiceOption[]) {
 export default function InquiryForm({
   idPrefix = "inquiry",
   defaultServiceId = "",
+  defaultMessage = "",
   services,
 }: InquiryFormProps) {
   const [status, setStatus] = useState("");
@@ -202,6 +204,7 @@ export default function InquiryForm({
           name="message"
           rows={5}
           required
+          defaultValue={defaultMessage}
           placeholder="Tell us about your shoot - style, location, any special requests..."
           className={`${inputClass} resize-none`}
         />

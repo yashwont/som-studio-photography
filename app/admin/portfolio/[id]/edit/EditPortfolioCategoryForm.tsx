@@ -38,7 +38,7 @@ export default function EditPortfolioCategoryForm({
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelClassName}>
-            Name
+            Title
           </label>
           <input
             id="name"
@@ -46,20 +46,6 @@ export default function EditPortfolioCategoryForm({
             type="text"
             required
             defaultValue={category.name}
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="slug" className={labelClassName}>
-            Slug
-          </label>
-          <input
-            id="slug"
-            name="slug"
-            type="text"
-            required
-            defaultValue={category.slug}
             className={inputClassName}
           />
         </div>

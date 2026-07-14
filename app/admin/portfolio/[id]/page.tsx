@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminPortfolioCategoryById } from "@/src/lib/db/admin-portfolio";
+import { storyStateFrom } from "@/src/lib/db/admin-portfolio-story";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
 
@@ -116,6 +117,39 @@ function EditImageLink({ id }: { id: string }) {
   );
 }
 
+function EditStoryLink({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/admin/portfolio/images/${id}/story`}
+      className="rounded border border-gold/40 px-3 py-1.5 text-xs font-semibold text-gold transition-colors hover:border-gold hover:bg-gold/10"
+    >
+      Edit Story
+    </Link>
+  );
+}
+
+function StoryStatusBadge({ image }: { image: AdminPortfolioImage }) {
+  const state = storyStateFrom(image.story);
+  const labels: Record<ReturnType<typeof storyStateFrom>, string> = {
+    "not-created": "Not created",
+    basic: "Basic content",
+    complete: "Complete",
+  };
+  const classNames: Record<ReturnType<typeof storyStateFrom>, string> = {
+    "not-created": "bg-neutral-700/50 text-neutral-400",
+    basic: "border border-gold/30 text-gold",
+    complete: "bg-emerald-500/10 text-emerald-400",
+  };
+
+  return (
+    <span
+      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${classNames[state]}`}
+    >
+      {labels[state]}
+    </span>
+  );
+}
+
 function DetailCard({
   title,
   children,
@@ -183,12 +217,6 @@ export default async function AdminPortfolioCategoryDetailPage({
               className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
             >
               &larr; Back to Portfolio
-            </Link>
-            <Link
-              href="/admin/portfolio/images/new"
-              className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-            >
-              Add Image
             </Link>
             <Link
               href={`/admin/portfolio/${category.id}/edit`}
@@ -283,6 +311,7 @@ export default async function AdminPortfolioCategoryDetailPage({
                       </h3>
                       <StatusBadge active={image.active} />
                       <FeaturedBadge featured={image.featured} />
+                      <StoryStatusBadge image={image} />
                     </div>
                     <dl className="mt-3 grid gap-3 text-sm sm:grid-cols-3">
                       <div>
@@ -303,12 +332,25 @@ export default async function AdminPortfolioCategoryDetailPage({
                           {formatDate(image.updatedAt)}
                         </dd>
                       </div>
+                      <div>
+                        <dt className="text-neutral-500">Story blocks</dt>
+                        <dd className="mt-1 text-neutral-300">
+                          {image.story?._count.blocks ?? 0}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="text-neutral-500">Story updated</dt>
+                        <dd className="mt-1 text-neutral-300">
+                          {image.story ? formatDate(image.story.updatedAt) : "—"}
+                        </dd>
+                      </div>
                     </dl>
                   </div>
 
                   <div className="flex shrink-0 gap-2 sm:justify-end">
                     <ViewImageLink id={image.id} />
                     <EditImageLink id={image.id} />
+                    <EditStoryLink id={image.id} />
                   </div>
                 </div>
               ))}

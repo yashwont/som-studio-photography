@@ -45,6 +45,16 @@ export function getAdminPortfolioCategoryById(id: string) {
           displayOrder: true,
           createdAt: true,
           updatedAt: true,
+          story: {
+            select: {
+              service: true,
+              location: true,
+              style: true,
+              setting: true,
+              updatedAt: true,
+              _count: { select: { blocks: true } },
+            },
+          },
         },
       },
     },
@@ -84,6 +94,16 @@ export function getAdminPortfolioImageById(id: string) {
           id: true,
           name: true,
           slug: true,
+        },
+      },
+      story: {
+        select: {
+          service: true,
+          location: true,
+          style: true,
+          setting: true,
+          updatedAt: true,
+          _count: { select: { blocks: true } },
         },
       },
     },

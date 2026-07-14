@@ -76,6 +76,7 @@ model PortfolioImage {
   featured     Boolean           @default(false)
   active       Boolean           @default(true)
   displayOrder Int               @default(0)
+  story        PortfolioStory?
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
 
@@ -83,6 +84,69 @@ model PortfolioImage {
   @@index([active, displayOrder])
   @@index([featured, active])
   @@map("portfolio_images")
+}
+
+/// Extended editorial content for a single PortfolioImage's detail page
+/// (/portfolio/[work]). Optional 1:1 - a PortfolioImage with no PortfolioStory
+/// falls back to the public page's generic presentation.
+model PortfolioStory {
+  id String @id @default(cuid())
+
+  portfolioImageId String         @unique
+  portfolioImage   PortfolioImage @relation(fields: [portfolioImageId], references: [id], onDelete: Cascade)
+
+  overviewEyebrow    String?
+  overviewHeading    String?
+  overviewParagraphs Json?
+
+  service  String?
+  location String?
+  style    String?
+  setting  String?
+
+  ctaEyebrow        String?
+  ctaHeading        String?
+  ctaBody           String?
+  primaryCtaLabel   String?
+  secondaryCtaLabel String?
+
+  seoTitle       String?
+  seoDescription String?
+
+  blocks PortfolioStoryBlock[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("portfolio_stories")
+}
+
+/// One ordered editorial block (text / image / gallery / imageText) within a
+/// PortfolioStory. `data` holds the block's type-specific fields as JSON,
+/// kept compatible with the public `PortfolioBlock` TypeScript union in
+/// src/types/portfolio.ts.
+model PortfolioStoryBlock {
+  id String @id @default(cuid())
+
+  storyId String
+  story   PortfolioStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  type      PortfolioStoryBlockType
+  sortOrder Int
+  data      Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storyId, sortOrder])
+  @@map("portfolio_story_blocks")
+}
+
+enum PortfolioStoryBlockType {
+  TEXT
+  IMAGE
+  GALLERY
+  IMAGE_TEXT
 }
 
 model Inquiry {

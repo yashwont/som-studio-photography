@@ -23,22 +23,17 @@ export async function createPortfolioCategory(
   await requireAdmin();
 
   const name = String(formData.get("name") ?? "").trim();
-  const rawSlug = String(formData.get("slug") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const displayOrderRaw = String(formData.get("displayOrder") ?? "");
 
   if (!name) {
-    return { error: "Name is required." };
+    return { error: "Title is required." };
   }
 
-  if (!rawSlug) {
-    return { error: "Slug is required." };
-  }
+  const baseSlug = slugify(name);
 
-  const slug = slugify(rawSlug);
-
-  if (!slug) {
-    return { error: "Slug must contain at least one letter or number." };
+  if (!baseSlug) {
+    return { error: "Title must contain at least one letter or number." };
   }
 
   const displayOrder = Number.parseInt(displayOrderRaw, 10);
@@ -47,13 +42,17 @@ export async function createPortfolioCategory(
     return { error: "Display order must be a number." };
   }
 
-  const slugConflict = await prisma.portfolioCategory.findUnique({
-    where: { slug },
-    select: { id: true },
-  });
+  let slug = baseSlug;
+  let suffix = 2;
 
-  if (slugConflict) {
-    return { error: "A portfolio category with this slug already exists." };
+  while (
+    await prisma.portfolioCategory.findUnique({
+      where: { slug },
+      select: { id: true },
+    })
+  ) {
+    slug = `${baseSlug}-${suffix}`;
+    suffix += 1;
   }
 
   const category = await prisma.portfolioCategory.create({

@@ -93,13 +93,16 @@ function ContactDetail({
 export default async function ContactPage({
   searchParams,
 }: {
-  searchParams: Promise<{ service?: string }>;
+  searchParams: Promise<{ service?: string; portfolio?: string }>;
 }) {
   const [contact, activeServices] = await Promise.all([
     getContactInfo(),
     getActiveServices(),
   ]);
-  const { service: defaultServiceId } = await searchParams;
+  const { service: defaultServiceId, portfolio } = await searchParams;
+  const defaultMessage = portfolio
+    ? `I'm interested in a session like: "${portfolio}"`
+    : "";
   const contactWhatsappUrl = `https://wa.me/${contact.whatsapp.replace("+", "")}`;
   const services = activeServices.map((service: ActiveService) => ({
     id: service.id,
@@ -214,6 +217,7 @@ export default async function ContactPage({
               <InquiryForm
                 idPrefix="page-contact"
                 defaultServiceId={defaultServiceId}
+                defaultMessage={defaultMessage}
                 services={services}
               />
             </div>

@@ -4,7 +4,13 @@ const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 
 export type ImageUploadResult =
-  | { ok: true; url: string }
+  | {
+      ok: true;
+      url: string;
+      publicId: string;
+      width: number;
+      height: number;
+    }
   | { ok: false; error: string };
 
 function isCloudinaryConfigured() {
@@ -54,7 +60,13 @@ async function uploadImage(
       resource_type: "image",
     });
 
-    return { ok: true, url: result.secure_url };
+    return {
+      ok: true,
+      url: result.secure_url,
+      publicId: result.public_id,
+      width: result.width,
+      height: result.height,
+    };
   } catch {
     return {
       ok: false,

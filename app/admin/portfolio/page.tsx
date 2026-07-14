@@ -80,8 +80,7 @@ export default async function AdminPortfolioPage() {
             <table className="w-full min-w-[860px] text-left text-sm">
               <thead className="bg-neutral-900 text-xs uppercase tracking-wide text-neutral-400">
                 <tr>
-                  <th className="px-4 py-3 font-semibold">Category</th>
-                  <th className="px-4 py-3 font-semibold">Slug</th>
+                  <th className="px-4 py-3 font-semibold">Title</th>
                   <th className="px-4 py-3 font-semibold">Description</th>
                   <th className="px-4 py-3 font-semibold">Images</th>
                   <th className="px-4 py-3 font-semibold">Order</th>
@@ -99,9 +98,6 @@ export default async function AdminPortfolioPage() {
                   >
                     <td className="px-4 py-3 font-medium text-neutral-50">
                       {category.name}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-400">
-                      {category.slug}
                     </td>
                     <td className="px-4 py-3 text-neutral-300">
                       {category.description ?? "—"}
