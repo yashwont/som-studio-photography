@@ -81,7 +81,7 @@ export async function parseCoverForm(
   }
 
   if (!imageUrl) {
-    return { ok: false, message: "Upload an image or provide an Image URL." };
+    return { ok: false, message: "An image is required." };
   }
 
   const slugConflict = await prisma.portfolioImage.findFirst({

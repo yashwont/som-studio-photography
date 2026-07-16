@@ -128,9 +128,7 @@ export default function PortfolioImageForm({
   const [description, setDescription] = useState(cover.description);
   const [altText, setAltText] = useState(cover.altText);
   const [filePreview, setFilePreview] = useState<string | null>(null);
-  const [urlPreview, setUrlPreview] = useState<string | null>(
-    getSafePreviewUrl(cover.imageUrl)
-  );
+  const urlPreview = getSafePreviewUrl(cover.imageUrl);
 
   const [heroEyebrow, setHeroEyebrow] = useState(story.heroEyebrow);
   const [overview, setOverview] = useState(story.overview);
@@ -142,10 +140,6 @@ export default function PortfolioImageForm({
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     setFilePreview(file ? URL.createObjectURL(file) : null);
-  }
-
-  function handleImageUrlChange(event: ChangeEvent<HTMLInputElement>) {
-    setUrlPreview(getSafePreviewUrl(event.target.value));
   }
 
   const previewImageUrl = filePreview ?? urlPreview ?? PLACEHOLDER_IMAGE;
@@ -320,25 +314,7 @@ export default function PortfolioImageForm({
                 </p>
               </div>
 
-              <div>
-                <label htmlFor={`${uid}-imageUrl`} className={labelClassName}>
-                  Image URL{" "}
-                  <span className="normal-case text-neutral-500">
-                    (used if no file is uploaded)
-                  </span>
-                </label>
-                <input
-                  id={`${uid}-imageUrl`}
-                  name="imageUrl"
-                  type="text"
-                  defaultValue={cover.imageUrl}
-                  placeholder={
-                    mode === "new" ? "/images/portfolio/example.jpg or https://..." : undefined
-                  }
-                  onChange={handleImageUrlChange}
-                  className={inputClassName}
-                />
-              </div>
+              <input type="hidden" name="imageUrl" value={cover.imageUrl} readOnly />
 
               <div>
                 <span className={labelClassName}>Preview</span>
