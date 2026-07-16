@@ -5,41 +5,20 @@ import Image from "next/image";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import { heroGallery } from "@/src/data/visuals";
+import type { HomeContentData } from "@/src/lib/db/home";
 import type { ContactInfo, SiteImage } from "@/src/types/site";
 
-const serviceHighlights = [
-  "New Born",
-  "Kids",
-  "Maternity",
-  "Family",
-  "Weddings",
-  "Pre-Wedding",
-];
-
-const trustPoints = [
-  "Studio & outdoor sessions",
-  "Guided posing and planning",
-  "Edited online gallery delivery",
-];
-
 const rotationMs = 3000;
-const heroLabels = [
-  {
-    title: "Wedding cover story",
-    subtitle: "A rotating front image keeps the hero feeling alive.",
-  },
-  {
-    title: "Ceremony moments",
-    subtitle: "The front frame changes while the side prints stay present.",
-  },
-  {
-    title: "Pre-wedding session",
-    subtitle: "A cleaner opening view with changing cover imagery.",
-  },
-];
 
-export default function Hero({ contact: contactInfo }: { contact: ContactInfo }) {
+export default function Hero({
+  contact: contactInfo,
+  content,
+}: {
+  contact: ContactInfo;
+  content: HomeContentData;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { heroTrustPoints, heroServiceTags, aboutEyebrow, aboutTitle } = content;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -72,13 +51,7 @@ export default function Hero({ contact: contactInfo }: { contact: ContactInfo })
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-900">
-                Welcome to Som Studio &mdash; where life&rsquo;s most cherished
-                moments have been captured with elegance, artistry, and heart
-                since 1995. For over three decades, We&rsquo;ve had the honor
-                of preserving families&rsquo; most precious chapters &mdash;
-                from the first flutter of maternity to your wedding day and
-                every milestone in between &mdash; creating timeless imagery
-                you&rsquo;ll treasure forever.
+                {content.heroWelcomeText}
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
@@ -91,7 +64,7 @@ export default function Hero({ contact: contactInfo }: { contact: ContactInfo })
               </div>
 
               <div className="mt-8 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3">
-                {trustPoints.map((point: string) => (
+                {heroTrustPoints.map((point: string) => (
                   <div
                     key={point}
                     className="border-l border-neutral-200 pl-4 text-sm leading-relaxed text-neutral-900"
@@ -102,7 +75,7 @@ export default function Hero({ contact: contactInfo }: { contact: ContactInfo })
               </div>
 
               <div className="mt-8 flex flex-wrap gap-2">
-                {serviceHighlights.map((tag: string) => (
+                {heroServiceTags.map((tag: string) => (
                   <span
                     key={tag}
                     className="rounded-full border border-neutral-200 px-3 py-1 text-xs text-neutral-900"
@@ -150,12 +123,12 @@ export default function Hero({ contact: contactInfo }: { contact: ContactInfo })
                     </div>
                     <div className="max-w-sm">
                       <div className="mb-3 h-px w-12 bg-gold" />
-                      <h2 className="text-xl font-semibold text-neutral-950 sm:text-2xl">
-                        {heroLabels[activeIndex].title}
+                      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900">
+                        {aboutEyebrow}
+                      </span>
+                      <h2 className="mt-2 text-xl font-semibold text-neutral-950 sm:text-2xl">
+                        {aboutTitle}
                       </h2>
-                      <p className="mt-3 text-sm leading-relaxed text-neutral-900">
-                        {heroLabels[activeIndex].subtitle}
-                      </p>
                     </div>
                   </div>
                 </div>

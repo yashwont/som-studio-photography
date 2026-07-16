@@ -1,64 +1,6 @@
 import Container from "@/src/components/layout/Container";
 import SectionHeader from "@/src/components/ui/SectionHeader";
-
-const services = [
-  {
-    title: "Maternity",
-    tagline: "Celebrating the beauty of new beginnings",
-  },
-  {
-    title: "Newborn",
-    tagline: "Tender, delicate moments in the earliest days",
-  },
-  {
-    title: "Family & Child",
-    tagline: "Authentic connection, elegantly captured",
-  },
-  {
-    title: "Cake Smash",
-    tagline: "Playful milestones with a touch of style",
-  },
-  {
-    title: "Portraits",
-    tagline: "Refined imagery that reflects who you are",
-  },
-  {
-    title: "Weddings",
-    tagline: "Your love story, artfully documented",
-  },
-  {
-    title: "Commercial",
-    tagline: "Polished visuals for brands and businesses",
-  },
-  {
-    title: "Web Profile",
-    tagline: "Professional headshots that make a lasting impression",
-  },
-];
-
-const reviews = [
-  {
-    quote:
-      "Absolutely stunning photos, so professional and easy to work with. They made the whole session feel effortless.",
-    name: "Priya S.",
-    context: "Wedding Session",
-    rating: 5,
-  },
-  {
-    quote:
-      "Best studio in Kathmandu, hands down. The team made us feel so comfortable the entire time.",
-    name: "Rajesh T.",
-    context: "Family Portraits",
-    rating: 5,
-  },
-  {
-    quote:
-      "From the first consultation to the final gallery, everything felt effortless. Highly recommend.",
-    name: "Anisha K.",
-    context: "Maternity Session",
-    rating: 5,
-  },
-];
+import type { HomeContentData, HomeReview, HomeServiceCard } from "@/src/lib/db/home";
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -72,7 +14,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-function ReviewCard({ review }: { review: (typeof reviews)[number] }) {
+function ReviewCard({ review }: { review: HomeReview }) {
   return (
     <div className="rounded border border-neutral-200 bg-neutral-50 p-6">
       <StarRating rating={review.rating} />
@@ -90,7 +32,7 @@ function ReviewCard({ review }: { review: (typeof reviews)[number] }) {
 function ServiceCard({
   service,
 }: {
-  service: (typeof services)[number];
+  service: HomeServiceCard;
 }) {
   return (
     <div className="service-card group flex h-full flex-col rounded border border-neutral-200 bg-neutral-50 p-6">
@@ -110,21 +52,21 @@ function ServiceCard({
   );
 }
 
-export default function Services() {
+export default function Services({ content }: { content: HomeContentData }) {
   return (
     <section id="services" className="bg-neutral-50 border-t border-neutral-200">
       <Container>
         <div className="py-20 sm:py-28">
           <SectionHeader
-            eyebrow="Services"
-            title="Our Services"
-            subtitle="Every story deserves to be told beautifully."
+            eyebrow={content.servicesEyebrow}
+            title={content.servicesTitle}
+            subtitle={content.servicesSubtitle}
             centered={true}
             className="mb-14 sm:mb-16"
           />
 
           <div className="service-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service, index) => (
+            {content.serviceCards.map((service, index) => (
               <div
                 key={service.title}
                 className={
@@ -139,15 +81,15 @@ export default function Services() {
           <div className="mt-16 border-t border-neutral-200 pt-12">
             <div className="mb-10 text-center">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
-                Client reviews
+                {content.reviewsEyebrow}
               </p>
               <h3 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
-                What clients are saying
+                {content.reviewsTitle}
               </h3>
             </div>
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-              {reviews.map((review) => (
+              {content.reviews.map((review) => (
                 <ReviewCard key={review.name} review={review} />
               ))}
             </div>
