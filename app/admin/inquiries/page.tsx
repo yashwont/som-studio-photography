@@ -30,7 +30,7 @@ const STATUS_STYLES: Record<string, string> = {
 function StatusBadge({ status }: { status: string }) {
   return (
     <span
-      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+      className={`inline-flex shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${
         STATUS_STYLES[status] ?? "bg-neutral-700/50 text-neutral-400"
       }`}
     >
@@ -39,14 +39,41 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
-function ViewInquiryLink({ id }: { id: string }) {
+function InquiryCard({ inquiry }: { inquiry: AdminInquiryListItem }) {
   return (
-    <Link
-      href={`/admin/inquiries/${id}`}
-      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-    >
-      View
-    </Link>
+    <div className="rounded border border-neutral-800 bg-neutral-950 p-4">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <h3 className="font-medium text-neutral-50">{inquiry.name}</h3>
+        <StatusBadge status={inquiry.status} />
+      </div>
+
+      <div className="mt-2 text-sm text-neutral-300">
+        <div>{inquiry.phone}</div>
+        {inquiry.email && (
+          <div className="text-neutral-500">{inquiry.email}</div>
+        )}
+      </div>
+
+      <p className="mt-2 text-sm text-neutral-400">
+        {inquiry.service?.title ??
+          inquiry.package?.name ??
+          inquiry.serviceType ??
+          "—"}
+      </p>
+
+      <p className="mt-2 text-xs text-neutral-500">
+        Submitted {formatDate(inquiry.createdAt)}
+      </p>
+
+      <div className="mt-4">
+        <Link
+          href={`/admin/inquiries/${inquiry.id}`}
+          className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+        >
+          View
+        </Link>
+      </div>
+    </div>
   );
 }
 
@@ -70,58 +97,10 @@ export default async function AdminInquiriesPage() {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto rounded border border-neutral-800">
-            <table className="w-full min-w-[900px] text-left text-sm">
-              <thead className="bg-neutral-900 text-xs uppercase tracking-wide text-neutral-400">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Name</th>
-                  <th className="px-4 py-3 font-semibold">Contact</th>
-                  <th className="px-4 py-3 font-semibold">Service / Package</th>
-                  <th className="px-4 py-3 font-semibold">Status</th>
-                  <th className="px-4 py-3 font-semibold">Submitted</th>
-                  <th className="px-4 py-3 font-semibold text-right">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-800">
-                {inquiries.map((inquiry: AdminInquiryListItem) => (
-                  <tr
-                    key={inquiry.id}
-                    className="bg-neutral-950 hover:bg-neutral-900/60"
-                  >
-                    <td className="px-4 py-3 font-medium text-neutral-50">
-                      {inquiry.name}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      <div>{inquiry.phone}</div>
-                      {inquiry.email && (
-                        <div className="text-neutral-500">
-                          {inquiry.email}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {inquiry.service?.title ??
-                        inquiry.package?.name ??
-                        inquiry.serviceType ??
-                        "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <StatusBadge status={inquiry.status} />
-                    </td>
-                    <td className="px-4 py-3 text-neutral-400">
-                      {formatDate(inquiry.createdAt)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
-                        <ViewInquiryLink id={inquiry.id} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {inquiries.map((inquiry: AdminInquiryListItem) => (
+              <InquiryCard key={inquiry.id} inquiry={inquiry} />
+            ))}
           </div>
         )}
       </section>

@@ -41,27 +41,6 @@ function getSafeThumbnailUrl(imageUrl: string) {
   }
 }
 
-function ServiceThumbnail({ imageUrl }: { imageUrl: string | null }) {
-  const thumbnailUrl = imageUrl ? getSafeThumbnailUrl(imageUrl) : null;
-
-  if (!thumbnailUrl) {
-    return (
-      <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-[10px] text-neutral-500">
-        No photo
-      </div>
-    );
-  }
-
-  return (
-    <div
-      aria-label="Service photo"
-      role="img"
-      className="h-12 w-16 shrink-0 rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${JSON.stringify(thumbnailUrl)})` }}
-    />
-  );
-}
-
 function StatusBadge({ active }: { active: boolean }) {
   return (
     <span
@@ -76,6 +55,14 @@ function StatusBadge({ active }: { active: boolean }) {
   );
 }
 
+function FeaturedBadge({ featured }: { featured: boolean }) {
+  return featured ? (
+    <span className="inline-flex rounded-full border border-gold/30 px-2.5 py-1 text-xs font-semibold text-gold">
+      Featured
+    </span>
+  ) : null;
+}
+
 function AddServiceButton({ className = "" }: { className?: string }) {
   return (
     <Link
@@ -87,25 +74,61 @@ function AddServiceButton({ className = "" }: { className?: string }) {
   );
 }
 
-function ViewServiceButton({ serviceId }: { serviceId: string }) {
-  return (
-    <Link
-      href={`/admin/services/${serviceId}`}
-      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-    >
-      View
-    </Link>
-  );
-}
+function ServiceCard({ service }: { service: AdminService }) {
+  const imageUrl = service.imageUrls[0] ?? null;
+  const thumbnailUrl = imageUrl ? getSafeThumbnailUrl(imageUrl) : null;
 
-function EditServiceButton({ serviceId }: { serviceId: string }) {
   return (
-    <Link
-      href={`/admin/services/${serviceId}/edit`}
-      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-    >
-      Edit
-    </Link>
+    <div className="overflow-hidden rounded border border-neutral-800 bg-neutral-950">
+      {thumbnailUrl ? (
+        <div
+          aria-label={`${service.title} photo`}
+          role="img"
+          className="h-40 w-full bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${JSON.stringify(thumbnailUrl)})` }}
+        />
+      ) : (
+        <div className="flex h-40 w-full items-center justify-center bg-neutral-900 text-xs text-neutral-500">
+          No photo
+        </div>
+      )}
+
+      <div className="p-4">
+        <h3 className="font-medium text-neutral-50">{service.title}</h3>
+
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          <StatusBadge active={service.active} />
+          <FeaturedBadge featured={service.featured} />
+        </div>
+
+        <dl className="mt-3 grid grid-cols-2 gap-2 text-xs">
+          <div>
+            <dt className="text-neutral-500">Order</dt>
+            <dd className="text-neutral-300">{service.displayOrder}</dd>
+          </div>
+          <div>
+            <dt className="text-neutral-500">Updated</dt>
+            <dd className="text-neutral-300">{formatDate(service.updatedAt)}</dd>
+          </div>
+        </dl>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href={`/admin/services/${service.id}`}
+            className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+          >
+            View
+          </Link>
+          <Link
+            href={`/admin/services/${service.id}/edit`}
+            className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+          >
+            Edit
+          </Link>
+          <DeleteServiceButton serviceId={service.id} serviceTitle={service.title} />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -128,59 +151,10 @@ export default async function AdminServicesPage() {
             <AddServiceButton className="mt-4" />
           </div>
         ) : (
-          <div className="overflow-x-auto rounded border border-neutral-800">
-            <table className="w-full min-w-[860px] text-left text-sm">
-              <thead className="bg-neutral-900 text-xs uppercase tracking-wide text-neutral-400">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Photo</th>
-                  <th className="px-4 py-3 font-semibold">Title</th>
-                  <th className="px-4 py-3 font-semibold">Status</th>
-                  <th className="px-4 py-3 font-semibold">Featured</th>
-                  <th className="px-4 py-3 font-semibold">Order</th>
-                  <th className="px-4 py-3 font-semibold">Updated</th>
-                  <th className="px-4 py-3 font-semibold text-right">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-800">
-                {services.map((service: AdminService) => (
-                  <tr
-                    key={service.id}
-                    className="bg-neutral-950 hover:bg-neutral-900/60"
-                  >
-                    <td className="px-4 py-3">
-                      <ServiceThumbnail imageUrl={service.imageUrls[0] ?? null} />
-                    </td>
-                    <td className="px-4 py-3 font-medium text-neutral-50">
-                      {service.title}
-                    </td>
-                    <td className="px-4 py-3">
-                      <StatusBadge active={service.active} />
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {service.featured ? "Yes" : "No"}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {service.displayOrder}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-400">
-                      {formatDate(service.updatedAt)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
-                        <ViewServiceButton serviceId={service.id} />
-                        <EditServiceButton serviceId={service.id} />
-                        <DeleteServiceButton
-                          serviceId={service.id}
-                          serviceTitle={service.title}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {services.map((service: AdminService) => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
           </div>
         )}
       </section>

@@ -3,7 +3,6 @@ import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
-import PageHeader from "@/src/components/ui/PageHeader";
 import SocialIcon from "@/src/components/ui/SocialIcon";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import InquiryForm from "@/src/components/forms/InquiryForm";
@@ -77,17 +76,16 @@ export default async function ContactPage({
     <>
       <Navbar />
 
-      <PageHeader
-        eyebrow="Contact"
-        title="Book a photography session"
-        subtitle="Tell us what you need and we will guide you with the right package, timing, and plan."
-        animated={false}
-      />
-
-      <section className="border-t border-neutral-200 bg-neutral-50">
+      <div className="border-b border-neutral-200 bg-neutral-50 pt-16 sm:pt-20">
         <Container>
-          <div className="pt-20 sm:pt-28">
-            <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-neutral-900">
+          <div className="py-5 text-center sm:py-6">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
+              Contact
+            </p>
+            <h1 className="break-words text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
+              Book a photography session
+            </h1>
+            <p className="mx-auto mt-1.5 max-w-xl text-xs font-semibold leading-relaxed text-neutral-900">
               Whether you already have a date in mind or you&rsquo;re still
               exploring options, reaching out costs nothing and commits you
               to nothing. Send a message or call us directly &mdash;
@@ -95,7 +93,12 @@ export default async function ContactPage({
               availability, and walk you through pricing and next steps.
             </p>
           </div>
-          <div className="grid grid-cols-1 items-start gap-14 pb-20 pt-14 sm:pb-28 sm:pt-16 lg:grid-cols-2 lg:gap-20">
+        </Container>
+      </div>
+
+      <section className="border-t border-neutral-200 bg-neutral-50">
+        <Container>
+          <div className="grid grid-cols-1 items-start gap-14 pb-20 pt-10 sm:pb-28 sm:pt-12 lg:grid-cols-2 lg:gap-20">
             <div>
               <h2 className="mb-6 text-xl font-bold text-neutral-950 sm:text-2xl">
                 Contact details
@@ -139,10 +142,10 @@ export default async function ContactPage({
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button href={contactWhatsappUrl} variant="secondary" size="md">
-                  Chat on WhatsApp: {contact.whatsapp}
+                <Button href={contactWhatsappUrl} variant="primary" size="md">
+                  Chat on WhatsApp
                 </Button>
-                <Button href="#studio-location" variant="ghost" size="md">
+                <Button href="#studio-location" variant="secondary" size="md">
                   View Location
                 </Button>
               </div>
