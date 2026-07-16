@@ -7,11 +7,10 @@ import PageHeader from "@/src/components/ui/PageHeader";
 import SocialIcon from "@/src/components/ui/SocialIcon";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import InquiryForm from "@/src/components/forms/InquiryForm";
-import { contactInfo } from "@/src/data/contact";
 import { getActiveServices } from "@/src/lib/db/services";
-import { getSiteSetting } from "@/src/lib/db/site-settings";
+import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl } from "@/src/lib/seo";
-import type { BusinessHours, ContactInfo, SocialLink } from "@/src/types/site";
+import type { BusinessHours, SocialLink } from "@/src/types/site";
 
 type ActiveService = Awaited<ReturnType<typeof getActiveServices>>[number];
 
@@ -23,41 +22,6 @@ export const metadata: Metadata = {
     canonical: absoluteUrl("/contact"),
   },
 };
-
-function isContactInfo(value: unknown): value is ContactInfo {
-  if (!value || typeof value !== "object") {
-    return false;
-  }
-
-  const candidate = value as Record<string, unknown>;
-
-  return (
-    typeof candidate.phone === "string" &&
-    typeof candidate.whatsapp === "string" &&
-    typeof candidate.email === "string" &&
-    typeof candidate.address === "string" &&
-    typeof candidate.city === "string" &&
-    typeof candidate.country === "string" &&
-    Array.isArray(candidate.socialLinks) &&
-    Array.isArray(candidate.businessHours)
-  );
-}
-
-async function getContactInfo() {
-  const setting = await getSiteSetting("contact.info");
-
-  if (!setting) {
-    return contactInfo;
-  }
-
-  try {
-    const parsed = JSON.parse(setting.value) as unknown;
-
-    return isContactInfo(parsed) ? parsed : contactInfo;
-  } catch {
-    return contactInfo;
-  }
-}
 
 function ContactDetail({
   label,
@@ -219,6 +183,7 @@ export default async function ContactPage({
                 defaultServiceId={defaultServiceId}
                 defaultMessage={defaultMessage}
                 services={services}
+                contact={contact}
               />
             </div>
           </div>
@@ -226,7 +191,7 @@ export default async function ContactPage({
       </section>
 
       <div id="studio-location">
-        <LocationVisit />
+        <LocationVisit contact={contact} />
       </div>
 
       <section className="border-t border-neutral-200 bg-neutral-50">
@@ -264,7 +229,7 @@ export default async function ContactPage({
         </Container>
       </section>
 
-      <Footer />
+      <Footer contact={contact} />
     </>
   );
 }

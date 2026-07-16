@@ -59,6 +59,7 @@ export interface StoryOverviewDraft {
 }
 
 export interface SessionDetailsDraft {
+  studio: string;
   service: string;
   location: string;
   style: string;

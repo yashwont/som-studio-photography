@@ -1,8 +1,8 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
-import { contactInfo } from "@/src/data/contact";
 import { submitInquiry } from "@/src/lib/actions/inquiry";
+import type { ContactInfo } from "@/src/types/site";
 
 type ServiceOption = {
   id: string;
@@ -14,6 +14,7 @@ interface InquiryFormProps {
   defaultServiceId?: string;
   defaultMessage?: string;
   services: ServiceOption[];
+  contact: ContactInfo;
 }
 
 const inputClass =
@@ -53,12 +54,13 @@ export default function InquiryForm({
   defaultServiceId = "",
   defaultMessage = "",
   services,
+  contact,
 }: InquiryFormProps) {
   const [status, setStatus] = useState("");
 
   const whatsappBaseUrl = useMemo(
-    () => `https://wa.me/${contactInfo.whatsapp.replace("+", "")}`,
-    [],
+    () => `https://wa.me/${contact.whatsapp.replace("+", "")}`,
+    [contact.whatsapp],
   );
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -214,7 +216,7 @@ export default function InquiryForm({
         type="submit"
         className="w-full rounded bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       >
-        Send Inquiry on WhatsApp: {contactInfo.whatsapp}
+        Send Inquiry on WhatsApp: {contact.whatsapp}
       </button>
 
       <p aria-live="polite" className="min-h-5 text-xs text-neutral-900">

@@ -12,6 +12,7 @@ import {
   getActivePortfolioImages,
   getFeaturedPortfolioImages,
 } from "@/src/lib/db/portfolio";
+import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl, defaultDescription } from "@/src/lib/seo";
 import type { PortfolioCategory } from "@/src/types/site";
 
@@ -41,6 +42,7 @@ function toHomepagePortfolioCategory(
 }
 
 export default async function Home() {
+  const contact = await getContactInfo();
   const featuredPortfolioImages = await getFeaturedPortfolioImages();
   const activePortfolioImages =
     featuredPortfolioImages.length > 0 ? [] : await getActivePortfolioImages();
@@ -58,7 +60,7 @@ export default async function Home() {
       <Navbar />
       <main>
         <ScrollReveal variant="soft-zoom">
-          <Hero />
+          <Hero contact={contact} />
         </ScrollReveal>
         <ScrollReveal variant="tilt-right">
           <About />
@@ -73,7 +75,7 @@ export default async function Home() {
           <FinalCTA />
         </ScrollReveal>
       </main>
-      <Footer />
+      <Footer contact={contact} />
     </>
   );
 }

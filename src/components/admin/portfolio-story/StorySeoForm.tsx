@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import type { StorySeoDraft } from "./types";
 import { inputClassName, labelClassName } from "./fieldStyles";
 
@@ -10,6 +11,8 @@ export default function StorySeoForm({
   value: StorySeoDraft;
   onChange: (next: StorySeoDraft) => void;
 }) {
+  const uid = useId();
+
   return (
     <div className="space-y-4">
       <p className="text-xs text-neutral-500">
@@ -19,11 +22,11 @@ export default function StorySeoForm({
       </p>
 
       <div>
-        <label htmlFor="seoTitle" className={labelClassName}>
+        <label htmlFor={`${uid}-seoTitle`} className={labelClassName}>
           SEO title override <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="seoTitle"
+          id={`${uid}-seoTitle`}
           name="seoTitle"
           type="text"
           defaultValue={value.title}
@@ -33,12 +36,12 @@ export default function StorySeoForm({
       </div>
 
       <div>
-        <label htmlFor="seoDescription" className={labelClassName}>
+        <label htmlFor={`${uid}-seoDescription`} className={labelClassName}>
           Meta description override{" "}
           <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <textarea
-          id="seoDescription"
+          id={`${uid}-seoDescription`}
           name="seoDescription"
           rows={3}
           defaultValue={value.description}

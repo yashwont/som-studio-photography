@@ -1,8 +1,8 @@
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
-import { contactInfo } from "@/src/data/contact";
+import type { ContactInfo } from "@/src/types/site";
 
-export default function LocationVisit() {
+export default function LocationVisit({ contact: contactInfo }: { contact: ContactInfo }) {
   const whatsappUrl = `https://wa.me/${contactInfo.whatsapp.replace("+", "")}`;
 
   return (

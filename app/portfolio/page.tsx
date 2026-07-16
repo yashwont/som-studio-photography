@@ -7,6 +7,7 @@ import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import { getPortfolioCategories } from "@/src/lib/db/portfolio";
+import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
@@ -87,7 +88,10 @@ function EmptyPortfolioFallback() {
 }
 
 export default async function PortfolioPage() {
-  const portfolioCategories = await getPortfolioCategories();
+  const [portfolioCategories, contact] = await Promise.all([
+    getPortfolioCategories(),
+    getContactInfo(),
+  ]);
   const hasPortfolioContent = portfolioCategories.some(
     (category: PortfolioCategoryWithImages) => category.images.length > 0
   );
@@ -98,14 +102,14 @@ export default async function PortfolioPage() {
 
       <div className="border-b border-neutral-200 bg-neutral-50 pt-16 sm:pt-20">
         <Container>
-          <div className="py-8 text-center sm:py-10">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
+          <div className="py-5 text-center sm:py-6">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
               Portfolio
             </p>
-            <h1 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
+            <h1 className="text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
               Photography portfolio
             </h1>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-neutral-900 sm:text-base">
+            <p className="mx-auto mt-1.5 max-w-xl text-xs font-semibold leading-relaxed text-neutral-900">
               Browse newborn, kids, maternity, family, graduation, portrait, wedding, pre-wedding, event, and product photography from our Kathmandu studio.
             </p>
           </div>
@@ -141,7 +145,7 @@ export default async function PortfolioPage() {
         </section>
       </ScrollReveal>
 
-      <Footer />
+      <Footer contact={contact} />
     </>
   );
 }

@@ -99,6 +99,11 @@ model PortfolioStory {
   overviewHeading    String?
   overviewParagraphs Json?
 
+  /// Overrides the eyebrow shown above the H1 in the hero banner (defaults to
+  /// "{category} Photography" on the public page when left unset).
+  heroEyebrow String?
+
+  studio   String?
   service  String?
   location String?
   style    String?

@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import type { StoryCtaDraft } from "./types";
 import { inputClassName, labelClassName } from "./fieldStyles";
 
@@ -10,6 +11,8 @@ export default function StoryCtaForm({
   value: StoryCtaDraft;
   onChange: (next: StoryCtaDraft) => void;
 }) {
+  const uid = useId();
+
   return (
     <div className="space-y-4">
       <p className="text-xs text-neutral-500">
@@ -19,11 +22,11 @@ export default function StoryCtaForm({
       </p>
 
       <div>
-        <label htmlFor="ctaEyebrow" className={labelClassName}>
+        <label htmlFor={`${uid}-ctaEyebrow`} className={labelClassName}>
           CTA eyebrow <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="ctaEyebrow"
+          id={`${uid}-ctaEyebrow`}
           name="ctaEyebrow"
           type="text"
           defaultValue={value.eyebrow}
@@ -34,11 +37,11 @@ export default function StoryCtaForm({
       </div>
 
       <div>
-        <label htmlFor="ctaHeading" className={labelClassName}>
+        <label htmlFor={`${uid}-ctaHeading`} className={labelClassName}>
           CTA heading <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="ctaHeading"
+          id={`${uid}-ctaHeading`}
           name="ctaHeading"
           type="text"
           defaultValue={value.heading}
@@ -48,11 +51,11 @@ export default function StoryCtaForm({
       </div>
 
       <div>
-        <label htmlFor="ctaBody" className={labelClassName}>
+        <label htmlFor={`${uid}-ctaBody`} className={labelClassName}>
           CTA description <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <textarea
-          id="ctaBody"
+          id={`${uid}-ctaBody`}
           name="ctaBody"
           rows={3}
           defaultValue={value.body}
@@ -63,12 +66,12 @@ export default function StoryCtaForm({
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="primaryCtaLabel" className={labelClassName}>
+          <label htmlFor={`${uid}-primaryCtaLabel`} className={labelClassName}>
             Primary button label{" "}
             <span className="normal-case text-neutral-500">(optional)</span>
           </label>
           <input
-            id="primaryCtaLabel"
+            id={`${uid}-primaryCtaLabel`}
             name="primaryCtaLabel"
             type="text"
             defaultValue={value.primaryLabel}
@@ -81,12 +84,12 @@ export default function StoryCtaForm({
         </div>
 
         <div>
-          <label htmlFor="secondaryCtaLabel" className={labelClassName}>
+          <label htmlFor={`${uid}-secondaryCtaLabel`} className={labelClassName}>
             Secondary button label{" "}
             <span className="normal-case text-neutral-500">(optional)</span>
           </label>
           <input
-            id="secondaryCtaLabel"
+            id={`${uid}-secondaryCtaLabel`}
             name="secondaryCtaLabel"
             type="text"
             defaultValue={value.secondaryLabel}

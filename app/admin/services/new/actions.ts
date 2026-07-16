@@ -8,8 +8,6 @@ import { makeRoomForServiceDisplayOrder } from "@/src/lib/db/admin-services";
 import { uploadServiceImage } from "@/src/lib/storage/cloudinary";
 import type { NewServiceState } from "./types";
 
-const PHOTO_SLOT_COUNT = 4;
-
 function slugify(value: string) {
   return value
     .trim()
@@ -77,10 +75,11 @@ export async function createService(
     suffix += 1;
   }
 
+  const photoIds = formData.getAll("photoIds").map(String);
   const imageUrls: string[] = [];
 
-  for (let i = 0; i < PHOTO_SLOT_COUNT; i++) {
-    const file = formData.get(`imageFile${i}`);
+  for (const photoId of photoIds) {
+    const file = formData.get(`imageFile__${photoId}`);
 
     if (file instanceof File && file.size > 0) {
       const uploadResult = await uploadServiceImage(file);

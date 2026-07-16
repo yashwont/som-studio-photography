@@ -77,6 +77,7 @@ export default function StoryPreviewPanel({
   categorySlug,
   title,
   summary,
+  heroEyebrow,
   coverImageSrc,
   coverImageAlt,
   overview,
@@ -88,6 +89,7 @@ export default function StoryPreviewPanel({
   categorySlug: string;
   title: string;
   summary: string;
+  heroEyebrow?: string;
   coverImageSrc: string;
   coverImageAlt: string;
   overview: StoryOverviewDraft;
@@ -113,13 +115,15 @@ export default function StoryPreviewPanel({
   ];
 
   const hasSessionDetails = Boolean(
-    sessionDetails.service ||
+    sessionDetails.studio ||
+      sessionDetails.service ||
       sessionDetails.location ||
       sessionDetails.style ||
       sessionDetails.setting
   );
   const publicSessionDetails: PortfolioSessionDetails | undefined = hasSessionDetails
     ? {
+        studio: sessionDetails.studio || undefined,
         service: sessionDetails.service || undefined,
         location: sessionDetails.location || undefined,
         style: sessionDetails.style || undefined,
@@ -141,6 +145,7 @@ export default function StoryPreviewPanel({
             categorySlug={categorySlug}
             title={title}
             summary={summary}
+            eyebrow={heroEyebrow || undefined}
             sessionDetails={publicSessionDetails}
             coverImage={coverImage}
           />

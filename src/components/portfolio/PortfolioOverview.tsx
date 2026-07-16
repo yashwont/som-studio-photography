@@ -62,6 +62,9 @@ export default function PortfolioOverview({
                     Session Details
                   </p>
                   <div className="space-y-5">
+                    {sessionDetails.studio && (
+                      <DetailRow label="Studio" value={sessionDetails.studio} />
+                    )}
                     {sessionDetails.service && (
                       <DetailRow label="Service" value={sessionDetails.service} />
                     )}

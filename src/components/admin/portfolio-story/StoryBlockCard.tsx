@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { EditableBlock } from "./types";
 import { blockPreviewText, blockTypeLabel } from "./types";
-import type { BlockFieldErrors } from "@/app/admin/portfolio/images/[id]/story/types";
+import type { BlockFieldErrors } from "@/src/lib/portfolio/story-form";
 import TextBlockEditor from "./TextBlockEditor";
 import ImageBlockEditor from "./ImageBlockEditor";
 import ImageTextBlockEditor from "./ImageTextBlockEditor";

@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import type { StoryOverviewDraft } from "./types";
 import { inputClassName, labelClassName } from "./fieldStyles";
 
@@ -10,14 +11,16 @@ export default function StoryOverviewForm({
   value: StoryOverviewDraft;
   onChange: (next: StoryOverviewDraft) => void;
 }) {
+  const uid = useId();
+
   return (
     <div className="space-y-4">
       <div>
-        <label htmlFor="overviewEyebrow" className={labelClassName}>
+        <label htmlFor={`${uid}-overviewEyebrow`} className={labelClassName}>
           Overview eyebrow <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="overviewEyebrow"
+          id={`${uid}-overviewEyebrow`}
           name="overviewEyebrow"
           type="text"
           defaultValue={value.eyebrow}
@@ -28,11 +31,11 @@ export default function StoryOverviewForm({
       </div>
 
       <div>
-        <label htmlFor="overviewHeading" className={labelClassName}>
+        <label htmlFor={`${uid}-overviewHeading`} className={labelClassName}>
           Overview heading <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="overviewHeading"
+          id={`${uid}-overviewHeading`}
           name="overviewHeading"
           type="text"
           defaultValue={value.heading}
@@ -42,14 +45,14 @@ export default function StoryOverviewForm({
       </div>
 
       <div>
-        <label htmlFor="overviewParagraphs" className={labelClassName}>
+        <label htmlFor={`${uid}-overviewParagraphs`} className={labelClassName}>
           Overview paragraphs{" "}
           <span className="normal-case text-neutral-500">
             (separate paragraphs with a blank line - at least two recommended)
           </span>
         </label>
         <textarea
-          id="overviewParagraphs"
+          id={`${uid}-overviewParagraphs`}
           name="overviewParagraphs"
           rows={6}
           defaultValue={value.paragraphs}

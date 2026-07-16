@@ -24,6 +24,7 @@ export default function PortfolioHero({
   categorySlug,
   title,
   summary,
+  eyebrow,
   sessionDetails,
   coverImage,
 }: {
@@ -31,6 +32,7 @@ export default function PortfolioHero({
   categorySlug: string;
   title: string;
   summary: string;
+  eyebrow?: string;
   sessionDetails?: PortfolioSessionDetails;
   coverImage: PortfolioImage;
 }) {
@@ -46,7 +48,7 @@ export default function PortfolioHero({
               &larr; Back to {categoryName} Portfolio
             </Link>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
-              {categoryName} Photography
+              {eyebrow || `${categoryName} Photography`}
             </p>
             <h1 className="max-w-3xl break-words text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl xl:text-5xl">
               {title}
@@ -57,7 +59,10 @@ export default function PortfolioHero({
 
             {sessionDetails && (
               <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2.5">
-                <MetaItem label="Studio" value="SomStudioPhotography" />
+                <MetaItem
+                  label="Studio"
+                  value={sessionDetails.studio || "SomStudioPhotography"}
+                />
                 {sessionDetails.service && (
                   <MetaItem label="Service" value={sessionDetails.service} />
                 )}

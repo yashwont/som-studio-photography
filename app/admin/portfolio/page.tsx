@@ -4,6 +4,7 @@ import { requireAdmin } from "@/src/lib/auth/admin";
 import { getAdminPortfolioCategories } from "@/src/lib/db/admin-portfolio";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
+import DeleteCategoryButton from "./DeleteCategoryButton";
 
 export const metadata: Metadata = {
   title: "Portfolio | Admin | SomStudioPhotography",
@@ -13,12 +14,28 @@ type AdminPortfolioCategory = Awaited<
   ReturnType<typeof getAdminPortfolioCategories>
 >[number];
 
-function formatDate(date: Date) {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+const FALLBACK_COVER = {
+  imageUrl: "/images/visuals/studio.jpg",
+  altText: "A photographer working with professional studio lighting equipment.",
+};
+
+function getSafeImageUrl(imageUrl: string) {
+  const trimmedUrl = imageUrl.trim();
+
+  if (!trimmedUrl || trimmedUrl.includes('"') || trimmedUrl.includes("'")) {
+    return null;
+  }
+
+  if (trimmedUrl.startsWith("/") && !trimmedUrl.startsWith("//")) {
+    return trimmedUrl;
+  }
+
+  try {
+    const url = new URL(trimmedUrl);
+    return url.protocol === "http:" || url.protocol === "https:" ? trimmedUrl : null;
+  } catch {
+    return null;
+  }
 }
 
 function AddCategoryButton({ className = "" }: { className?: string }) {
@@ -32,25 +49,68 @@ function AddCategoryButton({ className = "" }: { className?: string }) {
   );
 }
 
-function ViewCategoryLink({ id }: { id: string }) {
-  return (
-    <Link
-      href={`/admin/portfolio/${id}`}
-      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-    >
-      View
-    </Link>
-  );
-}
+function CategoryCard({ category }: { category: AdminPortfolioCategory }) {
+  const cover = category.images[0] ?? FALLBACK_COVER;
+  const coverUrl = getSafeImageUrl(cover.imageUrl);
+  const imageCount = category._count.images;
 
-function EditCategoryLink({ id }: { id: string }) {
   return (
-    <Link
-      href={`/admin/portfolio/${id}/edit`}
-      className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-    >
-      Edit
-    </Link>
+    <div className="overflow-hidden rounded border border-neutral-800 bg-neutral-900">
+      <Link href={`/admin/portfolio/${category.id}`} className="group block">
+        {coverUrl ? (
+          <div
+            aria-label={`${category.name} cover`}
+            role="img"
+            className="h-40 w-full bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-105"
+            style={{ backgroundImage: `url(${JSON.stringify(coverUrl)})` }}
+          />
+        ) : (
+          <div className="flex h-40 w-full items-center justify-center bg-neutral-950 text-xs text-neutral-500">
+            No preview
+          </div>
+        )}
+      </Link>
+
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <Link
+            href={`/admin/portfolio/${category.id}`}
+            className="font-semibold text-neutral-50 transition-colors hover:text-gold"
+          >
+            {category.name}
+          </Link>
+          <span className="shrink-0 rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-semibold text-neutral-300">
+            {imageCount} {imageCount === 1 ? "image" : "images"}
+          </span>
+        </div>
+
+        {category.description && (
+          <p className="mt-2 line-clamp-2 text-sm text-neutral-400">
+            {category.description}
+          </p>
+        )}
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href={`/admin/portfolio/${category.id}`}
+            className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+          >
+            View
+          </Link>
+          <Link
+            href={`/admin/portfolio/${category.id}/edit`}
+            className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+          >
+            Edit
+          </Link>
+          <DeleteCategoryButton
+            categoryId={category.id}
+            categoryName={category.name}
+            imageCount={imageCount}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -62,7 +122,7 @@ export default async function AdminPortfolioPage() {
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
       <AdminPageHeader
         title="Portfolio"
-        description="Manage portfolio categories and image collections."
+        description="Manage portfolio categories and their images, same as they appear on the public site."
         action={<AddCategoryButton />}
       />
 
@@ -70,57 +130,15 @@ export default async function AdminPortfolioPage() {
         {categories.length === 0 ? (
           <div className="rounded border border-neutral-800 bg-neutral-900 p-8 text-center">
             <p className="text-sm text-neutral-300">
-              No portfolio categories found. Category management will be
-              added in the next phase.
+              No portfolio categories found.
             </p>
             <AddCategoryButton className="mt-4" />
           </div>
         ) : (
-          <div className="overflow-x-auto rounded border border-neutral-800">
-            <table className="w-full min-w-[860px] text-left text-sm">
-              <thead className="bg-neutral-900 text-xs uppercase tracking-wide text-neutral-400">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Title</th>
-                  <th className="px-4 py-3 font-semibold">Description</th>
-                  <th className="px-4 py-3 font-semibold">Images</th>
-                  <th className="px-4 py-3 font-semibold">Order</th>
-                  <th className="px-4 py-3 font-semibold">Updated</th>
-                  <th className="px-4 py-3 font-semibold text-right">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-800">
-                {categories.map((category: AdminPortfolioCategory) => (
-                  <tr
-                    key={category.id}
-                    className="bg-neutral-950 hover:bg-neutral-900/60"
-                  >
-                    <td className="px-4 py-3 font-medium text-neutral-50">
-                      {category.name}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {category.description ?? "—"}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {category._count.images}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-300">
-                      {category.displayOrder}
-                    </td>
-                    <td className="px-4 py-3 text-neutral-400">
-                      {formatDate(category.updatedAt)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
-                        <ViewCategoryLink id={category.id} />
-                        <EditCategoryLink id={category.id} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {categories.map((category: AdminPortfolioCategory) => (
+              <CategoryCard key={category.id} category={category} />
+            ))}
           </div>
         )}
       </section>

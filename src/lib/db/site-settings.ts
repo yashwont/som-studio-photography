@@ -8,6 +8,14 @@ export function getSiteSetting(key: string) {
   });
 }
 
+export function setSiteSetting(key: string, value: string) {
+  return prisma.siteSetting.upsert({
+    where: { key },
+    create: { key, value },
+    update: { value },
+  });
+}
+
 export function getSiteSettings(keys: string[]) {
   if (keys.length === 0) {
     return Promise.resolve([]);

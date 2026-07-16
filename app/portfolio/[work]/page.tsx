@@ -21,6 +21,7 @@ import {
 } from "@/src/lib/db/portfolio";
 import { getPortfolioStoryByImageId } from "@/src/lib/db/portfolio-story";
 import { getActiveServices } from "@/src/lib/db/services";
+import { getContactInfo } from "@/src/lib/db/contact";
 import { buildPortfolioStoryContent, toNewbornSpelling } from "@/src/lib/portfolio/display";
 import { absoluteUrl } from "@/src/lib/seo";
 import type { PortfolioImage as PortfolioImageContent } from "@/src/types/portfolio";
@@ -107,13 +108,14 @@ export default async function PortfolioWorkPage({
   const displayCategoryName = toNewbornSpelling(category.name);
   const displayDescription = toNewbornSpelling(work.description) ?? "";
 
-  const [moreFromCategory, allActiveImages, activeServices] =
+  const [moreFromCategory, allActiveImages, activeServices, contact] =
     await Promise.all([
       getPortfolioImagesByCategorySlug(category.slug).then((items) =>
         items.filter((item: PortfolioImageWithCategory) => item.id !== work.id)
       ),
       getActivePortfolioImages(),
       getActiveServices(),
+      getContactInfo(),
     ]);
 
   const currentIndex = allActiveImages.findIndex((item) => item.id === work.id);
@@ -156,6 +158,7 @@ export default async function PortfolioWorkPage({
           categorySlug={category.slug}
           title={displayTitle}
           summary={displayDescription}
+          eyebrow={story?.heroEyebrow}
           sessionDetails={
             story?.sessionDetails ?? { service: `${displayCategoryName} Photography` }
           }
@@ -255,7 +258,7 @@ export default async function PortfolioWorkPage({
         }
       />
 
-      <Footer />
+      <Footer contact={contact} />
     </>
   );
 }

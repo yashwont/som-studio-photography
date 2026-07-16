@@ -128,16 +128,10 @@ export default async function AdminPortfolioImageDetailPage({
               &larr; Back to Category
             </Link>
             <Link
-              href={`/admin/portfolio/images/${image.id}/edit`}
-              className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
-            >
-              Edit Image
-            </Link>
-            <Link
-              href={`/admin/portfolio/images/${image.id}/story`}
+              href={`/admin/portfolio/${image.category.id}/edit?openImage=${image.id}`}
               className="inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
             >
-              Edit Story
+              Edit
             </Link>
           </div>
         }
@@ -251,7 +245,7 @@ export default async function AdminPortfolioImageDetailPage({
             </div>
           </dl>
           <Link
-            href={`/admin/portfolio/images/${image.id}/story`}
+            href={`/admin/portfolio/${image.category.id}/edit?openImage=${image.id}`}
             className="mt-4 inline-flex rounded border border-gold/40 px-4 py-2 text-sm font-semibold text-gold transition-colors hover:border-gold hover:bg-gold/10"
           >
             Edit Story

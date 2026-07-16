@@ -18,6 +18,8 @@ export interface PrismaPortfolioStoryWithBlocks {
   overviewEyebrow: string | null;
   overviewHeading: string | null;
   overviewParagraphs: unknown;
+  heroEyebrow: string | null;
+  studio: string | null;
   service: string | null;
   location: string | null;
   style: string | null;
@@ -54,8 +56,9 @@ export function buildPortfolioStoryContent(
     .filter((block) => block !== null);
 
   const sessionDetails =
-    story.service || story.location || story.style || story.setting
+    story.studio || story.service || story.location || story.style || story.setting
       ? {
+          studio: story.studio ?? undefined,
           service: story.service ?? undefined,
           location: story.location ?? undefined,
           style: story.style ?? undefined,
@@ -64,6 +67,7 @@ export function buildPortfolioStoryContent(
       : undefined;
 
   return {
+    heroEyebrow: story.heroEyebrow ?? undefined,
     storyEyebrow: story.overviewEyebrow ?? undefined,
     storyHeading: story.overviewHeading ?? undefined,
     storyParagraphs,

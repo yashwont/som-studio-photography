@@ -2,47 +2,132 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import type { Prisma } from "@prisma/client";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
-import type { EditPortfolioCategoryState } from "./types";
+import { parseCoverForm } from "@/src/lib/portfolio/cover-form";
+import { isStoryFormEmpty, parseStoryForm } from "@/src/lib/portfolio/story-form";
+import type { PortfolioImageFormState } from "../../images/_shared/types";
 
-export async function updatePortfolioCategory(
+export async function saveCategoryWithImage(
   categoryId: string,
-  _previousState: EditPortfolioCategoryState,
+  _previousState: PortfolioImageFormState,
   formData: FormData
-): Promise<EditPortfolioCategoryState> {
+): Promise<PortfolioImageFormState> {
   await requireAdmin();
 
-  const name = String(formData.get("name") ?? "").trim();
-  const description = String(formData.get("description") ?? "").trim();
-  const displayOrderRaw = String(formData.get("displayOrder") ?? "");
-
-  if (!name) {
-    return { error: "Title is required." };
-  }
-
-  const displayOrder = Number.parseInt(displayOrderRaw, 10);
-
-  if (Number.isNaN(displayOrder)) {
-    return { error: "Display order must be a number." };
-  }
-
-  // The slug is set once at creation and stays stable here - it's used for the
-  // public URL anchor and for matching services to a portfolio category, so
-  // renaming the title should not silently change it.
-  await prisma.portfolioCategory.update({
+  const category = await prisma.portfolioCategory.findUnique({
     where: { id: categoryId },
-    data: {
-      name,
-      description: description || null,
-      displayOrder,
-    },
+    select: { id: true },
   });
+
+  if (!category) {
+    return { status: "error", message: "Portfolio category no longer exists.", blockErrors: {} };
+  }
+
+  const categoryName = String(formData.get("categoryName") ?? "").trim();
+  const categoryDescription = String(formData.get("categoryDescription") ?? "").trim();
+  const categoryDisplayOrderRaw = String(formData.get("categoryDisplayOrder") ?? "");
+  const existingImageId = String(formData.get("imageId") ?? "").trim() || null;
+
+  if (!categoryName) {
+    return { status: "error", message: "Category name is required.", blockErrors: {} };
+  }
+
+  const categoryDisplayOrder = Number.parseInt(categoryDisplayOrderRaw, 10);
+
+  if (Number.isNaN(categoryDisplayOrder)) {
+    return {
+      status: "error",
+      message: "Category display order must be a number.",
+      blockErrors: {},
+    };
+  }
+
+  const coverResult = await parseCoverForm(
+    formData,
+    existingImageId ? { excludeImageId: existingImageId } : {}
+  );
+
+  if (!coverResult.ok) {
+    return { status: "error", message: coverResult.message, blockErrors: {} };
+  }
+
+  const storyResult = await parseStoryForm(formData);
+
+  if (!storyResult.ok) {
+    return { status: "error", message: storyResult.message, blockErrors: storyResult.blockErrors };
+  }
+
+  const existingStory = existingImageId
+    ? await prisma.portfolioStory.findUnique({
+        where: { portfolioImageId: existingImageId },
+        select: { id: true },
+      })
+    : null;
+  const shouldWriteStory =
+    Boolean(existingStory) || !isStoryFormEmpty(storyResult.fields, storyResult.blocks);
+
+  try {
+    await prisma.$transaction(async (tx) => {
+      await tx.portfolioCategory.update({
+        where: { id: categoryId },
+        data: {
+          name: categoryName,
+          description: categoryDescription || null,
+          displayOrder: categoryDisplayOrder,
+        },
+      });
+
+      const image = existingImageId
+        ? await tx.portfolioImage.update({
+            where: { id: existingImageId },
+            data: coverResult.data,
+            select: { id: true },
+          })
+        : await tx.portfolioImage.create({
+            data: { categoryId, ...coverResult.data },
+            select: { id: true },
+          });
+
+      if (shouldWriteStory) {
+        const story = await tx.portfolioStory.upsert({
+          where: { portfolioImageId: image.id },
+          create: { portfolioImageId: image.id, ...storyResult.fields },
+          update: { ...storyResult.fields },
+          select: { id: true },
+        });
+
+        await tx.portfolioStoryBlock.deleteMany({ where: { storyId: story.id } });
+
+        if (storyResult.blocks.length > 0) {
+          await tx.portfolioStoryBlock.createMany({
+            data: storyResult.blocks.map((block) => ({
+              storyId: story.id,
+              type: block.type,
+              sortOrder: block.sortOrder,
+              data: block.data as Prisma.InputJsonValue,
+            })),
+          });
+        }
+      }
+    });
+  } catch {
+    return { status: "error", message: "Failed to save. Please try again.", blockErrors: {} };
+  }
 
   revalidatePath("/");
   revalidatePath("/portfolio");
+  revalidatePath(`/portfolio/${coverResult.data.slug}`);
   revalidatePath("/admin/portfolio");
   revalidatePath(`/admin/portfolio/${categoryId}`);
 
-  redirect(`/admin/portfolio/${categoryId}`);
+  // A brand-new image was just created for this category - redirect back to this
+  // same edit page so the reload picks up its real id (the hidden `imageId` field
+  // would otherwise still be empty on the next save, creating a duplicate image).
+  if (!existingImageId) {
+    redirect(`/admin/portfolio/${categoryId}/edit`);
+  }
+
+  return { status: "success", message: "Changes saved.", blockErrors: {} };
 }

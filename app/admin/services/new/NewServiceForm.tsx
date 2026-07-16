@@ -16,42 +16,58 @@ type PortfolioCategoryOption = Awaited<
   ReturnType<typeof getAdminPortfolioCategoriesForSelect>
 >[number];
 
-const PHOTO_SLOT_COUNT = 4;
-
 const inputClassName =
   "w-full rounded border border-neutral-700 bg-neutral-900 px-4 py-2.5 text-sm text-neutral-100 placeholder:text-neutral-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/40";
 
 const labelClassName =
   "mb-1.5 block text-xs uppercase tracking-[0.15em] text-neutral-300";
 
+type PhotoDraft = {
+  clientId: string;
+  preview: string | null;
+};
+
+function createEmptyPhoto(): PhotoDraft {
+  return { clientId: crypto.randomUUID(), preview: null };
+}
+
 function PhotoSlot({
-  index,
-  previewUrl,
+  photo,
   onFileChange,
+  onRemove,
 }: {
-  index: number;
-  previewUrl: string | null;
-  onFileChange: (index: number, event: ChangeEvent<HTMLInputElement>) => void;
+  photo: PhotoDraft;
+  onFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onRemove: () => void;
 }) {
   return (
     <div className="space-y-2 rounded border border-neutral-800 bg-neutral-950/40 p-3">
-      <label htmlFor={`imageFile${index}`} className={labelClassName}>
-        Photo {index + 1}
-      </label>
+      <div className="flex items-center justify-between gap-2">
+        <label htmlFor={`imageFile-${photo.clientId}`} className={labelClassName}>
+          Photo
+        </label>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="rounded border border-red-900/60 px-2.5 py-1 text-xs font-semibold text-red-400 transition-colors hover:border-red-500 hover:text-red-300"
+        >
+          Remove
+        </button>
+      </div>
       <input
-        id={`imageFile${index}`}
-        name={`imageFile${index}`}
+        id={`imageFile-${photo.clientId}`}
+        name={`imageFile__${photo.clientId}`}
         type="file"
         accept="image/jpeg,image/png,image/webp"
-        onChange={(event) => onFileChange(index, event)}
+        onChange={onFileChange}
         className={`${inputClassName} cursor-pointer`}
       />
-      {previewUrl ? (
+      {photo.preview ? (
         <div
-          aria-label={`Photo ${index + 1} preview`}
+          aria-label="Photo preview"
           role="img"
           className="h-24 w-full rounded border border-neutral-800 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${JSON.stringify(previewUrl)})` }}
+          style={{ backgroundImage: `url(${JSON.stringify(photo.preview)})` }}
         />
       ) : (
         <div className="flex h-24 w-full items-center justify-center rounded border border-neutral-800 bg-neutral-950 text-xs text-neutral-500">
@@ -71,16 +87,14 @@ export default function NewServiceForm({
     createService,
     initialNewServiceState
   );
-  const [filePreviews, setFilePreviews] = useState<(string | null)[]>(
-    Array.from({ length: PHOTO_SLOT_COUNT }, () => null)
-  );
-  const filePreviewRefs = useRef<(string | null)[]>(
-    Array.from({ length: PHOTO_SLOT_COUNT }, () => null)
-  );
+  const [photos, setPhotos] = useState<PhotoDraft[]>(() => [createEmptyPhoto()]);
+  const previewRefs = useRef<Record<string, string | null>>({});
 
   useEffect(() => {
+    const refs = previewRefs.current;
+
     return () => {
-      filePreviewRefs.current.forEach((url) => {
+      Object.values(refs).forEach((url) => {
         if (url) {
           URL.revokeObjectURL(url);
         }
@@ -88,11 +102,8 @@ export default function NewServiceForm({
     };
   }, []);
 
-  function handleFileChange(
-    index: number,
-    event: ChangeEvent<HTMLInputElement>
-  ) {
-    const previous = filePreviewRefs.current[index];
+  function handleFileChange(clientId: string, event: ChangeEvent<HTMLInputElement>) {
+    const previous = previewRefs.current[clientId];
 
     if (previous) {
       URL.revokeObjectURL(previous);
@@ -100,16 +111,37 @@ export default function NewServiceForm({
 
     const file = event.target.files?.[0];
     const nextPreview = file ? URL.createObjectURL(file) : null;
-    filePreviewRefs.current[index] = nextPreview;
-    setFilePreviews((current) => {
-      const next = [...current];
-      next[index] = nextPreview;
-      return next;
-    });
+    previewRefs.current[clientId] = nextPreview;
+    setPhotos((current) =>
+      current.map((photo) =>
+        photo.clientId === clientId ? { ...photo, preview: nextPreview } : photo
+      )
+    );
+  }
+
+  function removePhoto(clientId: string) {
+    const preview = previewRefs.current[clientId];
+
+    if (preview) {
+      URL.revokeObjectURL(preview);
+    }
+
+    delete previewRefs.current[clientId];
+    setPhotos((current) => current.filter((photo) => photo.clientId !== clientId));
   }
 
   return (
     <form action={formAction} className="space-y-6">
+      {photos.map((photo) => (
+        <input
+          key={`id-${photo.clientId}`}
+          type="hidden"
+          name="photoIds"
+          value={photo.clientId}
+          readOnly
+        />
+      ))}
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="title" className={labelClassName}>
@@ -194,20 +226,26 @@ export default function NewServiceForm({
         <span className={labelClassName}>
           Photos{" "}
           <span className="normal-case text-neutral-500">
-            (up to {PHOTO_SLOT_COUNT}, shown as a rotating gallery on the
-            public page - all optional)
+            (shown as a rotating gallery on the public page - all optional)
           </span>
         </span>
         <div className="grid gap-4 sm:grid-cols-2">
-          {Array.from({ length: PHOTO_SLOT_COUNT }, (_, index) => (
+          {photos.map((photo) => (
             <PhotoSlot
-              key={index}
-              index={index}
-              previewUrl={filePreviews[index]}
-              onFileChange={handleFileChange}
+              key={photo.clientId}
+              photo={photo}
+              onFileChange={(event) => handleFileChange(photo.clientId, event)}
+              onRemove={() => removePhoto(photo.clientId)}
             />
           ))}
         </div>
+        <button
+          type="button"
+          onClick={() => setPhotos((current) => [...current, createEmptyPhoto()])}
+          className="mt-4 rounded border border-dashed border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-300 transition-colors hover:border-gold hover:text-gold"
+        >
+          + Add Photo
+        </button>
       </div>
 
       <div>

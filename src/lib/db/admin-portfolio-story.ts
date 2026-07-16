@@ -12,7 +12,9 @@ export function getAdminPortfolioImageWithStory(portfolioImageId: string) {
       imageUrl: true,
       altText: true,
       description: true,
+      featured: true,
       active: true,
+      displayOrder: true,
       category: {
         select: { id: true, name: true, slug: true },
       },

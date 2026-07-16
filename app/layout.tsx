@@ -7,6 +7,7 @@ import {
   siteName,
   siteUrl,
 } from "@/src/lib/seo";
+import { getContactInfo } from "@/src/lib/db/contact";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -48,12 +49,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = localBusinessJsonLd();
+  const contactInfo = await getContactInfo();
+  const jsonLd = localBusinessJsonLd(contactInfo);
 
   return (
     <html

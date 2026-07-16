@@ -1,7 +1,6 @@
-import { contactInfo } from "@/src/data/contact";
 import { services } from "@/src/data/services";
 import { heroImage } from "@/src/data/visuals";
-import type { Service, SocialLink } from "@/src/types/site";
+import type { ContactInfo, Service, SocialLink } from "@/src/types/site";
 
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://somstudiophotography.com.np";
@@ -30,7 +29,7 @@ export function absoluteUrl(path = "/") {
   return new URL(path, siteUrl).toString();
 }
 
-export function localBusinessJsonLd() {
+export function localBusinessJsonLd(contactInfo: ContactInfo) {
   return {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",

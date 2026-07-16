@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import type { SessionDetailsDraft } from "./types";
 import { inputClassName, labelClassName } from "./fieldStyles";
 
@@ -10,14 +11,31 @@ export default function SessionDetailsForm({
   value: SessionDetailsDraft;
   onChange: (next: SessionDetailsDraft) => void;
 }) {
+  const uid = useId();
+
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <div>
-        <label htmlFor="service" className={labelClassName}>
+        <label htmlFor={`${uid}-studio`} className={labelClassName}>
+          Studio <span className="normal-case text-neutral-500">(optional)</span>
+        </label>
+        <input
+          id={`${uid}-studio`}
+          name="studio"
+          type="text"
+          defaultValue={value.studio}
+          onChange={(event) => onChange({ ...value, studio: event.target.value })}
+          placeholder="SomStudioPhotography"
+          className={inputClassName}
+        />
+      </div>
+
+      <div>
+        <label htmlFor={`${uid}-service`} className={labelClassName}>
           Service <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="service"
+          id={`${uid}-service`}
           name="service"
           type="text"
           defaultValue={value.service}
@@ -28,11 +46,11 @@ export default function SessionDetailsForm({
       </div>
 
       <div>
-        <label htmlFor="location" className={labelClassName}>
+        <label htmlFor={`${uid}-location`} className={labelClassName}>
           Location <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="location"
+          id={`${uid}-location`}
           name="location"
           type="text"
           defaultValue={value.location}
@@ -43,11 +61,11 @@ export default function SessionDetailsForm({
       </div>
 
       <div>
-        <label htmlFor="style" className={labelClassName}>
+        <label htmlFor={`${uid}-style`} className={labelClassName}>
           Style <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="style"
+          id={`${uid}-style`}
           name="style"
           type="text"
           defaultValue={value.style}
@@ -58,11 +76,11 @@ export default function SessionDetailsForm({
       </div>
 
       <div>
-        <label htmlFor="setting" className={labelClassName}>
+        <label htmlFor={`${uid}-setting`} className={labelClassName}>
           Setting <span className="normal-case text-neutral-500">(optional)</span>
         </label>
         <input
-          id="setting"
+          id={`${uid}-setting`}
           name="setting"
           type="text"
           defaultValue={value.setting}

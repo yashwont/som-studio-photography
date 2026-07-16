@@ -9,7 +9,7 @@ import {
   duplicateBlock,
 } from "./types";
 import StoryBlockCard from "./StoryBlockCard";
-import type { BlockFieldErrors } from "@/app/admin/portfolio/images/[id]/story/types";
+import type { BlockFieldErrors } from "@/src/lib/portfolio/story-form";
 
 const addButtonClassName =
   "rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold";

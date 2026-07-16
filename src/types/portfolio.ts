@@ -41,6 +41,7 @@ export type PortfolioBlock =
     };
 
 export interface PortfolioSessionDetails {
+  studio?: string;
   service?: string;
   location?: string;
   style?: string;
@@ -49,6 +50,8 @@ export interface PortfolioSessionDetails {
 }
 
 export interface PortfolioStoryContent {
+  /** Overrides the hero banner's eyebrow (Section 1). Falls back to "{category} Photography". */
+  heroEyebrow?: string;
   storyEyebrow?: string;
   storyHeading?: string;
   storyParagraphs: string[];

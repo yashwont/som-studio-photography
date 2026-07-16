@@ -4,8 +4,8 @@ import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import LocationVisit from "@/src/components/sections/LocationVisit";
-import { contactInfo } from "@/src/data/contact";
 import { getAboutContent } from "@/src/lib/db/about";
+import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const content = await getAboutContent();
+  const contact = await getContactInfo();
 
   return (
     <>
@@ -89,7 +90,7 @@ export default async function AboutPage() {
               <div className="flex items-center gap-3 pt-2">
                 <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
                 <span className="text-xs uppercase tracking-[0.2em] text-neutral-900">
-                  {contactInfo.address}, {contactInfo.city}, {contactInfo.country}
+                  {contact.address}, {contact.city}, {contact.country}
                 </span>
               </div>
             </div>
@@ -228,7 +229,7 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <LocationVisit />
+      <LocationVisit contact={contact} />
 
       {/* Final CTA */}
       <section className="border-t border-neutral-200 bg-neutral-50">
@@ -256,7 +257,7 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <Footer />
+      <Footer contact={contact} />
     </>
   );
 }

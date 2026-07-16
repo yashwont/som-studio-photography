@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { deletePortfolioStory } from "@/app/admin/portfolio/images/[id]/story/actions";
+import { deletePortfolioStory } from "@/app/admin/portfolio/images/[id]/edit/actions";
 
 export default function DeleteStoryButton({
   imageId,

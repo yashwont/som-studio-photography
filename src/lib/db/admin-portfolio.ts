@@ -13,6 +13,11 @@ export function getAdminPortfolioCategories() {
       displayOrder: true,
       createdAt: true,
       updatedAt: true,
+      images: {
+        orderBy: { displayOrder: "asc" },
+        take: 1,
+        select: { imageUrl: true, altText: true },
+      },
       _count: {
         select: { images: true },
       },

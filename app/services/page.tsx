@@ -7,6 +7,7 @@ import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import ServicePhotoCarousel from "./ServicePhotoCarousel";
 import { getActiveServices } from "@/src/lib/db/services";
 import { getPortfolioCategories } from "@/src/lib/db/portfolio";
+import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
@@ -209,9 +210,10 @@ function EmptyServicesFallback() {
 }
 
 export default async function ServicesPage() {
-  const [services, portfolioCategories] = await Promise.all([
+  const [services, portfolioCategories, contact] = await Promise.all([
     getActiveServices(),
     getPortfolioCategories(),
+    getContactInfo(),
   ]);
   const portfolioMap = buildServicePortfolioMap(portfolioCategories);
 
@@ -222,27 +224,19 @@ export default async function ServicesPage() {
       <ScrollReveal variant="soft-zoom">
         <section className="border-b border-neutral-200 bg-neutral-50 pt-16 sm:pt-20">
           <Container>
-            <div className="py-14 text-center sm:py-20">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
+            <div className="py-5 text-center sm:py-6">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
                 Our Services
               </p>
-              <h1 className="break-words text-4xl font-bold tracking-tight text-neutral-950 sm:text-5xl xl:text-6xl">
+              <h1 className="break-words text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
                 Choose your session
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-neutral-900">
+              <p className="mx-auto mt-1.5 max-w-xl text-xs font-semibold leading-relaxed text-neutral-900">
                 Each service below can be tailored to your needs &mdash; location,
                 timing, coverage, and final deliverables all flex around your
                 plans. Tell us your vision and we&rsquo;ll help shape the right
                 session around it.
               </p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Button href="/contact" variant="primary" size="lg">
-                  Book a Session
-                </Button>
-                <Button href="/portfolio" variant="secondary" size="lg">
-                  View Portfolio
-                </Button>
-              </div>
             </div>
           </Container>
         </section>
@@ -313,7 +307,7 @@ export default async function ServicesPage() {
         </section>
       </ScrollReveal>
 
-      <Footer />
+      <Footer contact={contact} />
     </>
   );
 }

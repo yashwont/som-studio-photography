@@ -7,8 +7,6 @@ import { prisma } from "@/src/lib/prisma";
 import { uploadServiceImage } from "@/src/lib/storage/cloudinary";
 import type { EditServiceState } from "./types";
 
-const PHOTO_SLOT_COUNT = 4;
-
 export async function updateService(
   serviceId: string,
   _previousState: EditServiceState,
@@ -46,18 +44,19 @@ export async function updateService(
 
   const existingService = await prisma.service.findUnique({
     where: { id: serviceId },
-    select: { imageUrls: true },
+    select: { id: true },
   });
 
   if (!existingService) {
     return { error: "Service not found." };
   }
 
-  const imageUrls: (string | null)[] = [];
+  const photoIds = formData.getAll("photoIds").map(String);
+  const compactImageUrls: string[] = [];
 
-  for (let i = 0; i < PHOTO_SLOT_COUNT; i++) {
-    const file = formData.get(`imageFile${i}`);
-    const removeRequested = formData.get(`removePhoto${i}`) === "on";
+  for (const photoId of photoIds) {
+    const file = formData.get(`imageFile__${photoId}`);
+    const existingUrl = String(formData.get(`existingUrl__${photoId}`) ?? "").trim();
 
     if (file instanceof File && file.size > 0) {
       const uploadResult = await uploadServiceImage(file);
@@ -66,17 +65,11 @@ export async function updateService(
         return { error: uploadResult.error };
       }
 
-      imageUrls.push(uploadResult.url);
-    } else if (removeRequested) {
-      imageUrls.push(null);
-    } else {
-      imageUrls.push(existingService.imageUrls[i] ?? null);
+      compactImageUrls.push(uploadResult.url);
+    } else if (existingUrl) {
+      compactImageUrls.push(existingUrl);
     }
   }
-
-  const compactImageUrls = imageUrls.filter(
-    (url): url is string => url !== null
-  );
 
   const inclusions = inclusionsRaw
     .split("\n")

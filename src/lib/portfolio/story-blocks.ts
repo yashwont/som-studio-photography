@@ -1,6 +1,6 @@
 // Shared block-data parsing/validation, used by both:
 // - src/lib/portfolio/display.ts (Prisma -> public PortfolioBlock, lenient: skip malformed)
-// - app/admin/portfolio/images/[id]/story/actions.ts (form input -> Prisma `data` JSON, strict)
+// - src/lib/portfolio/story-form.ts (form input -> Prisma `data` JSON, strict)
 //
 // Keeping one parser means the admin can never save a block shape the public renderer
 // (or the admin editor, reloading its own data) can't understand.

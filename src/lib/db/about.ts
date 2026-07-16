@@ -250,3 +250,17 @@ export async function getAboutContent(): Promise<AboutContentData> {
     stats: parseStats(record.stats),
   };
 }
+
+/** Saves a partial update to the About content, merging it onto whatever is
+ * currently stored so that a section-specific admin page (e.g. just the
+ * Timeline) never clobbers fields owned by another section. */
+export async function saveAboutContent(partial: Partial<AboutContentData>): Promise<void> {
+  const current = await getAboutContent();
+  const next: AboutContentData = { ...current, ...partial };
+
+  await prisma.aboutContent.upsert({
+    where: { id: ABOUT_CONTENT_ID },
+    update: next,
+    create: { id: ABOUT_CONTENT_ID, ...next },
+  });
+}

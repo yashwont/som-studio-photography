@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
-import { contactInfo } from "@/src/data/contact";
 import { heroGallery } from "@/src/data/visuals";
-import type { SiteImage } from "@/src/types/site";
+import type { ContactInfo, SiteImage } from "@/src/types/site";
 
 const serviceHighlights = [
   "New Born",
@@ -39,7 +38,7 @@ const heroLabels = [
   },
 ];
 
-export default function Hero() {
+export default function Hero({ contact: contactInfo }: { contact: ContactInfo }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {

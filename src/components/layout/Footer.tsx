@@ -1,10 +1,9 @@
 import Link from "next/link";
 import Container from "@/src/components/layout/Container";
 import SocialIcon from "@/src/components/ui/SocialIcon";
-import { contactInfo } from "@/src/data/contact";
-import type { SocialLink } from "@/src/types/site";
+import type { ContactInfo, SocialLink } from "@/src/types/site";
 
-export default function Footer() {
+export default function Footer({ contact: contactInfo }: { contact: ContactInfo }) {
   const currentYear = new Date().getFullYear();
 
   return (

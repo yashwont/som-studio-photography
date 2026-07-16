@@ -2,80 +2,29 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import type { Prisma } from "@prisma/client";
 import { requireAdmin } from "@/src/lib/auth/admin";
 import { prisma } from "@/src/lib/prisma";
-import { uploadPortfolioImage } from "@/src/lib/storage/cloudinary";
-import type { NewPortfolioImageState } from "./types";
+import { parseCoverForm } from "@/src/lib/portfolio/cover-form";
+import { isStoryFormEmpty, parseStoryForm } from "@/src/lib/portfolio/story-form";
+import type { PortfolioImageFormState } from "../_shared/types";
 
-function slugify(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-export async function createPortfolioImage(
-  _previousState: NewPortfolioImageState,
+export async function createPortfolioImageWithStory(
+  _previousState: PortfolioImageFormState,
   formData: FormData
-): Promise<NewPortfolioImageState> {
+): Promise<PortfolioImageFormState> {
   await requireAdmin();
 
   const categoryId = String(formData.get("categoryId") ?? "").trim();
-  const title = String(formData.get("title") ?? "").trim();
-  const rawSlug = String(formData.get("slug") ?? "").trim();
-  const manualImageUrl = String(formData.get("imageUrl") ?? "").trim();
-  const imageFile = formData.get("imageFile");
-  const altText = String(formData.get("altText") ?? "").trim();
-  const description = String(formData.get("description") ?? "").trim();
-  const displayOrderRaw = String(formData.get("displayOrder") ?? "");
-  const featured = formData.get("featured") === "on";
-  const active = formData.get("active") === "on";
 
   if (!categoryId) {
-    return { error: "Category is required." };
+    return { status: "error", message: "Category is required.", blockErrors: {} };
   }
 
-  if (!title) {
-    return { error: "Title is required." };
-  }
+  const coverResult = await parseCoverForm(formData);
 
-  if (!rawSlug) {
-    return { error: "Slug is required." };
-  }
-
-  if (!altText) {
-    return { error: "Alt text is required." };
-  }
-
-  const slug = slugify(rawSlug);
-
-  if (!slug) {
-    return { error: "Slug must contain at least one letter or number." };
-  }
-
-  const displayOrder = Number.parseInt(displayOrderRaw, 10);
-
-  if (Number.isNaN(displayOrder)) {
-    return { error: "Display order must be a number." };
-  }
-
-  let imageUrl = manualImageUrl;
-
-  if (imageFile instanceof File && imageFile.size > 0) {
-    const uploadResult = await uploadPortfolioImage(imageFile);
-
-    if (!uploadResult.ok) {
-      return { error: uploadResult.error };
-    }
-
-    imageUrl = uploadResult.url;
-  }
-
-  if (!imageUrl) {
-    return { error: "Upload an image or provide an Image URL." };
+  if (!coverResult.ok) {
+    return { status: "error", message: coverResult.message, blockErrors: {} };
   }
 
   const category = await prisma.portfolioCategory.findUnique({
@@ -84,38 +33,53 @@ export async function createPortfolioImage(
   });
 
   if (!category) {
-    return { error: "Selected category does not exist." };
+    return { status: "error", message: "Selected category does not exist.", blockErrors: {} };
   }
 
-  const slugConflict = await prisma.portfolioImage.findUnique({
-    where: { slug },
-    select: { id: true },
-  });
+  const storyResult = await parseStoryForm(formData);
 
-  if (slugConflict) {
-    return { error: "A portfolio image with this slug already exists." };
+  if (!storyResult.ok) {
+    return { status: "error", message: storyResult.message, blockErrors: storyResult.blockErrors };
   }
 
-  const image = await prisma.portfolioImage.create({
-    data: {
-      categoryId,
-      title,
-      slug,
-      imageUrl,
-      altText,
-      description: description || null,
-      featured,
-      active,
-      displayOrder,
-    },
-    select: { id: true },
-  });
+  try {
+    await prisma.$transaction(async (tx) => {
+      const image = await tx.portfolioImage.create({
+        data: { categoryId, ...coverResult.data },
+        select: { id: true },
+      });
+
+      if (!isStoryFormEmpty(storyResult.fields, storyResult.blocks)) {
+        const story = await tx.portfolioStory.create({
+          data: { portfolioImageId: image.id, ...storyResult.fields },
+          select: { id: true },
+        });
+
+        if (storyResult.blocks.length > 0) {
+          await tx.portfolioStoryBlock.createMany({
+            data: storyResult.blocks.map((block) => ({
+              storyId: story.id,
+              type: block.type,
+              sortOrder: block.sortOrder,
+              data: block.data as Prisma.InputJsonValue,
+            })),
+          });
+        }
+      }
+    });
+  } catch {
+    return { status: "error", message: "Failed to create. Please try again.", blockErrors: {} };
+  }
 
   revalidatePath("/");
   revalidatePath("/portfolio");
-  revalidatePath(`/portfolio/${slug}`);
+  revalidatePath(`/portfolio/${coverResult.data.slug}`);
   revalidatePath("/admin/portfolio");
   revalidatePath(`/admin/portfolio/${categoryId}`);
+  revalidatePath(`/admin/portfolio/${categoryId}/edit`);
 
-  redirect(`/admin/portfolio/images/${image.id}`);
+  // Every image is now created inline on its category's edit page (the
+  // "+ Add another image" card) - land back there so the new image shows up
+  // in the list, instead of the old standalone image view page.
+  redirect(`/admin/portfolio/${categoryId}/edit`);
 }
