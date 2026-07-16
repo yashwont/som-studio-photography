@@ -8,6 +8,7 @@ import LocationVisit from "@/src/components/sections/LocationVisit";
 import InquiryForm from "@/src/components/forms/InquiryForm";
 import { getActiveServices } from "@/src/lib/db/services";
 import { getContactInfo } from "@/src/lib/db/contact";
+import { renderContactTemplate } from "@/src/lib/contact-template";
 import { absoluteUrl } from "@/src/lib/seo";
 import type { BusinessHours, SocialLink } from "@/src/types/site";
 
@@ -199,30 +200,20 @@ export default async function ContactPage({
 
       <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
-          <div className="py-14 sm:py-16">
-            <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
+          <div className="py-8 sm:py-10">
+            <p className="mb-5 text-center text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
               After your inquiry
             </p>
-            <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
-              {[
-                {
-                  step: "01",
-                  text: "We review your inquiry and check availability for your preferred date.",
-                },
-              {
-                step: "02",
-                  text: `We reach back via phone or WhatsApp (${contact.whatsapp}) to discuss details and confirm a plan.`,
-                },
-                {
-                  step: "03",
-                  text: "Once everything is agreed, your session is confirmed and we prepare for the shoot.",
-                },
-              ].map((item: { step: string; text: string }) => (
-                <div key={item.step} className="flex flex-col items-center gap-3">
-                  <span className="text-2xl font-bold text-neutral-200">
+            <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
+              {contact.afterInquirySteps.map((text, index) => ({
+                step: String(index + 1).padStart(2, "0"),
+                text: renderContactTemplate(text, contact),
+              })).map((item: { step: string; text: string }) => (
+                <div key={item.step} className="flex flex-col items-center gap-1.5">
+                  <span className="text-lg font-bold text-neutral-200">
                     {item.step}
                   </span>
-                  <p className="max-w-xs text-sm leading-relaxed text-neutral-900">
+                  <p className="max-w-[15rem] text-xs font-semibold leading-relaxed text-neutral-900">
                     {item.text}
                   </p>
                 </div>

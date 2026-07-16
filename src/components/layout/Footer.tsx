@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "@/src/components/layout/Container";
 import SocialIcon from "@/src/components/ui/SocialIcon";
+import { renderContactTemplate } from "@/src/lib/contact-template";
 import type { ContactInfo, SocialLink } from "@/src/types/site";
 
 export default function Footer({ contact: contactInfo }: { contact: ContactInfo }) {
@@ -17,12 +18,8 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
             Som<span className="text-neutral-900">Studio</span>
           </Link>
 
-          <p className="max-w-2xl text-sm leading-relaxed text-neutral-900">
-            A professional photography studio in {contactInfo.city},{" "}
-            {contactInfo.country} with 30 years of experience, specializing in
-            weddings, pre-weddings, portraits, events, maternity, kids,
-            graduation, and product photography. Proudly serving Kathmandu,
-            Lalitpur, and Bhaktapur.
+          <p className="max-w-2xl text-sm font-semibold leading-relaxed text-neutral-900">
+            {renderContactTemplate(contactInfo.footerDescription, contactInfo)}
           </p>
 
           <div className="flex items-center gap-5">
@@ -40,7 +37,7 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-neutral-900">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-neutral-900">
             <a
               href={`tel:${contactInfo.phone}`}
               className="transition-colors hover:text-neutral-950"

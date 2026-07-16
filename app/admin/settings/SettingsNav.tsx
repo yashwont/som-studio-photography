@@ -5,6 +5,8 @@ const SECTIONS = [
   { href: "/admin/settings/map", label: "Map" },
   { href: "/admin/settings/social-links", label: "Social Links" },
   { href: "/admin/settings/business-hours", label: "Business Hours" },
+  { href: "/admin/settings/footer", label: "Footer" },
+  { href: "/admin/settings/after-inquiry", label: "After Inquiry" },
   { href: "/admin/settings/account", label: "Your Account" },
 ] as const;
 

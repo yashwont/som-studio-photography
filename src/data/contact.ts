@@ -32,4 +32,11 @@ export const contactInfo: ContactInfo = {
     { days: "Sunday - Friday", hours: "9:00 AM - 6:00 PM" },
     { days: "Saturday", hours: "Closed" },
   ],
+  footerDescription:
+    "A professional photography studio in {city}, {country} with 30 years of experience, specializing in weddings, pre-weddings, portraits, events, maternity, kids, graduation, and product photography. Proudly serving Kathmandu, Lalitpur, and Bhaktapur.",
+  afterInquirySteps: [
+    "We review your inquiry and check availability for your preferred date.",
+    "We reach back via phone or WhatsApp ({whatsapp}) to discuss details and confirm a plan.",
+    "Once everything is agreed, your session is confirmed and we prepare for the shoot.",
+  ],
 };

@@ -30,6 +30,16 @@ const SECTIONS = [
     description: "Up to 4 rows of studio hours.",
   },
   {
+    href: "/admin/settings/footer",
+    title: "Footer",
+    description: "The studio description shown in the site footer.",
+  },
+  {
+    href: "/admin/settings/after-inquiry",
+    title: "After Inquiry",
+    description: "The 3-step \"After your inquiry\" section on the contact page.",
+  },
+  {
     href: "/admin/settings/account",
     title: "Your Account",
     description: "Change the password for your own admin login.",

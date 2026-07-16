@@ -61,4 +61,6 @@ export interface ContactInfo {
   mapEmbedUrl: string;
   socialLinks: SocialLink[];
   businessHours: BusinessHours[];
+  footerDescription: string;
+  afterInquirySteps: [string, string, string];
 }

@@ -44,6 +44,24 @@ function parseBusinessHours(value: unknown): BusinessHours[] {
   return hours.length > 0 ? hours : defaultContactInfo.businessHours;
 }
 
+function parseFooterDescription(value: unknown): string {
+  return typeof value === "string" && value.trim()
+    ? value
+    : defaultContactInfo.footerDescription;
+}
+
+function parseAfterInquirySteps(value: unknown): [string, string, string] {
+  if (!Array.isArray(value) || value.length !== 3) {
+    return defaultContactInfo.afterInquirySteps;
+  }
+
+  const steps = value.map((item) => (typeof item === "string" ? item.trim() : ""));
+
+  return steps.every((step) => step)
+    ? (steps as [string, string, string])
+    : defaultContactInfo.afterInquirySteps;
+}
+
 /** Reads contact.info from SiteSetting, falling back to src/data/contact.ts's
  * static default if the row is missing or malformed. Wrapped in cache() so the
  * many pages/layout that each need this only hit the database once per request. */
@@ -93,6 +111,8 @@ export const getContactInfo = cache(async (): Promise<ContactInfo> => {
     mapEmbedUrl: candidate.mapEmbedUrl as string,
     socialLinks: parseSocialLinks(candidate.socialLinks),
     businessHours: parseBusinessHours(candidate.businessHours),
+    footerDescription: parseFooterDescription(candidate.footerDescription),
+    afterInquirySteps: parseAfterInquirySteps(candidate.afterInquirySteps),
   };
 });
 
