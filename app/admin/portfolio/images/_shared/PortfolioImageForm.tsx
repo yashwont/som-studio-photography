@@ -3,22 +3,16 @@
 import { useActionState, useId, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
-import StoryOverviewForm from "@/src/components/admin/portfolio-story/StoryOverviewForm";
-import SessionDetailsForm from "@/src/components/admin/portfolio-story/SessionDetailsForm";
-import StoryBlockBuilder from "@/src/components/admin/portfolio-story/StoryBlockBuilder";
-import StoryCtaForm from "@/src/components/admin/portfolio-story/StoryCtaForm";
-import StorySeoForm from "@/src/components/admin/portfolio-story/StorySeoForm";
 import StoryPreviewPanel from "@/src/components/admin/portfolio-story/StoryPreviewPanel";
-import DeleteStoryButton from "@/src/components/admin/portfolio-story/DeleteStoryButton";
 import { inputClassName, labelClassName } from "@/src/components/admin/portfolio-story/fieldStyles";
 import type {
   EditableBlock,
   SessionDetailsDraft,
   StoryCtaDraft,
   StoryOverviewDraft,
-  StorySeoDraft,
 } from "@/src/components/admin/portfolio-story/types";
 import { initialPortfolioImageFormState, type PortfolioImageFormState } from "./types";
+import BlogStoryBlocks from "./BlogStoryBlocks";
 
 type CategoryOption = Awaited<
   ReturnType<typeof getAdminPortfolioCategoriesForSelect>
@@ -51,8 +45,7 @@ function getSafePreviewUrl(value: string) {
 
 export interface PortfolioImageFormCategoryFields {
   name: string;
-  /** Present only when editing an existing category (used for the live preview's
-   * "Back to X Portfolio" link); absent when creating a brand-new category. */
+  /** Present only when editing an existing story grouping, for preview links. */
   slug?: string;
   description: string;
   displayOrder: number;
@@ -75,7 +68,6 @@ export interface PortfolioImageFormInitialStory {
   overview: StoryOverviewDraft;
   sessionDetails: SessionDetailsDraft;
   cta: StoryCtaDraft;
-  seo: StorySeoDraft;
   blocks: EditableBlock[];
 }
 
@@ -86,7 +78,6 @@ export default function PortfolioImageForm({
   categoryFields,
   cover,
   story,
-  hasExistingStory,
   imageId,
   publicUrl,
   cancelHref,
@@ -100,13 +91,10 @@ export default function PortfolioImageForm({
     formData: FormData
   ) => Promise<PortfolioImageFormState>;
   categories: CategoryOption[];
-  /** When provided, renders a Category section (name/description/order) above
-   * the Cover card and hides the category picker - used when a category and
-   * its primary image are managed together from one combined form. */
+  /** When provided, renders portfolio story grouping fields above the cover card. */
   categoryFields?: PortfolioImageFormCategoryFields;
   cover: PortfolioImageFormInitialCover;
   story: PortfolioImageFormInitialStory;
-  hasExistingStory: boolean;
   imageId?: string;
   publicUrl?: string;
   /** Navigates away - use for a standalone page. Omit in favor of `onCancel`
@@ -132,9 +120,8 @@ export default function PortfolioImageForm({
 
   const [heroEyebrow, setHeroEyebrow] = useState(story.heroEyebrow);
   const [overview, setOverview] = useState(story.overview);
-  const [sessionDetails, setSessionDetails] = useState(story.sessionDetails);
-  const [cta, setCta] = useState(story.cta);
-  const [seo, setSeo] = useState(story.seo);
+  const [sessionDetails] = useState(story.sessionDetails);
+  const [cta] = useState(story.cta);
   const [blocks, setBlocks] = useState(story.blocks);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -155,11 +142,11 @@ export default function PortfolioImageForm({
         <form id={formId} action={formAction} className="space-y-6">
           {categoryFields && (
             <div className={sectionCardClassName}>
-              <h2 className={sectionHeadingClassName}>Category</h2>
+              <h2 className={sectionHeadingClassName}>Portfolio story</h2>
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor={`${uid}-categoryName`} className={labelClassName}>
-                    Name
+                    Title
                   </label>
                   <input
                     id={`${uid}-categoryName`}
@@ -174,21 +161,22 @@ export default function PortfolioImageForm({
 
                 <div>
                   <label htmlFor={`${uid}-categoryDisplayOrder`} className={labelClassName}>
-                    Category display order
+                    Display order
                   </label>
                   <input
                     id={`${uid}-categoryDisplayOrder`}
                     name="categoryDisplayOrder"
                     type="number"
+                    min={1}
                     required
-                    defaultValue={categoryFields.displayOrder}
+                    defaultValue={categoryFields.displayOrder + 1}
                     className={inputClassName}
                   />
                 </div>
 
                 <div className="sm:col-span-2">
                   <label htmlFor={`${uid}-categoryDescription`} className={labelClassName}>
-                    Category description{" "}
+                    Short description{" "}
                     <span className="normal-case text-neutral-500">
                       (shown on the public portfolio grid card)
                     </span>
@@ -209,13 +197,13 @@ export default function PortfolioImageForm({
           {categoryFields && <input type="hidden" name="imageId" value={imageId ?? ""} />}
 
           <div className={sectionCardClassName}>
-            <h2 className={sectionHeadingClassName}>Cover card</h2>
+            <h2 className={sectionHeadingClassName}>Main photo</h2>
             <div className="space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
                 {!categoryFields && (
                   <div>
                     <label htmlFor={`${uid}-categoryId`} className={labelClassName}>
-                      Category
+                      Portfolio section
                     </label>
                     <select
                       id={`${uid}-categoryId`}
@@ -236,7 +224,7 @@ export default function PortfolioImageForm({
 
                 <div>
                   <label htmlFor={`${uid}-title`} className={labelClassName}>
-                    Title
+                    Photo title
                   </label>
                   <input
                     id={`${uid}-title`}
@@ -262,24 +250,12 @@ export default function PortfolioImageForm({
                     type="text"
                     value={heroEyebrow}
                     onChange={(event) => setHeroEyebrow(event.target.value)}
-                    placeholder={`${previewCategoryName || "Category"} Photography`}
+                    placeholder={`${previewCategoryName || "Portfolio"} Photography`}
                     className={inputClassName}
                   />
                 </div>
 
-                <div>
-                  <label htmlFor={`${uid}-slug`} className={labelClassName}>
-                    Slug
-                  </label>
-                  <input
-                    id={`${uid}-slug`}
-                    name="slug"
-                    type="text"
-                    required
-                    defaultValue={cover.slug}
-                    className={inputClassName}
-                  />
-                </div>
+                <input type="hidden" name="slug" value={cover.slug || title} readOnly />
 
                 <div>
                   <label htmlFor={`${uid}-displayOrder`} className={labelClassName}>
@@ -289,8 +265,9 @@ export default function PortfolioImageForm({
                     id={`${uid}-displayOrder`}
                     name="displayOrder"
                     type="number"
+                    min={1}
                     required
-                    defaultValue={cover.displayOrder}
+                    defaultValue={cover.displayOrder + 1}
                     className={inputClassName}
                   />
                 </div>
@@ -379,35 +356,48 @@ export default function PortfolioImageForm({
             </div>
           </div>
 
+          <input type="hidden" name="overviewEyebrow" value={overview.eyebrow} readOnly />
+          <input type="hidden" name="overviewHeading" value={overview.heading} readOnly />
+          <input type="hidden" name="studio" value={sessionDetails.studio} readOnly />
+          <input type="hidden" name="service" value={sessionDetails.service} readOnly />
+          <input type="hidden" name="location" value={sessionDetails.location} readOnly />
+          <input type="hidden" name="style" value={sessionDetails.style} readOnly />
+          <input type="hidden" name="setting" value={sessionDetails.setting} readOnly />
+          <input type="hidden" name="ctaEyebrow" value={cta.eyebrow} readOnly />
+          <input type="hidden" name="ctaHeading" value={cta.heading} readOnly />
+          <input type="hidden" name="ctaBody" value={cta.body} readOnly />
+          <input type="hidden" name="primaryCtaLabel" value={cta.primaryLabel} readOnly />
+          <input type="hidden" name="secondaryCtaLabel" value={cta.secondaryLabel} readOnly />
+
           <div className={sectionCardClassName}>
-            <h2 className={sectionHeadingClassName}>Session overview</h2>
-            <StoryOverviewForm value={overview} onChange={setOverview} />
+            <h2 className={sectionHeadingClassName}>Opening paragraph</h2>
+            <label htmlFor={`${uid}-overviewParagraphs`} className={labelClassName}>
+              Paragraph after the main photo
+            </label>
+            <textarea
+              id={`${uid}-overviewParagraphs`}
+              name="overviewParagraphs"
+              rows={7}
+              value={overview.paragraphs}
+              onChange={(event) =>
+                setOverview({ ...overview, paragraphs: event.target.value })
+              }
+              placeholder="Write the first story paragraph that appears below the main photo."
+              className={inputClassName}
+            />
           </div>
 
           <div className={sectionCardClassName}>
-            <h2 className={sectionHeadingClassName}>Session details</h2>
-            <SessionDetailsForm value={sessionDetails} onChange={setSessionDetails} />
-          </div>
-
-          <div className={sectionCardClassName}>
-            <h2 className={sectionHeadingClassName}>Story blocks</h2>
-            <StoryBlockBuilder blocks={blocks} onChange={setBlocks} errors={state.blockErrors} />
-          </div>
-
-          <div className={sectionCardClassName}>
-            <h2 className={sectionHeadingClassName}>Booking CTA</h2>
-            <StoryCtaForm value={cta} onChange={setCta} />
-          </div>
-
-          <div className={sectionCardClassName}>
-            <h2 className={sectionHeadingClassName}>SEO</h2>
-            <StorySeoForm value={seo} onChange={setSeo} />
+            <h2 className={sectionHeadingClassName}>More photos and ending paragraph</h2>
+            <BlogStoryBlocks
+              blocks={blocks}
+              onChange={setBlocks}
+              errors={state.blockErrors}
+            />
           </div>
         </form>
 
-        {/* Outside the <form> - DeleteStoryButton renders its own <form>, which
-            can't be nested inside the form above without breaking HTML validity
-            and hydration. The submit button below targets the form by id instead. */}
+        {/* Outside the <form> so the sticky action bar can target the form by id. */}
         <div className="sticky bottom-0 flex flex-wrap items-center gap-4 rounded border border-neutral-800 bg-neutral-950 p-4 shadow-[0_-8px_24px_rgba(0,0,0,0.4)]">
           <button
             type="submit"
@@ -446,10 +436,6 @@ export default function PortfolioImageForm({
             >
               View public page &rarr;
             </Link>
-          )}
-
-          {mode === "edit" && hasExistingStory && imageId && (
-            <DeleteStoryButton imageId={imageId} workTitle={title || cover.title} />
           )}
 
           {state.status === "error" && state.message && (

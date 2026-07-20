@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
 import type { storyStateFrom } from "@/src/lib/db/admin-portfolio-story";
-import DeletePortfolioImageButton from "../DeletePortfolioImageButton";
 import { updatePortfolioImageWithStory } from "../[id]/edit/actions";
+import DeletePortfolioImageButton from "../DeletePortfolioImageButton";
 import { StatusBadge, FeaturedBadge, StoryStatusBadge } from "./Badges";
 import PortfolioImageForm, {
   type PortfolioImageFormInitialCover,
@@ -45,7 +46,6 @@ export default function AdditionalImageCard({
   categories,
   cover,
   story,
-  hasExistingStory,
   defaultExpanded = false,
 }: {
   imageId: string;
@@ -58,7 +58,6 @@ export default function AdditionalImageCard({
   categories: CategoryOption[];
   cover: PortfolioImageFormInitialCover;
   story: PortfolioImageFormInitialStory;
-  hasExistingStory: boolean;
   defaultExpanded?: boolean;
 }) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
@@ -90,6 +89,12 @@ export default function AdditionalImageCard({
         </div>
 
         <div className="flex shrink-0 gap-2">
+          <Link
+            href={`/admin/portfolio/images/${imageId}/seo`}
+            className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+          >
+            SEO
+          </Link>
           <button
             type="button"
             onClick={() => setIsExpanded(true)}
@@ -127,7 +132,6 @@ export default function AdditionalImageCard({
         onCancel={() => setIsExpanded(false)}
         submitLabel="Save Image"
         pendingLabel="Saving..."
-        hasExistingStory={hasExistingStory}
         cover={cover}
         story={story}
       />

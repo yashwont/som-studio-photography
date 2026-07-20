@@ -187,7 +187,6 @@ export default async function ContactPage({
                 defaultServiceId={defaultServiceId}
                 defaultMessage={defaultMessage}
                 services={services}
-                contact={contact}
               />
             </div>
           </div>

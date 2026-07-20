@@ -22,7 +22,7 @@ export async function saveCategoryWithImage(
   });
 
   if (!category) {
-    return { status: "error", message: "Portfolio category no longer exists.", blockErrors: {} };
+    return { status: "error", message: "Portfolio story no longer exists.", blockErrors: {} };
   }
 
   const categoryName = String(formData.get("categoryName") ?? "").trim();
@@ -31,15 +31,15 @@ export async function saveCategoryWithImage(
   const existingImageId = String(formData.get("imageId") ?? "").trim() || null;
 
   if (!categoryName) {
-    return { status: "error", message: "Category name is required.", blockErrors: {} };
+    return { status: "error", message: "Title is required.", blockErrors: {} };
   }
 
   const categoryDisplayOrder = Number.parseInt(categoryDisplayOrderRaw, 10);
 
-  if (Number.isNaN(categoryDisplayOrder)) {
+  if (Number.isNaN(categoryDisplayOrder) || categoryDisplayOrder < 1) {
     return {
       status: "error",
-      message: "Category display order must be a number.",
+      message: "Display order must be 1 or greater.",
       blockErrors: {},
     };
   }
@@ -53,7 +53,7 @@ export async function saveCategoryWithImage(
     return { status: "error", message: coverResult.message, blockErrors: {} };
   }
 
-  const storyResult = await parseStoryForm(formData);
+  const storyResult = await parseStoryForm(formData, { includeSeo: false });
 
   if (!storyResult.ok) {
     return { status: "error", message: storyResult.message, blockErrors: storyResult.blockErrors };
@@ -75,7 +75,7 @@ export async function saveCategoryWithImage(
         data: {
           name: categoryName,
           description: categoryDescription || null,
-          displayOrder: categoryDisplayOrder,
+          displayOrder: categoryDisplayOrder - 1,
         },
       });
 
@@ -94,7 +94,22 @@ export async function saveCategoryWithImage(
         const story = await tx.portfolioStory.upsert({
           where: { portfolioImageId: image.id },
           create: { portfolioImageId: image.id, ...storyResult.fields },
-          update: { ...storyResult.fields },
+          update: {
+            overviewEyebrow: storyResult.fields.overviewEyebrow,
+            overviewHeading: storyResult.fields.overviewHeading,
+            overviewParagraphs: storyResult.fields.overviewParagraphs,
+            heroEyebrow: storyResult.fields.heroEyebrow,
+            studio: storyResult.fields.studio,
+            service: storyResult.fields.service,
+            location: storyResult.fields.location,
+            style: storyResult.fields.style,
+            setting: storyResult.fields.setting,
+            ctaEyebrow: storyResult.fields.ctaEyebrow,
+            ctaHeading: storyResult.fields.ctaHeading,
+            ctaBody: storyResult.fields.ctaBody,
+            primaryCtaLabel: storyResult.fields.primaryCtaLabel,
+            secondaryCtaLabel: storyResult.fields.secondaryCtaLabel,
+          },
           select: { id: true },
         });
 

@@ -52,7 +52,6 @@ export default function AddAnotherImageCard({
         onCancel={() => setIsOpen(false)}
         submitLabel="Create Image"
         pendingLabel="Creating..."
-        hasExistingStory={false}
         cover={{
           categoryId,
           title: "",
@@ -69,7 +68,6 @@ export default function AddAnotherImageCard({
           overview: { eyebrow: "", heading: "", paragraphs: "" },
           sessionDetails: { studio: "", service: "", location: "", style: "", setting: "" },
           cta: { eyebrow: "", heading: "", body: "", primaryLabel: "", secondaryLabel: "" },
-          seo: { title: "", description: "" },
           blocks: [],
         }}
       />

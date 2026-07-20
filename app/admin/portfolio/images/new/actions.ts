@@ -18,7 +18,7 @@ export async function createPortfolioImageWithStory(
   const categoryId = String(formData.get("categoryId") ?? "").trim();
 
   if (!categoryId) {
-    return { status: "error", message: "Category is required.", blockErrors: {} };
+    return { status: "error", message: "Portfolio story is required.", blockErrors: {} };
   }
 
   const coverResult = await parseCoverForm(formData);
@@ -33,10 +33,10 @@ export async function createPortfolioImageWithStory(
   });
 
   if (!category) {
-    return { status: "error", message: "Selected category does not exist.", blockErrors: {} };
+    return { status: "error", message: "Selected portfolio story does not exist.", blockErrors: {} };
   }
 
-  const storyResult = await parseStoryForm(formData);
+  const storyResult = await parseStoryForm(formData, { includeSeo: false });
 
   if (!storyResult.ok) {
     return { status: "error", message: storyResult.message, blockErrors: storyResult.blockErrors };

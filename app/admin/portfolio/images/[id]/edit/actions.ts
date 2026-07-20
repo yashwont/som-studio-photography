@@ -18,7 +18,7 @@ export async function updatePortfolioImageWithStory(
   const categoryId = String(formData.get("categoryId") ?? "").trim();
 
   if (!categoryId) {
-    return { status: "error", message: "Category is required.", blockErrors: {} };
+    return { status: "error", message: "Portfolio story is required.", blockErrors: {} };
   }
 
   const existingImage = await prisma.portfolioImage.findUnique({
@@ -42,10 +42,10 @@ export async function updatePortfolioImageWithStory(
   });
 
   if (!category) {
-    return { status: "error", message: "Selected category does not exist.", blockErrors: {} };
+    return { status: "error", message: "Selected portfolio story does not exist.", blockErrors: {} };
   }
 
-  const storyResult = await parseStoryForm(formData);
+  const storyResult = await parseStoryForm(formData, { includeSeo: false });
 
   if (!storyResult.ok) {
     return { status: "error", message: storyResult.message, blockErrors: storyResult.blockErrors };
@@ -69,7 +69,22 @@ export async function updatePortfolioImageWithStory(
         const story = await tx.portfolioStory.upsert({
           where: { portfolioImageId: imageId },
           create: { portfolioImageId: imageId, ...storyResult.fields },
-          update: { ...storyResult.fields },
+          update: {
+            overviewEyebrow: storyResult.fields.overviewEyebrow,
+            overviewHeading: storyResult.fields.overviewHeading,
+            overviewParagraphs: storyResult.fields.overviewParagraphs,
+            heroEyebrow: storyResult.fields.heroEyebrow,
+            studio: storyResult.fields.studio,
+            service: storyResult.fields.service,
+            location: storyResult.fields.location,
+            style: storyResult.fields.style,
+            setting: storyResult.fields.setting,
+            ctaEyebrow: storyResult.fields.ctaEyebrow,
+            ctaHeading: storyResult.fields.ctaHeading,
+            ctaBody: storyResult.fields.ctaBody,
+            primaryCtaLabel: storyResult.fields.primaryCtaLabel,
+            secondaryCtaLabel: storyResult.fields.secondaryCtaLabel,
+          },
           select: { id: true },
         });
 
@@ -109,24 +124,4 @@ export async function updatePortfolioImageWithStory(
   }
 
   return { status: "success", message: "Changes saved.", blockErrors: {} };
-}
-
-export async function deletePortfolioStory(imageId: string) {
-  await requireAdmin();
-
-  const portfolioImage = await prisma.portfolioImage.findUnique({
-    where: { id: imageId },
-    select: { slug: true, categoryId: true },
-  });
-
-  if (!portfolioImage) {
-    return;
-  }
-
-  await prisma.portfolioStory.deleteMany({ where: { portfolioImageId: imageId } });
-
-  revalidatePath(`/portfolio/${portfolioImage.slug}`);
-  revalidatePath(`/admin/portfolio/images/${imageId}`);
-  revalidatePath(`/admin/portfolio/${portfolioImage.categoryId}`);
-  revalidatePath(`/admin/portfolio/${portfolioImage.categoryId}/edit`);
 }

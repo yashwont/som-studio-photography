@@ -1,8 +1,7 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useState } from "react";
 import { submitInquiry } from "@/src/lib/actions/inquiry";
-import type { ContactInfo } from "@/src/types/site";
 
 type ServiceOption = {
   id: string;
@@ -14,54 +13,19 @@ interface InquiryFormProps {
   defaultServiceId?: string;
   defaultMessage?: string;
   services: ServiceOption[];
-  contact: ContactInfo;
 }
 
 const inputClass =
   "w-full rounded border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-900 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors duration-200";
-
-function getValue(formData: FormData, key: string) {
-  return String(formData.get(key) ?? "").trim();
-}
-
-function buildWhatsAppMessage(formData: FormData, services: ServiceOption[]) {
-  const name = getValue(formData, "name");
-  const phone = getValue(formData, "phone");
-  const email = getValue(formData, "email");
-  const serviceId = getValue(formData, "service");
-  const preferredDate = getValue(formData, "date");
-  const message = getValue(formData, "message");
-  const service =
-    services.find((item: ServiceOption) => item.id === serviceId)?.title ??
-    serviceId;
-
-  return [
-    "New photography inquiry",
-    "",
-    `Name: ${name}`,
-    `Phone: ${phone}`,
-    email ? `Email: ${email}` : null,
-    `Service: ${service}`,
-    preferredDate ? `Preferred date: ${preferredDate}` : null,
-    message ? `Message: ${message}` : null,
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
 
 export default function InquiryForm({
   idPrefix = "inquiry",
   defaultServiceId = "",
   defaultMessage = "",
   services,
-  contact,
 }: InquiryFormProps) {
   const [status, setStatus] = useState("");
-
-  const whatsappBaseUrl = useMemo(
-    () => `https://wa.me/${contact.whatsapp.replace("+", "")}`,
-    [contact.whatsapp],
-  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -72,24 +36,19 @@ export default function InquiryForm({
     }
 
     const formData = new FormData(form);
-    const message = buildWhatsAppMessage(formData, services);
-    const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
-
-    window.open(url, "_blank", "noopener,noreferrer");
-    setStatus("Opening WhatsApp with your inquiry details...");
+    setIsSubmitting(true);
+    setStatus("Submitting your inquiry...");
 
     const result = await submitInquiry(formData);
 
     if (result.ok) {
-      setStatus(
-        "Inquiry saved and WhatsApp opened - we'll be in touch shortly.",
-      );
+      setStatus("Inquiry submitted. We'll be in touch shortly.");
       form.reset();
     } else {
-      setStatus(
-        `${result.error} WhatsApp is still open so you can send your message there.`,
-      );
+      setStatus(result.error);
     }
+
+    setIsSubmitting(false);
   }
 
   return (
@@ -214,9 +173,10 @@ export default function InquiryForm({
 
       <button
         type="submit"
+        disabled={isSubmitting}
         className="w-full rounded bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       >
-        Send Inquiry on WhatsApp: {contact.whatsapp}
+        {isSubmitting ? "Submitting..." : "Submit"}
       </button>
 
       <p aria-live="polite" className="min-h-5 text-xs text-neutral-900">

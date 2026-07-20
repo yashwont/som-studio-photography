@@ -164,8 +164,9 @@ export default function NewServiceForm({
             id="displayOrder"
             name="displayOrder"
             type="number"
+            min={1}
             required
-            defaultValue={0}
+            defaultValue={1}
             className={inputClassName}
           />
         </div>

@@ -38,14 +38,22 @@ function getSafeImageUrl(imageUrl: string) {
   }
 }
 
-function AddCategoryButton({ className = "" }: { className?: string }) {
+function PortfolioHeaderActions() {
   return (
-    <Link
-      href="/admin/portfolio/new"
-      className={`inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500 ${className}`}
-    >
-      Add Category
-    </Link>
+    <div className="flex flex-wrap gap-3">
+      <Link
+        href="/admin/portfolio/seo"
+        className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+      >
+        SEO
+      </Link>
+      <Link
+        href="/admin/portfolio/new"
+        className="inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
+      >
+        Add Story
+      </Link>
+    </div>
   );
 }
 
@@ -99,7 +107,7 @@ function CategoryCard({ category }: { category: AdminPortfolioCategory }) {
           </Link>
           <Link
             href={`/admin/portfolio/${category.id}/edit`}
-            className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+            className="rounded border border-gold/40 px-3 py-1.5 text-xs font-semibold text-gold transition-colors hover:border-gold hover:bg-gold/10"
           >
             Edit
           </Link>
@@ -123,7 +131,7 @@ export default async function AdminPortfolioPage() {
       <AdminPageHeader
         title="Portfolio"
         description="Manage portfolio categories and their images, same as they appear on the public site."
-        action={<AddCategoryButton />}
+        action={<PortfolioHeaderActions />}
       />
 
       <section className="mt-8">
@@ -132,7 +140,12 @@ export default async function AdminPortfolioPage() {
             <p className="text-sm text-neutral-300">
               No portfolio categories found.
             </p>
-            <AddCategoryButton className="mt-4" />
+            <Link
+              href="/admin/portfolio/new"
+              className="mt-4 inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
+            >
+              Add Story
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

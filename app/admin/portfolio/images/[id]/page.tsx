@@ -7,6 +7,7 @@ import { getAdminPortfolioImageById } from "@/src/lib/db/admin-portfolio";
 import { storyStateFrom } from "@/src/lib/db/admin-portfolio-story";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
+import DeletePortfolioImageButton from "../DeletePortfolioImageButton";
 
 export async function generateMetadata({
   params,
@@ -125,7 +126,7 @@ export default async function AdminPortfolioImageDetailPage({
               href={`/admin/portfolio/${image.category.id}`}
               className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
             >
-              &larr; Back to Category
+              &larr; Back to Story
             </Link>
             <Link
               href={`/admin/portfolio/${image.category.id}/edit?openImage=${image.id}`}
@@ -133,6 +134,17 @@ export default async function AdminPortfolioImageDetailPage({
             >
               Edit
             </Link>
+            <Link
+              href={`/admin/portfolio/images/${image.id}/seo`}
+              className="inline-flex rounded border border-gold/40 px-4 py-2 text-sm font-semibold text-gold transition-colors hover:border-gold hover:bg-gold/10"
+            >
+              SEO
+            </Link>
+            <DeletePortfolioImageButton
+              imageId={image.id}
+              imageTitle={image.title}
+              className="px-4 py-2 text-sm"
+            />
           </div>
         }
       />
@@ -158,7 +170,7 @@ export default async function AdminPortfolioImageDetailPage({
         <DetailCard title="Basic Details">
           <dl className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <dt className="text-neutral-500">Category</dt>
+              <dt className="text-neutral-500">Story</dt>
               <dd className="mt-1">
                 <Link
                   href={`/admin/portfolio/${image.category.id}`}
@@ -169,12 +181,12 @@ export default async function AdminPortfolioImageDetailPage({
               </dd>
             </div>
             <div>
-              <dt className="text-neutral-500">Slug</dt>
-              <dd className="mt-1 text-neutral-100">{image.slug}</dd>
+              <dt className="text-neutral-500">Public URL</dt>
+              <dd className="mt-1 text-neutral-100">/portfolio/{image.slug}</dd>
             </div>
             <div>
               <dt className="text-neutral-500">Display order</dt>
-              <dd className="mt-1 text-neutral-100">{image.displayOrder}</dd>
+              <dd className="mt-1 text-neutral-100">{image.displayOrder + 1}</dd>
             </div>
             <div>
               <dt className="text-neutral-500">Status</dt>
@@ -245,10 +257,10 @@ export default async function AdminPortfolioImageDetailPage({
             </div>
           </dl>
           <Link
-            href={`/admin/portfolio/${image.category.id}/edit?openImage=${image.id}`}
-            className="mt-4 inline-flex rounded border border-gold/40 px-4 py-2 text-sm font-semibold text-gold transition-colors hover:border-gold hover:bg-gold/10"
+            href={`/admin/portfolio/images/${image.id}/seo`}
+            className="mt-4 inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
           >
-            Edit Story
+            SEO
           </Link>
         </DetailCard>
       </div>

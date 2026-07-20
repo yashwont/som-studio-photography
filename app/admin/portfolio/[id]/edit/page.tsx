@@ -13,7 +13,6 @@ import {
   type SessionDetailsDraft,
   type StoryCtaDraft,
   type StoryOverviewDraft,
-  type StorySeoDraft,
 } from "@/src/components/admin/portfolio-story/types";
 import { joinParagraphs } from "@/src/lib/portfolio/story-blocks";
 import AdminShell from "@/src/components/admin/AdminShell";
@@ -34,7 +33,6 @@ function buildCoverAndStory(image: ImageWithStory): {
     overview: StoryOverviewDraft;
     sessionDetails: SessionDetailsDraft;
     cta: StoryCtaDraft;
-    seo: StorySeoDraft;
     blocks: EditableBlock[];
   };
 } {
@@ -79,10 +77,6 @@ function buildCoverAndStory(image: ImageWithStory): {
         primaryLabel: story?.primaryCtaLabel ?? "",
         secondaryLabel: story?.secondaryCtaLabel ?? "",
       },
-      seo: {
-        title: story?.seoTitle ?? "",
-        description: story?.seoDescription ?? "",
-      },
       blocks: draftsFromStoryBlocks(story?.blocks ?? []),
     },
   };
@@ -98,7 +92,7 @@ export async function generateMetadata({
 
   if (!category) {
     return {
-      title: "Portfolio Category Not Found | Admin | SomStudioPhotography",
+      title: "Portfolio Story Not Found | Admin | SomStudioPhotography",
     };
   }
 
@@ -137,7 +131,7 @@ export default async function AdminPortfolioCategoryEditPage({
   return (
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
       <AdminPageHeader
-        title="Edit Portfolio Category"
+        title="Edit Portfolio Story"
         description={`${category.name} · ${category.slug}`}
         action={
           <div className="flex flex-wrap gap-3">
@@ -151,7 +145,13 @@ export default async function AdminPortfolioCategoryEditPage({
               href={`/admin/portfolio/${category.id}`}
               className="inline-flex rounded border border-neutral-700 px-4 py-2 text-sm font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
             >
-              View Category
+              View Story
+            </Link>
+            <Link
+              href="/admin/portfolio/seo"
+              className="inline-flex rounded border border-gold/40 px-4 py-2 text-sm font-semibold text-gold transition-colors hover:border-gold hover:bg-gold/10"
+            >
+              Portfolio SEO
             </Link>
           </div>
         }
@@ -171,9 +171,8 @@ export default async function AdminPortfolioCategoryEditPage({
           imageId={primaryImage?.id}
           publicUrl={primaryImage ? `/portfolio/${primaryImage.slug}` : undefined}
           cancelHref={`/admin/portfolio/${category.id}`}
-          submitLabel="Save Changes"
+          submitLabel="Save Story"
           pendingLabel="Saving..."
-          hasExistingStory={Boolean(primaryImage?.story)}
           cover={primaryCover}
           story={primaryStory}
         />
@@ -181,7 +180,7 @@ export default async function AdminPortfolioCategoryEditPage({
 
       <div className="mt-10 space-y-5">
         <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">
-          Additional images in this category
+          Additional images in this story
         </h2>
 
         {additionalImages.map((image, index) => {
@@ -201,7 +200,6 @@ export default async function AdminPortfolioCategoryEditPage({
               categories={categories}
               cover={cover}
               story={story}
-              hasExistingStory={Boolean(image?.story)}
               defaultExpanded={openImage === summary.id}
             />
           );

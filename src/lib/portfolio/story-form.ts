@@ -46,6 +46,10 @@ export type StoryFormResult =
   | { ok: true; fields: StoryFieldValues; blocks: PreparedStoryBlock[] }
   | { ok: false; message: string; blockErrors: Record<string, BlockFieldErrors> };
 
+export type StoryFormOptions = {
+  includeSeo?: boolean;
+};
+
 function trimmed(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
 }
@@ -136,7 +140,11 @@ async function resolveImage(
   };
 }
 
-export async function parseStoryForm(formData: FormData): Promise<StoryFormResult> {
+export async function parseStoryForm(
+  formData: FormData,
+  options: StoryFormOptions = {}
+): Promise<StoryFormResult> {
+  const includeSeo = options.includeSeo ?? true;
   const overviewEyebrow = trimmed(formData, "overviewEyebrow");
   const overviewHeading = trimmed(formData, "overviewHeading");
   const overviewParagraphsRaw = String(formData.get("overviewParagraphs") ?? "");
@@ -156,8 +164,8 @@ export async function parseStoryForm(formData: FormData): Promise<StoryFormResul
   const primaryCtaLabel = trimmed(formData, "primaryCtaLabel");
   const secondaryCtaLabel = trimmed(formData, "secondaryCtaLabel");
 
-  const seoTitle = trimmed(formData, "seoTitle");
-  const seoDescription = trimmed(formData, "seoDescription");
+  const seoTitle = includeSeo ? trimmed(formData, "seoTitle") : "";
+  const seoDescription = includeSeo ? trimmed(formData, "seoDescription") : "";
 
   const lengthChecks: Array<[string, number, string]> = [
     [overviewEyebrow, STORY_FIELD_MAX_LENGTHS.eyebrow, "Overview eyebrow"],
@@ -369,8 +377,8 @@ export async function parseStoryForm(formData: FormData): Promise<StoryFormResul
       ctaBody: optional(ctaBody),
       primaryCtaLabel: optional(primaryCtaLabel),
       secondaryCtaLabel: optional(secondaryCtaLabel),
-      seoTitle: optional(seoTitle),
-      seoDescription: optional(seoDescription),
+      seoTitle: includeSeo ? optional(seoTitle) : null,
+      seoDescription: includeSeo ? optional(seoDescription) : null,
     },
     blocks: preparedBlocks,
   };

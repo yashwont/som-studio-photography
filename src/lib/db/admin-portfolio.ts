@@ -114,3 +114,60 @@ export function getAdminPortfolioImageById(id: string) {
     },
   });
 }
+
+export function getAdminPortfolioSeoItems() {
+  return prisma.portfolioImage.findMany({
+    orderBy: [{ category: { displayOrder: "asc" } }, { displayOrder: "asc" }],
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      description: true,
+      imageUrl: true,
+      active: true,
+      category: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      story: {
+        select: {
+          seoTitle: true,
+          seoDescription: true,
+          updatedAt: true,
+        },
+      },
+    },
+  });
+}
+
+export function getAdminPortfolioImageSeoById(id: string) {
+  return prisma.portfolioImage.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      description: true,
+      imageUrl: true,
+      altText: true,
+      categoryId: true,
+      category: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      story: {
+        select: {
+          seoTitle: true,
+          seoDescription: true,
+          updatedAt: true,
+        },
+      },
+    },
+  });
+}

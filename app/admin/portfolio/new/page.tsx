@@ -7,7 +7,7 @@ import PortfolioImageForm from "../images/_shared/PortfolioImageForm";
 import { createCategoryWithImage } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Add Portfolio Category | Admin | SomStudioPhotography",
+  title: "Add Portfolio Story | Admin | SomStudioPhotography",
 };
 
 export default async function AdminNewPortfolioCategoryPage() {
@@ -16,8 +16,8 @@ export default async function AdminNewPortfolioCategoryPage() {
   return (
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
       <AdminPageHeader
-        title="Add Portfolio Category"
-        description="Create a new portfolio category along with its first image and story content."
+        title="Add Portfolio Story"
+        description="Create a portfolio story with a main photo, opening paragraph, more photos, and an ending paragraph."
         action={
           <Link
             href="/admin/portfolio"
@@ -35,9 +35,8 @@ export default async function AdminNewPortfolioCategoryPage() {
           categories={[]}
           categoryFields={{ name: "", description: "", displayOrder: 0 }}
           cancelHref="/admin/portfolio"
-          submitLabel="Create Category"
+          submitLabel="Create Story"
           pendingLabel="Creating..."
-          hasExistingStory={false}
           cover={{
             categoryId: "",
             title: "",
@@ -54,7 +53,6 @@ export default async function AdminNewPortfolioCategoryPage() {
             overview: { eyebrow: "", heading: "", paragraphs: "" },
             sessionDetails: { studio: "", service: "", location: "", style: "", setting: "" },
             cta: { eyebrow: "", heading: "", body: "", primaryLabel: "", secondaryLabel: "" },
-            seo: { title: "", description: "" },
             blocks: [],
           }}
         />

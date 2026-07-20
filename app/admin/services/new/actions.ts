@@ -59,11 +59,13 @@ export async function createService(
     return { error: "Title must contain at least one letter or number." };
   }
 
-  const displayOrder = Number.parseInt(displayOrderRaw, 10);
+  const displayOrderInput = Number.parseInt(displayOrderRaw, 10);
 
-  if (Number.isNaN(displayOrder)) {
-    return { error: "Display order must be a number." };
+  if (Number.isNaN(displayOrderInput) || displayOrderInput < 1) {
+    return { error: "Display order must be 1 or greater." };
   }
+
+  const displayOrder = displayOrderInput - 1;
 
   let slug = baseSlug;
   let suffix = 2;

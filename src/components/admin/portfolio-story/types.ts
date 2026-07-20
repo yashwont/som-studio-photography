@@ -123,18 +123,6 @@ export function createEmptyGalleryBlock(): GalleryBlockDraft {
   };
 }
 
-export function createEmptyImageTextBlock(): ImageTextBlockDraft {
-  return {
-    clientId: generateClientId(),
-    type: "IMAGE_TEXT",
-    imagePosition: "left",
-    eyebrow: "",
-    heading: "",
-    paragraphs: "",
-    image: createEmptyImageDraft(),
-  };
-}
-
 export function addGalleryImage(block: GalleryBlockDraft): GalleryBlockDraft {
   return { ...block, images: [...block.images, createEmptyImageDraft()] };
 }

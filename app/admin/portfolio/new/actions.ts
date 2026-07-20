@@ -40,15 +40,15 @@ export async function createCategoryWithImage(
   const categoryDisplayOrderRaw = String(formData.get("categoryDisplayOrder") ?? "");
 
   if (!categoryName) {
-    return { status: "error", message: "Category name is required.", blockErrors: {} };
+    return { status: "error", message: "Title is required.", blockErrors: {} };
   }
 
   const categoryDisplayOrder = Number.parseInt(categoryDisplayOrderRaw, 10);
 
-  if (Number.isNaN(categoryDisplayOrder)) {
+  if (Number.isNaN(categoryDisplayOrder) || categoryDisplayOrder < 1) {
     return {
       status: "error",
-      message: "Category display order must be a number.",
+      message: "Display order must be 1 or greater.",
       blockErrors: {},
     };
   }
@@ -58,7 +58,7 @@ export async function createCategoryWithImage(
   if (!categorySlug) {
     return {
       status: "error",
-      message: "Category name must contain at least one letter or number.",
+      message: "Title must contain at least one letter or number.",
       blockErrors: {},
     };
   }
@@ -69,7 +69,7 @@ export async function createCategoryWithImage(
     return { status: "error", message: coverResult.message, blockErrors: {} };
   }
 
-  const storyResult = await parseStoryForm(formData);
+  const storyResult = await parseStoryForm(formData, { includeSeo: false });
 
   if (!storyResult.ok) {
     return { status: "error", message: storyResult.message, blockErrors: storyResult.blockErrors };
@@ -84,7 +84,7 @@ export async function createCategoryWithImage(
           name: categoryName,
           slug: categorySlug,
           description: categoryDescription || null,
-          displayOrder: categoryDisplayOrder,
+          displayOrder: categoryDisplayOrder - 1,
         },
         select: { id: true },
       });

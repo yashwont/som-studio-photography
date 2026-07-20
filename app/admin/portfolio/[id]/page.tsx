@@ -6,9 +6,9 @@ import { getAdminPortfolioCategoryById } from "@/src/lib/db/admin-portfolio";
 import { storyStateFrom } from "@/src/lib/db/admin-portfolio-story";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
+import { StatusBadge, FeaturedBadge, StoryStatusBadge } from "../images/_shared/Badges";
 import DeleteCategoryButton from "../DeleteCategoryButton";
 import DeletePortfolioImageButton from "../images/DeletePortfolioImageButton";
-import { StatusBadge, FeaturedBadge, StoryStatusBadge } from "../images/_shared/Badges";
 
 type AdminPortfolioCategoryDetail = NonNullable<
   Awaited<ReturnType<typeof getAdminPortfolioCategoryById>>
@@ -25,7 +25,7 @@ export async function generateMetadata({
 
   if (!category) {
     return {
-      title: "Portfolio Category Not Found | Admin | SomStudioPhotography",
+      title: "Portfolio Story Not Found | Admin | SomStudioPhotography",
     };
   }
 
@@ -100,6 +100,12 @@ function ImageCard({ image, categoryId }: { image: AdminPortfolioImage; category
           >
             Edit
           </Link>
+          <Link
+            href={`/admin/portfolio/images/${image.id}/seo`}
+            className="rounded border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-100 transition-colors hover:border-gold hover:text-gold"
+          >
+            SEO
+          </Link>
           <DeletePortfolioImageButton imageId={image.id} imageTitle={image.title} />
         </div>
       </div>
@@ -141,7 +147,7 @@ export default async function AdminPortfolioCategoryDetailPage({
               href={`/admin/portfolio/${category.id}/edit`}
               className="inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
             >
-              Edit Category
+              Edit Story
             </Link>
             <DeleteCategoryButton
               categoryId={category.id}
@@ -161,19 +167,19 @@ export default async function AdminPortfolioCategoryDetailPage({
 
       <div className="mt-8">
         <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-neutral-400">
-          Images in this category
+          Images in this story
         </h2>
 
         {category.images.length === 0 ? (
           <div className="rounded border border-neutral-800 bg-neutral-900 p-8 text-center">
             <p className="text-sm text-neutral-300">
-              No portfolio images are assigned to this category yet.
+              No portfolio images are assigned to this story yet.
             </p>
             <Link
               href={`/admin/portfolio/${category.id}/edit`}
               className="mt-4 inline-flex rounded bg-gold px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-yellow-500"
             >
-              Add one from Edit Category
+              Add one from Edit Story
             </Link>
           </div>
         ) : (

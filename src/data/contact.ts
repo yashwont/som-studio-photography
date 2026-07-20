@@ -3,7 +3,7 @@ import type { ContactInfo } from "@/src/types/site";
 export const contactInfo: ContactInfo = {
   phone: "+9779841255294",
   whatsapp: "+9779841255294",
-  email: "hello@somstudiophotography.com.np",
+  email: "somphotographystudio@gmail.com",
   address: "Basundhara Road, Tokha-5",
   city: "Kathmandu",
   country: "Nepal",

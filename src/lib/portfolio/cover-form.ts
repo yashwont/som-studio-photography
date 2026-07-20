@@ -35,7 +35,7 @@ export async function parseCoverForm(
   options: { excludeImageId?: string } = {}
 ): Promise<CoverFormResult> {
   const title = String(formData.get("title") ?? "").trim();
-  const rawSlug = String(formData.get("slug") ?? "").trim();
+  const rawSlug = String(formData.get("slug") ?? "").trim() || title;
   const manualImageUrl = String(formData.get("imageUrl") ?? "").trim();
   const imageFile = formData.get("imageFile");
   const altText = String(formData.get("altText") ?? "").trim();
@@ -48,10 +48,6 @@ export async function parseCoverForm(
     return { ok: false, message: "Title is required." };
   }
 
-  if (!rawSlug) {
-    return { ok: false, message: "Slug is required." };
-  }
-
   if (!altText) {
     return { ok: false, message: "Alt text is required." };
   }
@@ -59,13 +55,13 @@ export async function parseCoverForm(
   const slug = slugify(rawSlug);
 
   if (!slug) {
-    return { ok: false, message: "Slug must contain at least one letter or number." };
+    return { ok: false, message: "Title must contain at least one letter or number." };
   }
 
   const displayOrder = Number.parseInt(displayOrderRaw, 10);
 
-  if (Number.isNaN(displayOrder)) {
-    return { ok: false, message: "Display order must be a number." };
+  if (Number.isNaN(displayOrder) || displayOrder < 1) {
+    return { ok: false, message: "Display order must be 1 or greater." };
   }
 
   let imageUrl = manualImageUrl;
@@ -110,7 +106,7 @@ export async function parseCoverForm(
       description: description || null,
       featured,
       active,
-      displayOrder,
+      displayOrder: displayOrder - 1,
     },
   };
 }

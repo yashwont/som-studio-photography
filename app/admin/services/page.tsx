@@ -104,7 +104,7 @@ function ServiceCard({ service }: { service: AdminService }) {
         <dl className="mt-3 grid grid-cols-2 gap-2 text-xs">
           <div>
             <dt className="text-neutral-500">Order</dt>
-            <dd className="text-neutral-300">{service.displayOrder}</dd>
+            <dd className="text-neutral-300">{service.displayOrder + 1}</dd>
           </div>
           <div>
             <dt className="text-neutral-500">Updated</dt>

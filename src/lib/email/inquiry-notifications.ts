@@ -1,6 +1,8 @@
 import { absoluteUrl } from "@/src/lib/seo";
 import { sendEmail, type SendEmailResult } from "./resend";
 
+const ADMIN_INQUIRY_EMAIL = "somphotographystudio@gmail.com";
+
 export type InquiryNotificationData = {
   id: string;
   name: string;
@@ -23,20 +25,25 @@ function formatEventDate(date: Date | null) {
   });
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 function toHtml(lines: string[]) {
   return `<div>${lines
-    .map((line) => `<p>${line}</p>`)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
     .join("")}</div>`;
 }
 
 export async function sendInquiryAdminNotification(
   inquiry: InquiryNotificationData
 ): Promise<SendEmailResult> {
-  const notifyEmail = process.env.INQUIRY_NOTIFY_EMAIL;
-
-  if (!notifyEmail) {
-    return { ok: false, error: "INQUIRY_NOTIFY_EMAIL is not set." };
-  }
+  const notifyEmail = process.env.INQUIRY_NOTIFY_EMAIL || ADMIN_INQUIRY_EMAIL;
 
   const adminUrl = absoluteUrl(`/admin/inquiries/${inquiry.id}`);
   const eventDate = formatEventDate(inquiry.preferredDate);
