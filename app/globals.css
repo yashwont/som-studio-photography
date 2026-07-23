@@ -97,60 +97,6 @@ section[id] {
   animation-delay: 6s;
 }
 
-.studio-float-a {
-  animation: studio-float-a 9s ease-in-out infinite;
-}
-
-.studio-float-b {
-  animation: studio-float-b 10s ease-in-out infinite;
-}
-
-.studio-float-c {
-  animation: studio-float-c 11s ease-in-out infinite;
-}
-
-.editorial-drift-a {
-  animation: editorial-drift-a 12s ease-in-out infinite;
-}
-
-.editorial-drift-b {
-  animation: editorial-drift-b 14s ease-in-out infinite;
-}
-
-.image-parallax-hover {
-  transition:
-    filter 500ms ease,
-    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.group:hover .image-parallax-hover {
-  filter: saturate(1.04) contrast(1.03);
-  transform: scale(1.07) translateY(-1.5%);
-}
-
-.image-lift-card {
-  transform: translateY(0);
-  transition:
-    border-color 200ms ease,
-    box-shadow 200ms ease,
-    transform 200ms ease;
-}
-
-.image-lift-card:hover {
-  box-shadow: 0 18px 50px rgb(15 15 15 / 0.08);
-  transform: translateY(-3px);
-}
-
-.image-reveal {
-  transition:
-    opacity 500ms ease,
-    transform 700ms ease;
-}
-
-.image-lift-card:hover .image-reveal {
-  transform: scale(1.05);
-}
-
 .service-card {
   transition:
     border-color 200ms ease,
@@ -163,94 +109,16 @@ section[id] {
   transform: translateY(-3px);
 }
 
-.portfolio-orbit {
-  animation: portfolio-orbit-spin 56s linear infinite;
-}
-
-.portfolio-orbit-card {
-  animation: portfolio-orbit-focus 24s ease-in-out infinite;
-  left: 50%;
-  opacity: 0.38;
-  position: absolute;
-  top: 50%;
-  transform:
-    translate(-50%, -50%)
-    rotate(var(--orbit-angle))
-    translateX(clamp(8.25rem, 25vw, 19rem))
-    rotate(calc(var(--orbit-angle) * -1))
-    scale(0.9);
-  transform-origin: center;
-  transition:
-    opacity 400ms ease,
-    filter 400ms ease,
-    box-shadow 400ms ease;
-}
-
-.portfolio-orbit-card > a {
-  animation: portfolio-orbit-counter-spin 56s linear infinite;
-}
-
-.portfolio-orbit-card-0 {
-  --orbit-angle: 0deg;
-  animation-delay: 0s;
-}
-
-.portfolio-orbit-card-1 {
-  --orbit-angle: 45deg;
-  animation-delay: 3s;
-}
-
-.portfolio-orbit-card-2 {
-  --orbit-angle: 90deg;
-  animation-delay: 6s;
-}
-
-.portfolio-orbit-card-3 {
-  --orbit-angle: 135deg;
-  animation-delay: 9s;
-}
-
-.portfolio-orbit-card-4 {
-  --orbit-angle: 180deg;
-  animation-delay: 12s;
-}
-
-.portfolio-orbit-card-5 {
-  --orbit-angle: 225deg;
-  animation-delay: 15s;
-}
-
-.portfolio-orbit-card-6 {
-  --orbit-angle: 270deg;
-  animation-delay: 18s;
-}
-
-.portfolio-orbit-card-7 {
-  --orbit-angle: 315deg;
-  animation-delay: 21s;
-}
-
-.portfolio-focus-ring {
-  animation: portfolio-orbit-spin 52s linear infinite;
-}
-
-.portfolio-focus-thumb {
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform:
-    translate(-50%, -50%)
-    rotate(var(--orbit-angle))
-    translateX(clamp(9rem, 26vw, 21rem));
-  transform-origin: center;
-}
-
-.portfolio-focus-thumb-link {
-  animation: portfolio-orbit-counter-spin 52s linear infinite;
-}
-
-.portfolio-thumb-float {
-  animation: portfolio-thumb-float 8s ease-in-out infinite;
+.footer-sprocket-strip {
+  background-color: #000;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0.1) 0,
+    rgb(255 255 255 / 0.1) 6px,
+    transparent 6px,
+    transparent 14px
+  );
+  block-size: 10px;
 }
 
 @keyframes image-cycle {
@@ -290,120 +158,6 @@ section[id] {
   }
 }
 
-@keyframes portfolio-orbit-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes portfolio-orbit-counter-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-@keyframes portfolio-orbit-focus {
-  0%,
-  12.5% {
-    filter: saturate(1.08) contrast(1.03);
-    opacity: 1;
-    transform:
-      translate(-50%, -50%)
-      rotate(var(--orbit-angle))
-      translateX(clamp(8.25rem, 25vw, 19rem))
-      rotate(calc(var(--orbit-angle) * -1))
-      scale(1.2);
-    z-index: 10;
-  }
-
-  16%,
-  100% {
-    filter: saturate(0.85);
-    opacity: 0.38;
-    transform:
-      translate(-50%, -50%)
-      rotate(var(--orbit-angle))
-      translateX(clamp(8.25rem, 25vw, 19rem))
-      rotate(calc(var(--orbit-angle) * -1))
-      scale(0.9);
-    z-index: 1;
-  }
-}
-
-@keyframes studio-float-a {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes studio-float-b {
-  0%,
-  100% {
-    transform: translateY(0) rotate(1deg);
-  }
-
-  50% {
-    transform: translateY(8px) rotate(1deg);
-  }
-}
-
-@keyframes studio-float-c {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-1deg);
-  }
-
-  50% {
-    transform: translateY(-7px) rotate(-1deg);
-  }
-}
-
-@keyframes editorial-drift-a {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) rotate(-2deg);
-  }
-
-  50% {
-    transform: translate3d(8px, -10px, 0) rotate(-1deg);
-  }
-}
-
-@keyframes editorial-drift-b {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) rotate(2deg);
-  }
-
-  50% {
-    transform: translate3d(-8px, 9px, 0) rotate(1deg);
-  }
-}
-
-@keyframes portfolio-thumb-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -423,17 +177,372 @@ section[id] {
     opacity: 0;
   }
 
-  .portfolio-orbit,
-  .portfolio-orbit-card > a {
-    animation: none;
+}
+
+.vintage-film-display {
+  block-size: 560px;
+  contain: layout paint;
+  inline-size: 100%;
+  max-block-size: 560px;
+  max-inline-size: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.vintage-film-stage {
+  block-size: 100%;
+  inline-size: 100%;
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.vintage-film-stage::after {
+  background:
+    radial-gradient(ellipse at 78% 78%, rgb(10 10 10 / 0.18), transparent 31%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 5;
+}
+
+.vintage-film-strip-window {
+  block-size: 460px;
+  inline-size: calc(100% - 82px);
+  inset-block-start: 50%;
+  inset-inline-end: 0;
+  overflow: hidden;
+  position: absolute;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.vintage-film-track {
+  align-items: center;
+  animation: film-marquee 36s linear infinite;
+  display: flex;
+  gap: 0;
+  inline-size: max-content;
+  padding-block: 56px;
+  will-change: transform;
+}
+
+.vintage-film-display:hover .vintage-film-track {
+  animation-play-state: paused;
+}
+
+.vintage-film-wave {
+  flex: 0 0 auto;
+  transform-origin: center;
+}
+
+.vintage-film-wave-0 {
+  transform: translateY(10px) rotate(-2deg);
+}
+
+.vintage-film-wave-1 {
+  transform: translateY(4px) rotate(-1deg);
+}
+
+.vintage-film-wave-2 {
+  transform: translateY(-8px) rotate(1.2deg);
+}
+
+.vintage-film-wave-3 {
+  transform: translateY(-10px) rotate(2deg);
+}
+
+.vintage-film-wave-4 {
+  transform: translateY(-4px) rotate(1deg);
+}
+
+.vintage-film-wave-5 {
+  transform: translateY(8px) rotate(-1.6deg);
+}
+
+.vintage-film-frame {
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.06), transparent 32%),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035), transparent 20%, transparent 80%, rgb(255 255 255 / 0.03)),
+    #101010;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 0.42rem;
+  box-shadow:
+    0 18px 34px rgb(10 10 10 / 0.18),
+    inset 0 0 0 1px rgb(255 255 255 / 0.04);
+  display: grid;
+  grid-template-rows: 0.72rem auto 0.72rem;
+  margin-inline: 4px;
+  overflow: hidden;
+  padding: 0.32rem 0.46rem 0.24rem;
+  position: relative;
+  width: 276px;
+}
+
+.vintage-film-frame::after {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.026) 1px, transparent 1px);
+  background-size: 9px 9px;
+  content: "";
+  inset: 0;
+  opacity: 0.36;
+  pointer-events: none;
+  position: absolute;
+}
+
+.vintage-film-frame-image {
+  background: #262626;
+  block-size: 420px;
+  border-inline: 3px solid #050505;
+  border-radius: 0.16rem;
+  inline-size: 260px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vintage-film-frame-image img {
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: cover;
+}
+
+.vintage-film-placeholder {
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.64), rgb(200 200 200 / 0.55)),
+    repeating-linear-gradient(45deg, transparent 0 10px, rgb(10 10 10 / 0.035) 10px 11px);
+  block-size: 100%;
+  color: #555;
+  display: flex;
+  font-size: 0.56rem;
+  font-weight: 700;
+  inline-size: 100%;
+  justify-content: center;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.vintage-film-frame-meta {
+  bottom: 0.2rem;
+  color: rgb(229 229 229 / 0.68);
+  display: flex;
+  font-size: 0.42rem;
+  font-weight: 700;
+  inset-inline: 0.58rem;
+  justify-content: space-between;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.vintage-film-sprockets {
+  display: grid;
+  gap: 0.22rem;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  position: relative;
+  z-index: 1;
+}
+
+.vintage-film-sprockets span {
+  background: #e5e5e5;
+  border-radius: 0.08rem;
+  box-shadow: inset 0 1px 1px rgb(10 10 10 / 0.24);
+  height: 0.34rem;
+}
+
+.vintage-film-spool {
+  block-size: 420px;
+  inline-size: 86px;
+  inset-block-start: 50%;
+  inset-inline-start: 2px;
+  position: absolute;
+  transform: translateY(-50%);
+  z-index: 4;
+}
+
+.vintage-film-spool::before {
+  background:
+    linear-gradient(90deg, #070707 0%, #171717 40%, #050505 100%);
+  block-size: 108px;
+  border-radius: 0.65rem;
+  box-shadow: 0 12px 24px rgb(10 10 10 / 0.16);
+  content: "";
+  inline-size: 76px;
+  inset-block-start: 50%;
+  inset-inline-end: -58px;
+  position: absolute;
+  transform: translateY(-50%) rotate(2deg);
+  z-index: -1;
+}
+
+.vintage-film-spool-body {
+  background:
+    linear-gradient(90deg, #030303 0%, #0c0c0c 18%, #242424 42%, #111 62%, #020202 100%);
+  block-size: 100%;
+  border: 1px solid rgb(255 255 255 / 0.06);
+  border-radius: 1.1rem / 0.75rem;
+  box-shadow:
+    0 18px 28px rgb(10 10 10 / 0.22),
+    inset 12px 0 16px rgb(255 255 255 / 0.05),
+    inset -18px 0 24px rgb(0 0 0 / 0.7);
+  position: relative;
+}
+
+.vintage-film-spool-body::after {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.1), transparent 18%, transparent 82%, rgb(255 255 255 / 0.05)),
+    repeating-linear-gradient(180deg, transparent 0 17px, rgb(255 255 255 / 0.025) 17px 18px);
+  border-radius: inherit;
+  content: "";
+  inset: 0.45rem 0.5rem;
+  pointer-events: none;
+  position: absolute;
+}
+
+.vintage-film-spool-cap {
+  background:
+    radial-gradient(ellipse at center, #2c2c2c 0%, #101010 55%, #030303 100%);
+  block-size: 1.65rem;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 999px / 55%;
+  box-shadow:
+    0 5px 12px rgb(10 10 10 / 0.18),
+    inset 0 1px 3px rgb(255 255 255 / 0.12);
+  inline-size: 128%;
+  inset-inline-start: -14%;
+  position: absolute;
+  z-index: 2;
+}
+
+.vintage-film-spool-cap-top {
+  inset-block-start: -0.72rem;
+}
+
+.vintage-film-spool-cap-bottom {
+  inset-block-end: -0.72rem;
+}
+
+.vintage-film-spool-cap-top::after {
+  background:
+    radial-gradient(ellipse at center, #363636 0%, #101010 58%, #030303 100%);
+  block-size: 1.05rem;
+  border-radius: 999px / 55%;
+  box-shadow: 0 2px 5px rgb(10 10 10 / 0.18);
+  content: "";
+  inline-size: 48%;
+  inset-block-start: -0.5rem;
+  inset-inline-start: 26%;
+  position: absolute;
+}
+
+@keyframes film-marquee {
+  from {
+    transform: translateX(-50%);
   }
 
-  .portfolio-orbit-card {
-    animation: none;
-    opacity: 0.8;
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .vintage-film-display {
+    block-size: 440px;
+    max-block-size: 460px;
   }
 
-  .portfolio-thumb-float {
+  .vintage-film-stage {
+    block-size: 100%;
+  }
+
+  .vintage-film-strip-window {
+    block-size: 360px;
+    inline-size: calc(100% - 68px);
+  }
+
+  .vintage-film-frame {
+    width: 200px;
+  }
+
+  .vintage-film-frame-image {
+    block-size: 320px;
+    inline-size: 184px;
+  }
+
+  .vintage-film-spool {
+    block-size: 320px;
+    inline-size: 68px;
+  }
+}
+
+@media (max-width: 640px) {
+  .portfolio-gallery-copy {
+    inline-size: min(100%, 320px);
+    max-inline-size: 320px;
+    overflow: hidden;
+  }
+
+  .portfolio-gallery-copy p {
+    max-inline-size: 320px;
+  }
+
+  .vintage-film-display {
+    block-size: 350px;
+    inline-size: min(100%, 350px);
+    max-block-size: 380px;
+    max-inline-size: 350px;
+  }
+
+  .vintage-film-stage {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .vintage-film-strip-window {
+    block-size: 250px;
+    inline-size: calc(100% - 52px);
+    inset-block-start: 50%;
+    inset-inline-end: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    transform: translateY(-50%);
+  }
+
+  .vintage-film-track {
+    animation-duration: 40s;
+    padding-block: 42px;
+  }
+
+  .vintage-film-frame {
+    scroll-snap-align: center;
+    width: 176px;
+  }
+
+  .vintage-film-frame-image {
+    block-size: 250px;
+    inline-size: 160px;
+  }
+
+  .vintage-film-spool {
+    block-size: 250px;
+    inline-size: 48px;
+    inset-inline-start: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vintage-film-track {
     animation: none;
+    transform: none;
+  }
+
+  .vintage-film-strip-window {
+    overflow-x: auto;
   }
 }

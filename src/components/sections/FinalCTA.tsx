@@ -32,8 +32,8 @@ export default function FinalCTA({ content }: { content: HomeContentData }) {
             <Button href="/contact" variant="primary" size="md" className="w-full sm:w-auto">
               Book a Session
             </Button>
-            <Button href="/portfolio" variant="secondary" size="md" className="w-full sm:w-auto">
-              View Portfolio
+            <Button href="/services" variant="secondary" size="md" className="w-full sm:w-auto">
+              View Services
             </Button>
           </div>
 

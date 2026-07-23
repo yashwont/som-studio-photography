@@ -116,9 +116,7 @@ export default async function AdminServiceDetailPage({
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
       <AdminPageHeader
         title={service.title}
-        description={`${service.slug} · ${service.category ?? "Uncategorized"} · ${
-          service.active ? "Active" : "Inactive"
-        }`}
+        description={`${service.slug} · ${service.active ? "Active" : "Inactive"}`}
         action={
           <div className="flex flex-wrap gap-3">
             <Link

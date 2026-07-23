@@ -38,7 +38,6 @@ export async function updateBusinessHours(
   revalidatePath("/about");
   revalidatePath("/contact");
   revalidatePath("/services");
-  revalidatePath("/portfolio");
   revalidatePath("/admin/settings/business-hours");
 
   return { error: null, success: true };

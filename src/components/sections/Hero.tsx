@@ -58,8 +58,8 @@ export default function Hero({
                 <Button href="/contact" variant="primary" size="lg" className="w-full sm:w-auto">
                   Book a Session
                 </Button>
-                <Button href="/portfolio" variant="secondary" size="lg" className="w-full sm:w-auto">
-                  View Portfolio
+                <Button href="/services" variant="secondary" size="lg" className="w-full sm:w-auto">
+                  View Services
                 </Button>
               </div>
 

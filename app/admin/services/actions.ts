@@ -28,7 +28,9 @@ export async function deleteService(serviceId: string) {
 
   revalidatePath("/");
   revalidatePath("/services");
+  revalidatePath("/portfolio");
   revalidatePath("/admin/services");
+  revalidatePath("/admin/portfolio");
 
   redirect("/admin/services");
 }

@@ -16,13 +16,8 @@ async function main() {
   const counts = {
     services: await prisma.service.count(),
     packages: await prisma.package.count(),
-    portfolioCategories: await prisma.portfolioCategory.count(),
-    portfolioImages: await prisma.portfolioImage.count(),
     siteSettings: await prisma.siteSetting.count(),
     inquiries: await prisma.inquiry.count(),
-    bookings: await prisma.booking.count(),
-    orders: await prisma.order.count(),
-    payments: await prisma.payment.count(),
     adminUsers: await prisma.adminUser.count(),
   };
 

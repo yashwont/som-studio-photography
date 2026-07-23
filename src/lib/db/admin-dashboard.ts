@@ -8,9 +8,6 @@ export async function getAdminDashboardStats() {
     bookedInquiries,
     closedInquiries,
     servicesCount,
-    packagesCount,
-    portfolioCategoriesCount,
-    portfolioImagesCount,
     recentInquiries,
   ] = await Promise.all([
     prisma.inquiry.count(),
@@ -19,9 +16,6 @@ export async function getAdminDashboardStats() {
     prisma.inquiry.count({ where: { status: "BOOKED" } }),
     prisma.inquiry.count({ where: { status: "CLOSED" } }),
     prisma.service.count(),
-    prisma.package.count(),
-    prisma.portfolioCategory.count(),
-    prisma.portfolioImage.count(),
     prisma.inquiry.findMany({
       orderBy: { createdAt: "desc" },
       take: 5,
@@ -48,9 +42,6 @@ export async function getAdminDashboardStats() {
     bookedInquiries,
     closedInquiries,
     servicesCount,
-    packagesCount,
-    portfolioCategoriesCount,
-    portfolioImagesCount,
     recentInquiries,
   };
 }

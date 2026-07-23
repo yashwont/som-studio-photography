@@ -77,12 +77,6 @@ async function uploadImage(
   }
 }
 
-export async function uploadPortfolioImage(
-  file: File
-): Promise<ImageUploadResult> {
-  return uploadImage(file, "portfolio");
-}
-
 export async function uploadServiceImage(
   file: File
 ): Promise<ImageUploadResult> {

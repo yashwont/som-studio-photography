@@ -14,25 +14,6 @@ export interface Service {
   featured: boolean;
 }
 
-export interface PortfolioCategory {
-  id: string;
-  title: string;
-  description: string;
-  slug: string;
-  image: SiteImage;
-}
-
-export interface PortfolioWork {
-  id: string;
-  categoryId: string;
-  title: string;
-  description: string;
-  location: string;
-  image: SiteImage;
-  gallery?: SiteImage[];
-  featured?: boolean;
-}
-
 export interface SiteImage {
   src: string;
   alt: string;

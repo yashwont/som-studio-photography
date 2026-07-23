@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/src/lib/auth/admin";
-import { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
 import AdminShell from "@/src/components/admin/AdminShell";
 import AdminPageHeader from "@/src/components/admin/AdminPageHeader";
 import NewServiceForm from "./NewServiceForm";
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
 
 export default async function AdminNewServicePage() {
   const admin = await requireAdmin();
-  const portfolioCategories = await getAdminPortfolioCategoriesForSelect();
 
   return (
     <AdminShell adminName={admin.name} adminEmail={admin.email}>
@@ -30,7 +28,7 @@ export default async function AdminNewServicePage() {
       />
 
       <div className="mt-8 max-w-3xl rounded border border-neutral-800 bg-neutral-900 p-6">
-        <NewServiceForm portfolioCategories={portfolioCategories} />
+        <NewServiceForm />
       </div>
     </AdminShell>
   );

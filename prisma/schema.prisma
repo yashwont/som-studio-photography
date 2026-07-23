@@ -7,22 +7,22 @@ datasource db {
 }
 
 model Service {
-  id           String    @id @default(cuid())
-  title        String
-  slug         String    @unique
-  description  String
-  imageUrls    String[]  @default([])
-  price        Decimal?  @db.Decimal(10, 2)
-  inclusions   String[]
-  category     String?
-  featured     Boolean   @default(false)
-  active       Boolean   @default(true)
-  displayOrder Int       @default(0)
-  packages     Package[]
-  bookings     Booking[]
-  inquiries    Inquiry[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  description    String
+  galleryIntro   String?
+  galleryClosing String?
+  imageUrls      String[]  @default([])
+  price          Decimal?  @db.Decimal(10, 2)
+  inclusions     String[]
+  featured       Boolean   @default(false)
+  active         Boolean   @default(true)
+  displayOrder   Int       @default(0)
+  packages       Package[]
+  inquiries      Inquiry[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   @@index([active, displayOrder])
   @@index([featured, active])
@@ -39,8 +39,6 @@ model Package {
   inclusions   String[]
   active       Boolean   @default(true)
   displayOrder Int       @default(0)
-  orders       Order[]
-  bookings     Booking[]
   inquiries    Inquiry[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -48,110 +46,6 @@ model Package {
   @@index([serviceId])
   @@index([active, displayOrder])
   @@map("packages")
-}
-
-model PortfolioCategory {
-  id           String           @id @default(cuid())
-  name         String
-  slug         String           @unique
-  description  String?
-  displayOrder Int              @default(0)
-  images       PortfolioImage[]
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-
-  @@index([displayOrder])
-  @@map("portfolio_categories")
-}
-
-model PortfolioImage {
-  id           String            @id @default(cuid())
-  categoryId   String
-  category     PortfolioCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  title        String
-  slug         String            @unique
-  imageUrl     String
-  altText      String
-  description  String?
-  featured     Boolean           @default(false)
-  active       Boolean           @default(true)
-  displayOrder Int               @default(0)
-  story        PortfolioStory?
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
-
-  @@index([categoryId])
-  @@index([active, displayOrder])
-  @@index([featured, active])
-  @@map("portfolio_images")
-}
-
-/// Extended editorial content for a single PortfolioImage's detail page
-/// (/portfolio/[work]). Optional 1:1 - a PortfolioImage with no PortfolioStory
-/// falls back to the public page's generic presentation.
-model PortfolioStory {
-  id String @id @default(cuid())
-
-  portfolioImageId String         @unique
-  portfolioImage   PortfolioImage @relation(fields: [portfolioImageId], references: [id], onDelete: Cascade)
-
-  overviewEyebrow    String?
-  overviewHeading    String?
-  overviewParagraphs Json?
-
-  /// Overrides the eyebrow shown above the H1 in the hero banner (defaults to
-  /// "{category} Photography" on the public page when left unset).
-  heroEyebrow String?
-
-  studio   String?
-  service  String?
-  location String?
-  style    String?
-  setting  String?
-
-  ctaEyebrow        String?
-  ctaHeading        String?
-  ctaBody           String?
-  primaryCtaLabel   String?
-  secondaryCtaLabel String?
-
-  seoTitle       String?
-  seoDescription String?
-
-  blocks PortfolioStoryBlock[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("portfolio_stories")
-}
-
-/// One ordered editorial block (text / image / gallery / imageText) within a
-/// PortfolioStory. `data` holds the block's type-specific fields as JSON,
-/// kept compatible with the public `PortfolioBlock` TypeScript union in
-/// src/types/portfolio.ts.
-model PortfolioStoryBlock {
-  id String @id @default(cuid())
-
-  storyId String
-  story   PortfolioStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
-
-  type      PortfolioStoryBlockType
-  sortOrder Int
-  data      Json
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([storyId, sortOrder])
-  @@map("portfolio_story_blocks")
-}
-
-enum PortfolioStoryBlockType {
-  TEXT
-  IMAGE
-  GALLERY
-  IMAGE_TEXT
 }
 
 model Inquiry {
@@ -168,7 +62,6 @@ model Inquiry {
   message       String
   status        InquiryStatus @default(NEW)
   notes         String?
-  booking       Booking?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
@@ -177,63 +70,6 @@ model Inquiry {
   @@index([serviceId])
   @@index([packageId])
   @@map("inquiries")
-}
-
-model Booking {
-  id          String        @id @default(cuid())
-  inquiryId   String?       @unique
-  inquiry     Inquiry?      @relation(fields: [inquiryId], references: [id], onDelete: SetNull)
-  serviceId   String?
-  service     Service?      @relation(fields: [serviceId], references: [id], onDelete: SetNull)
-  packageId   String?
-  package     Package?      @relation(fields: [packageId], references: [id], onDelete: SetNull)
-  bookingDate DateTime?
-  status      BookingStatus @default(PENDING)
-  notes       String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  @@index([status])
-  @@index([bookingDate])
-  @@index([serviceId])
-  @@index([packageId])
-  @@map("bookings")
-}
-
-model Order {
-  id            String        @id @default(cuid())
-  packageId     String?
-  package       Package?      @relation(fields: [packageId], references: [id], onDelete: SetNull)
-  customerName  String
-  phone         String
-  email         String?
-  totalAmount   Decimal       @db.Decimal(10, 2)
-  status        OrderStatus   @default(PENDING)
-  paymentStatus PaymentStatus @default(UNPAID)
-  payments      Payment[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-
-  @@index([status])
-  @@index([paymentStatus])
-  @@index([packageId])
-  @@map("orders")
-}
-
-model Payment {
-  id            String        @id @default(cuid())
-  orderId       String
-  order         Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  provider      String
-  amount        Decimal       @db.Decimal(10, 2)
-  status        PaymentStatus @default(PENDING)
-  transactionId String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-
-  @@index([orderId])
-  @@index([status])
-  @@map("payments")
 }
 
 model AdminUser {
@@ -291,28 +127,6 @@ enum InquiryStatus {
   CONTACTED
   BOOKED
   CLOSED
-}
-
-enum BookingStatus {
-  PENDING
-  CONFIRMED
-  COMPLETED
-  CANCELLED
-}
-
-enum OrderStatus {
-  PENDING
-  CONFIRMED
-  COMPLETED
-  CANCELLED
-}
-
-enum PaymentStatus {
-  UNPAID
-  PENDING
-  PAID
-  FAILED
-  REFUNDED
 }
 
 enum AdminRole {

@@ -19,6 +19,25 @@ export function getAdminServices() {
   });
 }
 
+export function getAdminPortfolioServices() {
+  return prisma.service.findMany({
+    orderBy: {
+      displayOrder: "asc",
+    },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      description: true,
+      imageUrls: true,
+      featured: true,
+      active: true,
+      displayOrder: true,
+      updatedAt: true,
+    },
+  });
+}
+
 /**
  * If another service already occupies `targetOrder`, shifts it (and every
  * other service from that point on) up by one so `targetOrder` is free -
@@ -60,10 +79,11 @@ export function getAdminServiceById(id: string) {
       title: true,
       slug: true,
       description: true,
+      galleryIntro: true,
+      galleryClosing: true,
       imageUrls: true,
       price: true,
       inclusions: true,
-      category: true,
       featured: true,
       active: true,
       displayOrder: true,

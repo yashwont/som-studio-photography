@@ -6,7 +6,6 @@ import Button from "@/src/components/ui/Button";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import ServicePhotoCarousel from "./ServicePhotoCarousel";
 import { getActiveServices } from "@/src/lib/db/services";
-import { getPortfolioCategories } from "@/src/lib/db/portfolio";
 import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl } from "@/src/lib/seo";
 
@@ -20,34 +19,6 @@ export const metadata: Metadata = {
 };
 
 type ServiceRecord = Awaited<ReturnType<typeof getActiveServices>>[number];
-type PortfolioCategoryWithImages = Awaited<ReturnType<typeof getPortfolioCategories>>[number];
-
-function buildServicePortfolioMap(categories: PortfolioCategoryWithImages[]) {
-  const map = new Map<string, string>();
-
-  categories.forEach((category: PortfolioCategoryWithImages) => {
-    const firstImage = category.images[0];
-
-    if (firstImage) {
-      map.set(category.slug, firstImage.slug);
-    }
-  });
-
-  return map;
-}
-
-function getServicePortfolioHref(
-  service: ServiceRecord,
-  portfolioMap: Map<string, string>
-) {
-  if (!service.category) {
-    return "/portfolio";
-  }
-
-  const workSlug = portfolioMap.get(service.category);
-
-  return workSlug ? `/portfolio/${workSlug}` : "/portfolio";
-}
 
 const faqs = [
   {
@@ -85,13 +56,7 @@ function formatPrice(price: ServiceRecord["price"]) {
   return `NRS ${price.toNumber().toLocaleString("en-US")}`;
 }
 
-function ServicePricing({
-  service,
-  portfolioHref,
-}: {
-  service: ServiceRecord;
-  portfolioHref: string;
-}) {
+function ServicePricing({ service }: { service: ServiceRecord }) {
   return (
     <div className="rounded border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -123,9 +88,6 @@ function ServicePricing({
         <Button href={`/contact?service=${service.id}`} variant="primary" size="sm">
           Book Now
         </Button>
-        <Button href={portfolioHref} variant="secondary" size="sm">
-          View Portfolio
-        </Button>
       </div>
     </div>
   );
@@ -134,11 +96,9 @@ function ServicePricing({
 function ServiceBlock({
   service,
   index,
-  portfolioHref,
 }: {
   service: ServiceRecord;
   index: number;
-  portfolioHref: string;
 }) {
   const number = String(index + 1).padStart(2, "0");
   const reversed = index % 2 === 1;
@@ -180,7 +140,7 @@ function ServiceBlock({
               </p>
 
               <div className="mt-5">
-                <ServicePricing service={service} portfolioHref={portfolioHref} />
+                <ServicePricing service={service} />
               </div>
             </div>
           </div>
@@ -210,12 +170,10 @@ function EmptyServicesFallback() {
 }
 
 export default async function ServicesPage() {
-  const [services, portfolioCategories, contact] = await Promise.all([
+  const [services, contact] = await Promise.all([
     getActiveServices(),
-    getPortfolioCategories(),
     getContactInfo(),
   ]);
-  const portfolioMap = buildServicePortfolioMap(portfolioCategories);
 
   return (
     <>
@@ -244,12 +202,7 @@ export default async function ServicesPage() {
 
       {services.length > 0 ? (
         services.map((service: ServiceRecord, index: number) => (
-          <ServiceBlock
-            key={service.id}
-            service={service}
-            index={index}
-            portfolioHref={getServicePortfolioHref(service, portfolioMap)}
-          />
+          <ServiceBlock key={service.id} service={service} index={index} />
         ))
       ) : (
         <EmptyServicesFallback />

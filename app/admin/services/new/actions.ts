@@ -25,7 +25,6 @@ export async function createService(
   await requireAdmin();
 
   const title = String(formData.get("title") ?? "").trim();
-  const category = String(formData.get("category") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").trim();
   const inclusionsRaw = String(formData.get("inclusions") ?? "");
@@ -106,7 +105,6 @@ export async function createService(
       data: {
         title,
         slug,
-        category: category || null,
         description,
         imageUrls,
         price,
@@ -121,7 +119,9 @@ export async function createService(
 
   revalidatePath("/");
   revalidatePath("/services");
+  revalidatePath("/portfolio");
   revalidatePath("/admin/services");
+  revalidatePath("/admin/portfolio");
 
   redirect(`/admin/services/${service.id}`);
 }

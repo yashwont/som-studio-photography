@@ -86,15 +86,6 @@ export default async function AdminPage() {
         <SectionHeading>Content</SectionHeading>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <AdminStatCard label="Services" value={stats.servicesCount} />
-          <AdminStatCard label="Packages" value={stats.packagesCount} />
-          <AdminStatCard
-            label="Portfolio categories"
-            value={stats.portfolioCategoriesCount}
-          />
-          <AdminStatCard
-            label="Portfolio images"
-            value={stats.portfolioImagesCount}
-          />
         </div>
       </section>
 

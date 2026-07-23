@@ -1,150 +1,212 @@
-import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import type { Metadata } from "next";
 import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
-import { getPortfolioCategories } from "@/src/lib/db/portfolio";
+import { getActiveServices } from "@/src/lib/db/services";
 import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl } from "@/src/lib/seo";
+import {
+  buildPortfolioCategories,
+  type PortfolioCategory,
+  type PortfolioImage,
+} from "@/src/lib/portfolio/public-portfolio";
 
 export const metadata: Metadata = {
-  title: "Photography Portfolio",
+  title: "Photography Portfolio in Kathmandu",
   description:
-    "Browse SomStudioPhotography's portfolio of newborn, kids, maternity, family, graduation, portrait, wedding, pre-wedding, event, and product photography in Kathmandu, Nepal.",
+    "Explore SomStudioPhotography's portfolio across wedding, pre-wedding, maternity, newborn, kids, family, portrait, event, graduation, and product photography in Kathmandu, Nepal.",
   alternates: {
     canonical: absoluteUrl("/portfolio"),
   },
 };
 
-type PortfolioCategoryWithImages = Awaited<ReturnType<typeof getPortfolioCategories>>[number];
-
-const fallbackImage = {
-  imageUrl: "/images/visuals/studio.jpg",
-  altText: "A photographer working with professional studio lighting equipment.",
-};
-
-function getCategoryCoverImage(category: PortfolioCategoryWithImages) {
-  return category.images[0] ?? fallbackImage;
+function CategoryNav({ categories }: { categories: PortfolioCategory[] }) {
+  return (
+    <nav
+      aria-label="Portfolio categories"
+      className="sticky top-16 z-40 flex flex-wrap justify-center gap-2 border-y border-neutral-200 bg-white px-5 py-4 shadow-[0_10px_24px_-22px_rgba(10,10,10,0.45)] sm:top-20 sm:px-8 lg:px-12 xl:px-16 2xl:px-20"
+    >
+      {categories.map((category: PortfolioCategory) => (
+        <a
+          key={category.id}
+          href={`#${category.id}`}
+          className="shrink-0 rounded-full border border-neutral-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-700 transition-colors hover:border-accent hover:text-neutral-950"
+        >
+          {category.title}
+        </a>
+      ))}
+    </nav>
+  );
 }
 
-function CategoryButton({ category }: { category: PortfolioCategoryWithImages }) {
-  const coverImage = getCategoryCoverImage(category);
-  const featuredWork = category.images[0];
-  const href = featuredWork ? `/portfolio/${featuredWork.slug}` : "/contact";
+function PortfolioImageFrame({
+  image,
+  priority = false,
+  className = "",
+  sizes = "(max-width: 768px) 100vw, 50vw",
+}: {
+  image: PortfolioImage;
+  priority?: boolean;
+  className?: string;
+  sizes?: string;
+}) {
+  return (
+    <div className={`relative overflow-hidden bg-neutral-200 ${className}`}>
+      <Image
+        src={image.src}
+        alt={image.alt}
+        fill
+        priority={priority}
+        sizes={sizes}
+        className="object-cover"
+      />
+    </div>
+  );
+}
+
+function CategorySection({
+  category,
+  index,
+}: {
+  category: PortfolioCategory;
+  index: number;
+}) {
+  const image = category.images[0];
+  const reversed = index % 2 === 1;
 
   return (
-    <Link
-      href={href}
-      className="group relative flex min-h-[9.5rem] flex-col justify-between gap-4 overflow-hidden rounded border border-neutral-200 bg-white p-5 shadow-sm transition-colors duration-300 hover:border-neutral-950 sm:min-h-[11rem]"
-    >
-      <span
-        aria-hidden="true"
-        className="absolute inset-y-0 left-0 z-0 w-0 overflow-hidden transition-[width] duration-500 ease-out group-hover:w-full"
+    <ScrollReveal variant={reversed ? "slide-right" : "slide-left"}>
+      <section
+        id={category.id}
+        className={`scroll-mt-36 border-t border-neutral-200 sm:scroll-mt-44 ${
+          reversed ? "bg-white" : "bg-neutral-50"
+        }`}
       >
-        <Image
-          src={coverImage.imageUrl}
-          alt=""
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-          className="object-cover"
-        />
-      </span>
+        <Container>
+          <div className="grid grid-cols-1 items-center gap-8 py-10 sm:py-14 lg:grid-cols-2 lg:gap-12">
+            <div className={reversed ? "lg:order-2" : undefined}>
+              <PortfolioImageFrame
+                image={image}
+                priority={index < 2}
+                className="aspect-[16/11] rounded border border-neutral-200 shadow-sm"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
 
-      <div className="relative z-10 flex items-start justify-between gap-3">
-        <span className="text-sm font-semibold uppercase tracking-[0.1em] text-neutral-950 transition-all duration-300 group-hover:text-white group-hover:[text-shadow:0_1px_8px_rgba(0,0,0,0.7)]">
-          {category.name}
-        </span>
-        <span
-          aria-hidden="true"
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-white text-xs text-neutral-950 transition-all duration-300 group-hover:translate-x-1 group-hover:border-gold group-hover:bg-gold group-hover:text-neutral-950"
-        >
-          &rarr;
-        </span>
-      </div>
+            <div className={reversed ? "lg:order-1" : undefined}>
+              <div className="rounded border border-neutral-200 bg-white p-6 sm:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h2 className="mt-3 text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+                  {category.title}
+                </h2>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-800">
+                  {category.description}
+                </p>
 
-      {category.description && (
-        <p className="relative z-10 line-clamp-2 text-xs leading-relaxed text-neutral-900 transition-all duration-300 group-hover:text-white group-hover:[text-shadow:0_1px_6px_rgba(0,0,0,0.7)]">
-          {category.description}
-        </p>
-      )}
-    </Link>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button
+                    href={`/portfolio/${category.id}`}
+                    variant="primary"
+                    size="sm"
+                  >
+                    View Full Gallery
+                  </Button>
+                  <Button
+                    href={
+                      category.serviceId
+                        ? `/contact?service=${category.serviceId}`
+                        : "/contact"
+                    }
+                    variant="primary"
+                    size="sm"
+                  >
+                    Inquire for This Style
+                  </Button>
+                  <Button href="/services" variant="secondary" size="sm">
+                    View Packages
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+    </ScrollReveal>
   );
 }
 
 function EmptyPortfolioFallback() {
   return (
-    <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded border border-neutral-200 bg-white px-6 py-10 text-center">
-      <p className="text-base leading-relaxed text-neutral-900">
-        Portfolio is being updated. Please contact us to request sample work.
-      </p>
-      <Button href="/contact" variant="primary" size="md">
-        Contact Us
-      </Button>
-    </div>
+    <section className="border-t border-neutral-200 bg-neutral-50">
+      <Container>
+        <div className="flex flex-col items-center gap-5 py-20 text-center sm:py-28">
+          <p className="max-w-xl text-base leading-relaxed text-neutral-900">
+            Portfolio galleries are being refreshed. Contact us and we will send
+            recent work that matches your session type.
+          </p>
+          <Button href="/contact" variant="primary" size="md">
+            Request Recent Work
+          </Button>
+        </div>
+      </Container>
+    </section>
   );
 }
 
 export default async function PortfolioPage() {
-  const [portfolioCategories, contact] = await Promise.all([
-    getPortfolioCategories(),
+  const [services, contact] = await Promise.all([
+    getActiveServices(),
     getContactInfo(),
   ]);
-  const hasPortfolioContent = portfolioCategories.some(
-    (category: PortfolioCategoryWithImages) => category.images.length > 0
-  );
+  const categories = buildPortfolioCategories(services);
 
   return (
     <>
       <Navbar />
+      <main>
+        <div className="pt-16 sm:pt-20" />
 
-      <div className="border-b border-neutral-200 bg-neutral-50 pt-16 sm:pt-20">
-        <Container>
-          <div className="py-5 text-center sm:py-6">
-            <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
-              Portfolio
-            </p>
-            <h1 className="text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
-              Photography portfolio
-            </h1>
-            <p className="mx-auto mt-1.5 max-w-xl text-xs font-semibold leading-relaxed text-neutral-900">
-              Browse newborn, kids, maternity, family, graduation, portrait, wedding, pre-wedding, event, and product photography from our Kathmandu studio.
-            </p>
-          </div>
-        </Container>
-      </div>
+        <CategoryNav categories={categories} />
 
-      <ScrollReveal variant="rise">
-        <section className="border-t border-neutral-200 bg-neutral-50">
-        <Container>
-          <div className="py-16 sm:py-20">
-            <div className="mb-10">
-              <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
-                  Session categories
+        {categories.length > 0 ? (
+          categories.map((category: PortfolioCategory, index: number) => (
+            <CategorySection
+              key={category.id}
+              category={category}
+              index={index}
+            />
+          ))
+        ) : (
+          <EmptyPortfolioFallback />
+        )}
+
+        <ScrollReveal variant="fade">
+          <section className="border-t border-neutral-200 bg-neutral-950 text-white">
+            <Container>
+              <div className="flex flex-col items-center gap-5 py-16 text-center sm:py-20">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+                  Next step
                 </p>
-                <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-                  Choose the type of session you want to explore.
+                <h2 className="max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+                  Want photographs like these for your own story?
                 </h2>
+                <p className="max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
+                  Tell us the session type, preferred date, and location. We will
+                  help shape a package around the coverage you need.
+                </p>
+                <Button href="/contact" variant="primary" size="lg">
+                  Start an Inquiry
+                </Button>
               </div>
-            </div>
-
-            {hasPortfolioContent ? (
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-                {portfolioCategories.map((category: PortfolioCategoryWithImages) => (
-                  <CategoryButton key={category.id} category={category} />
-                ))}
-              </div>
-            ) : (
-              <EmptyPortfolioFallback />
-            )}
-          </div>
-        </Container>
-        </section>
-      </ScrollReveal>
-
+            </Container>
+          </section>
+        </ScrollReveal>
+      </main>
       <Footer contact={contact} />
     </>
   );

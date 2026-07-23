@@ -8,13 +8,8 @@ import {
   type ChangeEvent,
 } from "react";
 import Link from "next/link";
-import type { getAdminPortfolioCategoriesForSelect } from "@/src/lib/db/admin-portfolio";
 import { updateService } from "./actions";
 import { initialEditServiceState } from "./types";
-
-type PortfolioCategoryOption = Awaited<
-  ReturnType<typeof getAdminPortfolioCategoriesForSelect>
->[number];
 
 export type ServiceFormValues = {
   id: string;
@@ -23,7 +18,6 @@ export type ServiceFormValues = {
   imageUrls: string[];
   price: number | null;
   inclusions: string[];
-  category: string | null;
   featured: boolean;
   active: boolean;
 };
@@ -61,8 +55,8 @@ type PhotoDraft = {
   preview: string | null;
 };
 
-function createExistingPhoto(url: string): PhotoDraft {
-  return { clientId: crypto.randomUUID(), existingUrl: url, preview: null };
+function createExistingPhoto(url: string, index: number): PhotoDraft {
+  return { clientId: `existing-${index}-${url}`, existingUrl: url, preview: null };
 }
 
 function createEmptyPhoto(): PhotoDraft {
@@ -121,10 +115,8 @@ function PhotoSlot({
 
 export default function EditServiceForm({
   service,
-  portfolioCategories,
 }: {
   service: ServiceFormValues;
-  portfolioCategories: PortfolioCategoryOption[];
 }) {
   const updateServiceWithId = updateService.bind(null, service.id);
   const [state, formAction, pending] = useActionState(
@@ -136,7 +128,7 @@ export default function EditServiceForm({
     service.imageUrls
       .map((url) => getSafePreviewUrl(url))
       .filter((url): url is string => Boolean(url))
-      .map(createExistingPhoto)
+      .map((url, index) => createExistingPhoto(url, index))
   );
   const previewRefs = useRef<Record<string, string | null>>({});
 
@@ -222,29 +214,6 @@ export default function EditServiceForm({
           defaultValue={service.description}
           className={inputClassName}
         />
-      </div>
-
-      <div>
-        <label htmlFor="category" className={labelClassName}>
-          Portfolio Category
-        </label>
-        <select
-          id="category"
-          name="category"
-          defaultValue={service.category ?? ""}
-          className={inputClassName}
-        >
-          <option value="">No matching gallery (links to /portfolio)</option>
-          {portfolioCategories.map((category: PortfolioCategoryOption) => (
-            <option key={category.id} value={category.slug}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <p className="mt-1.5 text-xs text-neutral-500">
-          Controls where this service&rsquo;s &ldquo;View Portfolio&rdquo;
-          button links to.
-        </p>
       </div>
 
       <div>

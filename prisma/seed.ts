@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 
 import { contactInfo } from "../src/data/contact";
 import { navLinks, ctaLink } from "../src/data/navigation";
-import { portfolioCategories, portfolioWorks } from "../src/data/portfolio";
 import { services } from "../src/data/services";
 import { heroGallery, heroImage, studioGallery, studioImage } from "../src/data/visuals";
 
@@ -52,64 +51,6 @@ async function seedServicesAndPackages() {
   }
 }
 
-async function seedPortfolio() {
-  for (const [index, category] of portfolioCategories.entries()) {
-    await prisma.portfolioCategory.upsert({
-      where: { slug: category.slug },
-      update: {
-        name: category.title,
-        description: category.description,
-        displayOrder: index,
-      },
-      create: {
-        id: category.id,
-        name: category.title,
-        slug: category.slug,
-        description: category.description,
-        displayOrder: index,
-      },
-    });
-  }
-
-  for (const [index, work] of portfolioWorks.entries()) {
-    const category = portfolioCategories.find((item) => item.id === work.categoryId);
-
-    if (!category) {
-      throw new Error(`Missing portfolio category for work: ${work.id}`);
-    }
-
-    await prisma.portfolioImage.upsert({
-      where: { slug: work.id },
-      update: {
-        title: work.title,
-        imageUrl: work.image.src,
-        altText: work.image.alt,
-        description: work.description,
-        featured: work.featured ?? false,
-        active: true,
-        displayOrder: index,
-        category: {
-          connect: { slug: category.slug },
-        },
-      },
-      create: {
-        id: work.id,
-        title: work.title,
-        slug: work.id,
-        imageUrl: work.image.src,
-        altText: work.image.alt,
-        description: work.description,
-        featured: work.featured ?? false,
-        active: true,
-        displayOrder: index,
-        category: {
-          connect: { slug: category.slug },
-        },
-      },
-    });
-  }
-}
-
 async function seedSiteSettings() {
   const settings = [
     ["contact.info", contactInfo],
@@ -137,7 +78,6 @@ async function seedSiteSettings() {
 
 async function main() {
   await seedServicesAndPackages();
-  await seedPortfolio();
   await seedSiteSettings();
 }
 

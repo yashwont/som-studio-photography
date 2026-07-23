@@ -40,7 +40,6 @@ export async function updateContactDetails(
   revalidatePath("/about");
   revalidatePath("/contact");
   revalidatePath("/services");
-  revalidatePath("/portfolio");
   revalidatePath("/admin/settings/contact");
 
   return { error: null, success: true };

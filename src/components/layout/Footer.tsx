@@ -8,21 +8,28 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-neutral-200 bg-neutral-50">
+    <footer className="bg-neutral-950 text-neutral-300">
+      <div aria-hidden="true" className="footer-sprocket-strip" />
+
       <Container>
         <div className="flex flex-col items-center gap-6 py-14 text-center sm:py-16">
           <Link
             href="/"
-            className="text-xl font-semibold tracking-tight text-neutral-950"
+            className="inline-block border-b border-neutral-800 pb-2 font-serif text-2xl font-semibold tracking-tight text-white"
           >
-            Som<span className="text-neutral-900">Studio</span>
+            Som<span className="text-accent">Studio</span>
           </Link>
 
-          <p className="max-w-2xl text-sm font-semibold leading-relaxed text-neutral-900">
+          <span className="flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
+            <span className="h-px w-3.5 bg-gold" aria-hidden="true" />
+            Photography
+          </span>
+
+          <p className="max-w-2xl text-sm leading-relaxed text-neutral-400">
             {renderContactTemplate(contactInfo.footerDescription, contactInfo)}
           </p>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3">
             {contactInfo.socialLinks.map((social: SocialLink) => (
               <Link
                 key={social.platform}
@@ -30,46 +37,48 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${social.label} - opens in new tab`}
-                className="text-neutral-900 transition-colors hover:text-gold"
+                className="flex h-10 w-10 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-neutral-300 transition-colors hover:border-gold/60 hover:text-white"
               >
-                <SocialIcon platform={social.platform} />
+                <SocialIcon platform={social.platform} className="h-4 w-4" />
               </Link>
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-neutral-900">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-neutral-300">
             <a
               href={`tel:${contactInfo.phone}`}
-              className="transition-colors hover:text-neutral-950"
+              className="transition-colors hover:text-white"
             >
               {contactInfo.phone}
             </a>
             <span
               aria-hidden="true"
-              className="hidden h-1 w-1 rounded-full bg-neutral-300 sm:block"
+              className="hidden h-1 w-1 rounded-full bg-neutral-700 sm:block"
             />
             <a
               href={`mailto:${contactInfo.email}`}
-              className="break-all transition-colors hover:text-neutral-950"
+              className="break-all transition-colors hover:text-white"
             >
               {contactInfo.email}
             </a>
             <span
               aria-hidden="true"
-              className="hidden h-1 w-1 rounded-full bg-neutral-300 sm:block"
+              className="hidden h-1 w-1 rounded-full bg-neutral-700 sm:block"
             />
             <span>
               {contactInfo.address}, {contactInfo.city}
             </span>
           </div>
         </div>
-
-        <div className="border-t border-neutral-200 py-5 text-center">
-          <p className="text-xs text-neutral-900">
-            &copy; {currentYear} SomStudioPhotography. All rights reserved.
-          </p>
-        </div>
       </Container>
+
+      <div aria-hidden="true" className="footer-sprocket-strip" />
+
+      <div className="py-5 text-center">
+        <p className="text-xs text-neutral-600">
+          &copy; {currentYear} SomStudioPhotography. All rights reserved.
+        </p>
+      </div>
     </footer>
   );
 }

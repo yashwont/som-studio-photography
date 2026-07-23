@@ -39,7 +39,6 @@ export async function updateSocialLinks(
   revalidatePath("/about");
   revalidatePath("/contact");
   revalidatePath("/services");
-  revalidatePath("/portfolio");
   revalidatePath("/admin/settings/social-links");
 
   return { error: null, success: true };

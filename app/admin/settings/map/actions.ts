@@ -20,7 +20,6 @@ export async function updateMapInfo(
   revalidatePath("/about");
   revalidatePath("/contact");
   revalidatePath("/services");
-  revalidatePath("/portfolio");
   revalidatePath("/admin/settings/map");
 
   return { error: null, success: true };

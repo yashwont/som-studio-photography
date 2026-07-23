@@ -23,7 +23,6 @@ export async function updateFooter(
   revalidatePath("/about");
   revalidatePath("/contact");
   revalidatePath("/services");
-  revalidatePath("/portfolio");
   revalidatePath("/admin/settings/footer");
 
   return { error: null, success: true };
