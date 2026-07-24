@@ -10,7 +10,7 @@ export function ServicePhotoPlaceholder({ title }: { title: string }) {
     <div
       role="img"
       aria-label={`${title} photo placeholder`}
-      className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded border border-dashed border-neutral-300 bg-gradient-to-br from-neutral-100 to-neutral-50 text-neutral-300"
+      className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-neutral-300 bg-gradient-to-br from-neutral-100 to-neutral-50 text-neutral-300"
     >
       <svg
         viewBox="0 0 24 24"
@@ -58,7 +58,7 @@ export default function ServicePhotoCarousel({
   }
 
   return (
-    <div className="relative aspect-[16/9] w-full overflow-hidden rounded bg-neutral-100">
+    <div className="group relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-neutral-100">
       {imageUrls.map((url, index) => (
         <Image
           key={url}
@@ -67,7 +67,7 @@ export default function ServicePhotoCarousel({
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority={index === 0}
-          className={`object-cover transition-opacity duration-1000 ease-in-out ${
+          className={`object-cover transition-all duration-1000 ease-in-out group-hover:scale-105 ${
             index === activeIndex ? "opacity-100" : "opacity-0"
           }`}
         />

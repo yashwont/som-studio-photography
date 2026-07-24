@@ -3,6 +3,7 @@ interface SectionHeaderProps {
   title: string;
   subtitle?: string;
   centered?: boolean;
+  size?: "default" | "sm";
   className?: string;
 }
 
@@ -11,23 +12,34 @@ export default function SectionHeader({
   title,
   subtitle,
   centered = true,
+  size = "default",
   className = "",
 }: SectionHeaderProps) {
   const align = centered ? "text-center" : "text-left";
+  const titleSize =
+    size === "sm" ? "text-2xl sm:text-3xl" : "text-3xl sm:text-4xl";
+  const subtitleSize = size === "sm" ? "text-base" : "text-lg";
 
   return (
     <div className={`${align} ${className}`}>
       {eyebrow && (
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
+        <p
+          className={`mb-3 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold sm:tracking-[0.2em] ${
+            centered ? "justify-center" : ""
+          }`}
+        >
+          <span aria-hidden="true" className="accent-rule h-px w-6" />
           {eyebrow}
         </p>
       )}
-      <h2 className="break-words text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+      <h2
+        className={`break-words font-serif font-semibold tracking-tight text-neutral-950 ${titleSize}`}
+      >
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`mt-4 text-neutral-900 text-lg ${
+          className={`mt-4 text-neutral-900 ${subtitleSize} ${
             centered ? "max-w-2xl mx-auto" : "max-w-2xl"
           }`}
         >

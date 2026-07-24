@@ -17,11 +17,11 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
             href="/"
             className="inline-block border-b border-neutral-800 pb-2 font-serif text-2xl font-semibold tracking-tight text-white"
           >
-            Som<span className="text-accent">Studio</span>
+            Som<span className="text-gold">Studio</span>
           </Link>
 
           <span className="flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
-            <span className="h-px w-3.5 bg-gold" aria-hidden="true" />
+            <span className="accent-rule h-px w-3.5" aria-hidden="true" />
             Photography
           </span>
 
@@ -37,7 +37,7 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${social.label} - opens in new tab`}
-                className="flex h-10 w-10 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-neutral-300 transition-colors hover:border-gold/60 hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-neutral-300 transition-all duration-200 hover:border-white hover:bg-white hover:text-neutral-950"
               >
                 <SocialIcon platform={social.platform} className="h-4 w-4" />
               </Link>
@@ -47,7 +47,7 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-neutral-300">
             <a
               href={`tel:${contactInfo.phone}`}
-              className="transition-colors hover:text-white"
+              className="transition-colors hover:text-white hover:underline underline-offset-4"
             >
               {contactInfo.phone}
             </a>
@@ -57,7 +57,7 @@ export default function Footer({ contact: contactInfo }: { contact: ContactInfo 
             />
             <a
               href={`mailto:${contactInfo.email}`}
-              className="break-all transition-colors hover:text-white"
+              className="break-all transition-colors hover:text-white hover:underline underline-offset-4"
             >
               {contactInfo.email}
             </a>

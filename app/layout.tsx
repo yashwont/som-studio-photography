@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import {
   absoluteUrl,
   defaultDescription,
@@ -9,6 +10,22 @@ import {
 } from "@/src/lib/seo";
 import { getContactInfo } from "@/src/lib/db/contact";
 import "./globals.css";
+
+// Display face — Fraunces carries the heritage/editorial personality on headings.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+// Body face — Inter keeps running text and UI crisp and neutral.
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -60,7 +77,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className="h-full antialiased"
+      className={`h-full antialiased ${fraunces.variable} ${inter.variable}`}
       data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col">
@@ -68,6 +85,8 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Ambient film-grain wash — ties the whole site to the darkroom motif */}
+        <div aria-hidden="true" className="film-grain" />
         {children}
       </body>
     </html>

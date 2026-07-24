@@ -58,9 +58,10 @@ function formatPrice(price: ServiceRecord["price"]) {
 
 function ServicePricing({ service }: { service: ServiceRecord }) {
   return (
-    <div className="rounded border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
+    <div className="glass rounded-2xl p-5 sm:p-6">
       <div className="mb-4 flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+        <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+          <span aria-hidden="true" className="accent-rule h-px w-6" />
           Session includes
         </p>
         <p className="text-sm font-semibold text-neutral-950">
@@ -131,7 +132,7 @@ function ServiceBlock({
                 )}
               </div>
 
-              <h3 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
+              <h3 className="font-serif text-2xl font-bold text-neutral-950 sm:text-3xl">
                 {service.title}
               </h3>
 
@@ -155,7 +156,7 @@ function EmptyServicesFallback() {
     <section className="border-t border-neutral-200 bg-neutral-50">
       <Container>
         <div className="py-20 sm:py-28">
-          <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded border border-neutral-200 bg-white px-6 py-10 text-center">
+          <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded-2xl border border-neutral-200 bg-white px-6 py-10 text-center shadow-[0_1px_2px_rgba(16,15,12,0.05)]">
             <p className="text-base leading-relaxed text-neutral-900">
               Services are being updated. Please contact us for current packages.
             </p>
@@ -186,7 +187,7 @@ export default async function ServicesPage() {
               <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
                 Our Services
               </p>
-              <h1 className="break-words text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
+              <h1 className="break-words font-serif text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
                 Choose your session
               </h1>
               <p className="mx-auto mt-1.5 max-w-xl text-xs font-semibold leading-relaxed text-neutral-900">
@@ -212,12 +213,15 @@ export default async function ServicesPage() {
         <section className="border-t border-neutral-200 bg-neutral-50">
           <Container size="narrow">
             <div className="py-16 sm:py-20">
-              <h2 className="mb-10 text-center text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+              <h2 className="mb-10 text-center font-serif text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
                 Before You Book
               </h2>
-              <div className="divide-y divide-neutral-200 border-y border-neutral-200">
+              <div className="flex flex-col gap-3">
                 {faqs.map((faq: (typeof faqs)[number]) => (
-                  <details key={faq.question} className="group py-6">
+                  <details
+                    key={faq.question}
+                    className="group glass rounded-xl px-5 py-5 transition-all hover:-translate-y-0.5 sm:px-6"
+                  >
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-neutral-950 marker:content-none">
                       {faq.question}
                       <span
@@ -245,7 +249,7 @@ export default async function ServicesPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                 Still deciding?
               </p>
-              <h2 className="text-2xl font-bold text-neutral-950 sm:text-3xl">
+              <h2 className="font-serif text-2xl font-bold text-neutral-950 sm:text-3xl">
                 Need help choosing the right service?
               </h2>
               <p className="max-w-md text-neutral-900">

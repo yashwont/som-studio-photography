@@ -16,9 +16,9 @@ function StarRating({ rating }: { rating: number }) {
 
 function ReviewCard({ review }: { review: HomeReview }) {
   return (
-    <div className="rounded border border-neutral-200 bg-neutral-50 p-6">
+    <div className="glass rounded-2xl p-6">
       <StarRating rating={review.rating} />
-      <p className="mt-4 text-sm leading-relaxed text-neutral-900">
+      <p className="mt-4 font-serif text-base italic leading-relaxed text-neutral-900">
         &ldquo;{review.quote}&rdquo;
       </p>
       <p className="mt-4 text-xs font-semibold uppercase tracking-[0.15em] text-neutral-950">
@@ -35,13 +35,13 @@ function ServiceCard({
   service: HomeServiceCard;
 }) {
   return (
-    <div className="service-card group flex h-full flex-col rounded border border-neutral-200 bg-neutral-50 p-6">
+    <div className="service-card glass group flex h-full flex-col rounded-2xl p-6">
       <div
         aria-hidden="true"
-        className="mb-5 h-px w-6 bg-gold transition-all duration-300 group-hover:w-10"
+        className="accent-rule mb-5 h-px w-6 transition-all duration-300 group-hover:w-12"
       />
 
-      <h3 className="mb-2 text-base font-semibold text-neutral-950">
+      <h3 className="mb-2 font-serif text-lg font-semibold text-neutral-950">
         {service.title}
       </h3>
 
@@ -56,7 +56,7 @@ export default function Services({ content }: { content: HomeContentData }) {
   return (
     <section id="services" className="bg-neutral-50 border-t border-neutral-200">
       <Container>
-        <div className="py-20 sm:py-28">
+        <div className="py-12 sm:py-16">
           <SectionHeader
             eyebrow={content.servicesEyebrow}
             title={content.servicesTitle}
@@ -78,12 +78,12 @@ export default function Services({ content }: { content: HomeContentData }) {
             ))}
           </div>
 
-          <div className="mt-16 border-t border-neutral-200 pt-12">
+          <div className="mt-12 border-t border-neutral-200 pt-10">
             <div className="mb-10 text-center">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                 {content.reviewsEyebrow}
               </p>
-              <h3 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
+              <h3 className="font-serif text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
                 {content.reviewsTitle}
               </h3>
             </div>

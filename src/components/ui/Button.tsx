@@ -18,9 +18,10 @@ interface ButtonProps {
 
 const variants: Record<string, string> = {
   primary:
-    "bg-accent-hover text-white font-semibold shadow-sm hover:bg-neutral-950 hover:shadow-lg hover:shadow-accent/20",
-  secondary: "border border-accent text-accent hover:bg-accent/10",
-  ghost: "text-neutral-900 hover:text-neutral-950",
+    "btn-shimmer bg-accent-hover text-white font-semibold shadow-sm hover:-translate-y-0.5 hover:bg-neutral-950 hover:shadow-xl hover:shadow-accent/25",
+  secondary:
+    "border border-neutral-300 text-neutral-950 backdrop-blur-sm hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white",
+  ghost: "text-neutral-900 hover:text-neutral-950 hover:underline underline-offset-4",
 };
 
 const sizes: Record<string, string> = {
@@ -30,9 +31,27 @@ const sizes: Record<string, string> = {
 };
 
 const base =
-  "inline-flex items-center justify-center rounded-full transition-all duration-300 " +
+  "group inline-flex items-center justify-center gap-2 rounded-full transition-all duration-300 " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 " +
   "disabled:opacity-50 disabled:cursor-not-allowed";
+
+function ArrowIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+    >
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </svg>
+  );
+}
 
 export default function Button({
   children,
@@ -48,11 +67,17 @@ export default function Button({
 }: ButtonProps) {
   const classes =
     `${base} ${variants[variant]} ${sizes[size]} ${className}`.trim();
+  const content = (
+    <>
+      {children}
+      {variant === "primary" && <ArrowIcon />}
+    </>
+  );
 
   if (href) {
     return (
       <Link href={href} className={classes} onClick={onClick} target={target} rel={rel}>
-        {children}
+        {content}
       </Link>
     );
   }
@@ -64,7 +89,7 @@ export default function Button({
       disabled={disabled}
       className={classes}
     >
-      {children}
+      {content}
     </button>
   );
 }

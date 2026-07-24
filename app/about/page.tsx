@@ -3,6 +3,7 @@ import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
+import ScrollReveal from "@/src/components/ui/ScrollReveal";
 import LocationVisit from "@/src/components/sections/LocationVisit";
 import { getAboutContent } from "@/src/lib/db/about";
 import { getContactInfo } from "@/src/lib/db/contact";
@@ -29,14 +30,14 @@ export default async function AboutPage() {
       <section className="bg-white">
         <Container>
           <div className="grid grid-cols-1 gap-12 pb-16 pt-28 sm:pb-20 sm:pt-32 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-            <div>
-              <div className="mb-5 flex items-center gap-3">
-                <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
+            <div className="hero-enter hero-enter-1">
+              <div className="mb-5 flex items-center gap-3 text-gold">
+                <div aria-hidden="true" className="accent-rule h-px w-10 shrink-0" />
+                <span className="text-xs font-semibold uppercase tracking-[0.2em]">
                   {content.heroEyebrow}
                 </span>
               </div>
-              <h1 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-neutral-950 sm:text-5xl xl:text-6xl">
+              <h1 className="max-w-2xl font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl xl:text-6xl">
                 {content.heroTitle}
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-900">
@@ -44,8 +45,8 @@ export default async function AboutPage() {
               </p>
             </div>
 
-            <div className="border-t-2 border-gold pt-6 lg:mt-3">
-              <p className="font-serif text-2xl leading-snug text-neutral-950 sm:text-[1.75rem]">
+            <div className="hero-enter hero-enter-3 border-t-2 border-gold pt-6 lg:mt-3">
+              <p className="font-serif text-2xl italic leading-snug text-neutral-950 sm:text-[1.75rem]">
                 &ldquo;{content.quoteText}&rdquo;
               </p>
               <p className="mt-4 text-xs uppercase tracking-[0.2em] text-neutral-500">
@@ -57,14 +58,15 @@ export default async function AboutPage() {
       </section>
 
       {/* Legacy / Since 1995 */}
-      <section className="border-t border-neutral-200 bg-[#F7F4EE]">
+      <section className="border-t border-neutral-200 bg-neutral-100">
         <Container>
-          <div className="grid grid-cols-1 gap-10 py-20 sm:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <ScrollReveal variant="rise" className="grid grid-cols-1 gap-10 py-20 sm:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-600">
+              <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                <span aria-hidden="true" className="accent-rule h-px w-6" />
                 Since 1995
               </p>
-              <p className="mt-3 text-6xl font-bold leading-none tracking-tight text-neutral-950 sm:text-7xl">
+              <p className="mt-3 font-serif text-7xl font-semibold leading-none tracking-tight text-neutral-950 sm:text-8xl">
                 30+
               </p>
               <p className="mt-2 text-xl font-semibold text-neutral-950 sm:text-2xl">
@@ -88,13 +90,13 @@ export default async function AboutPage() {
               )}
 
               <div className="flex items-center gap-3 pt-2">
-                <div aria-hidden="true" className="h-px w-8 shrink-0 bg-gold" />
+                <div aria-hidden="true" className="accent-rule h-px w-8 shrink-0" />
                 <span className="text-xs uppercase tracking-[0.2em] text-neutral-900">
                   {contact.address}, {contact.city}, {contact.country}
                 </span>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 
@@ -106,7 +108,7 @@ export default async function AboutPage() {
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                 {content.timelineEyebrow}
               </p>
-              <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
                 {content.timelineTitle}
               </h2>
             </div>
@@ -130,7 +132,7 @@ export default async function AboutPage() {
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                       {item.year}
                     </p>
-                    <h3 className="mt-2 text-xl font-bold text-neutral-950 sm:text-2xl">
+                    <h3 className="mt-2 font-serif text-xl font-bold text-neutral-950 sm:text-2xl">
                       {item.title}
                     </h3>
                     <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-900 sm:text-base">
@@ -152,7 +154,7 @@ export default async function AboutPage() {
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                 {content.highlightsEyebrow}
               </p>
-              <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
                 {content.highlightsTitle}
               </h2>
             </div>
@@ -187,7 +189,7 @@ export default async function AboutPage() {
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
                 {content.experienceEyebrow}
               </p>
-              <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
                 {content.experienceTitle}
               </h2>
             </div>
@@ -212,12 +214,12 @@ export default async function AboutPage() {
       </section>
 
       {/* Trust stats */}
-      <section className="border-t border-neutral-200 bg-[#F7F4EE]">
+      <section className="border-t border-neutral-200 bg-neutral-100">
         <Container>
-          <div className="grid grid-cols-2 divide-y divide-neutral-300/70 py-16 sm:grid-cols-4 sm:divide-y-0 sm:divide-x sm:py-20">
+          <ScrollReveal variant="rise" className="grid grid-cols-2 divide-y divide-neutral-300/70 py-16 sm:grid-cols-4 sm:divide-y-0 sm:divide-x sm:py-20">
             {content.stats.map((stat) => (
               <div key={stat.label} className="py-6 text-center first:pt-0 sm:px-6 sm:py-0 sm:first:pl-0">
-                <p className="text-2xl font-bold text-neutral-950 sm:text-3xl">
+                <p className="font-serif text-4xl font-semibold text-neutral-950 sm:text-5xl">
                   {stat.value}
                 </p>
                 <p className="mt-2 text-xs uppercase tracking-[0.15em] text-neutral-600">
@@ -225,7 +227,7 @@ export default async function AboutPage() {
                 </p>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 
@@ -234,11 +236,11 @@ export default async function AboutPage() {
       {/* Final CTA */}
       <section className="border-t border-neutral-200 bg-neutral-50">
         <Container>
-          <div className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
+          <ScrollReveal variant="fade" className="flex flex-col items-center gap-6 py-16 text-center sm:py-20">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
               Let&rsquo;s work together
             </p>
-            <h2 className="max-w-xl text-2xl font-bold text-neutral-950 sm:text-3xl">
+            <h2 className="max-w-xl font-serif text-3xl font-semibold text-neutral-950 sm:text-4xl">
               Ready to create something worth keeping?
             </h2>
             <p className="max-w-md text-neutral-900">
@@ -253,7 +255,7 @@ export default async function AboutPage() {
                 View Services
               </Button>
             </div>
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 

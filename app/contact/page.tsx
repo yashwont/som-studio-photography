@@ -42,7 +42,7 @@ function ContactDetail({
         {href ? (
           <a
             href={href}
-            className="text-sm text-neutral-900 transition-colors hover:text-neutral-950"
+            className="text-sm text-neutral-900 transition-colors hover:text-neutral-950 hover:underline underline-offset-4"
           >
             {value}
           </a>
@@ -80,7 +80,7 @@ export default async function ContactPage({
             <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
               Contact
             </p>
-            <h1 className="break-words text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
+            <h1 className="break-words font-serif text-lg font-medium tracking-tight text-neutral-950 sm:text-xl xl:text-2xl">
               Book a photography session
             </h1>
             <p className="mx-auto mt-1.5 max-w-xl text-xs font-semibold leading-relaxed text-neutral-900">
@@ -159,7 +159,7 @@ export default async function ContactPage({
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-900 transition-colors hover:border-gold hover:text-gold"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-900 transition-all hover:border-neutral-900 hover:bg-neutral-900 hover:text-white"
                       aria-label={`${social.label} - opens in new tab`}
                       title={social.label}
                     >
@@ -175,8 +175,9 @@ export default async function ContactPage({
               </p>
             </div>
 
-            <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
-              <p className="mb-6 text-sm font-semibold text-neutral-950">
+            <div className="glass rounded-2xl p-6 sm:p-8">
+              <p className="mb-6 flex items-center gap-2.5 font-serif text-lg font-semibold text-neutral-950">
+                <span aria-hidden="true" className="accent-rule h-px w-6" />
                 Send an inquiry
               </p>
               <InquiryForm

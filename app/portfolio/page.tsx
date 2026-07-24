@@ -5,6 +5,7 @@ import Footer from "@/src/components/layout/Footer";
 import Container from "@/src/components/layout/Container";
 import Button from "@/src/components/ui/Button";
 import ScrollReveal from "@/src/components/ui/ScrollReveal";
+import BackToTop from "@/src/components/ui/BackToTop";
 import { getActiveServices } from "@/src/lib/db/services";
 import { getContactInfo } from "@/src/lib/db/contact";
 import { absoluteUrl } from "@/src/lib/seo";
@@ -27,13 +28,13 @@ function CategoryNav({ categories }: { categories: PortfolioCategory[] }) {
   return (
     <nav
       aria-label="Portfolio categories"
-      className="sticky top-16 z-40 flex flex-wrap justify-center gap-2 border-y border-neutral-200 bg-white px-5 py-4 shadow-[0_10px_24px_-22px_rgba(10,10,10,0.45)] sm:top-20 sm:px-8 lg:px-12 xl:px-16 2xl:px-20"
+      className="flex flex-wrap justify-center gap-2 border-y border-neutral-200 bg-white/70 px-5 py-4 backdrop-blur-sm sm:px-8 lg:px-12 xl:px-16 2xl:px-20"
     >
       {categories.map((category: PortfolioCategory) => (
         <a
           key={category.id}
           href={`#${category.id}`}
-          className="shrink-0 rounded-full border border-neutral-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-700 transition-colors hover:border-accent hover:text-neutral-950"
+          className="shrink-0 rounded-full border border-neutral-200/80 bg-white/50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-700 transition-all hover:-translate-y-0.5 hover:border-neutral-900 hover:bg-neutral-900 hover:text-white"
         >
           {category.title}
         </a>
@@ -61,7 +62,7 @@ function PortfolioImageFrame({
         fill
         priority={priority}
         sizes={sizes}
-        className="object-cover"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
       />
     </div>
   );
@@ -87,21 +88,22 @@ function CategorySection({
       >
         <Container>
           <div className="grid grid-cols-1 items-center gap-8 py-10 sm:py-14 lg:grid-cols-2 lg:gap-12">
-            <div className={reversed ? "lg:order-2" : undefined}>
+            <ScrollReveal variant="soft-zoom" className={`group ${reversed ? "lg:order-2" : ""}`}>
               <PortfolioImageFrame
                 image={image}
                 priority={index < 2}
-                className="aspect-[16/11] rounded border border-neutral-200 shadow-sm"
+                className="aspect-[16/11] rounded-2xl border border-neutral-200 shadow-[0_24px_60px_-30px_rgba(10,10,10,0.5)]"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-            </div>
+            </ScrollReveal>
 
             <div className={reversed ? "lg:order-1" : undefined}>
-              <div className="rounded border border-neutral-200 bg-white p-6 sm:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+              <div className="glass rounded-2xl p-6 sm:p-8">
+                <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                  <span aria-hidden="true" className="accent-rule h-px w-6" />
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+                <h2 className="mt-3 font-serif text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
                   {category.title}
                 </h2>
                 <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-800">
@@ -192,7 +194,7 @@ export default async function PortfolioPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
                   Next step
                 </p>
-                <h2 className="max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+                <h2 className="max-w-2xl font-serif text-3xl font-bold tracking-tight sm:text-4xl">
                   Want photographs like these for your own story?
                 </h2>
                 <p className="max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
@@ -208,6 +210,7 @@ export default async function PortfolioPage() {
         </ScrollReveal>
       </main>
       <Footer contact={contact} />
+      <BackToTop />
     </>
   );
 }

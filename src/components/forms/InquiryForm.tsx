@@ -16,7 +16,7 @@ interface InquiryFormProps {
 }
 
 const inputClass =
-  "w-full rounded border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-900 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors duration-200";
+  "w-full rounded-xl border border-neutral-200 bg-white/70 px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-400 backdrop-blur-sm focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/25 transition-all duration-200";
 
 export default function InquiryForm({
   idPrefix = "inquiry",
@@ -174,7 +174,7 @@ export default function InquiryForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+        className="btn-shimmer w-full rounded-full bg-accent px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-xl hover:shadow-accent/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting ? "Submitting..." : "Submit"}
       </button>

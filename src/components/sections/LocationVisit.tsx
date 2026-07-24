@@ -9,11 +9,12 @@ export default function LocationVisit({ contact: contactInfo }: { contact: Conta
     <section className="border-t border-neutral-200 bg-neutral-50">
       <Container>
         <div className="grid grid-cols-1 gap-8 py-16 sm:py-20 lg:grid-cols-[1fr_0.8fr] lg:items-stretch">
-          <div className="rounded border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
+          <div className="glass rounded-2xl p-6 sm:p-8">
+            <p className="mb-3 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+              <span aria-hidden="true" className="accent-rule h-px w-6" />
               Studio location
             </p>
-            <h2 className="text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
+            <h2 className="font-serif text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               Visit our Kathmandu studio
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-900">
@@ -62,7 +63,7 @@ export default function LocationVisit({ contact: contactInfo }: { contact: Conta
             </div>
           </div>
 
-          <div className="relative min-h-72 overflow-hidden rounded border border-neutral-200 bg-neutral-50">
+          <div className="relative min-h-72 overflow-hidden rounded-2xl border border-white/60 shadow-[0_10px_40px_-18px_rgba(15,15,15,0.28)]">
             <iframe
               src={contactInfo.mapEmbedUrl}
               title={`Map showing ${contactInfo.address}, ${contactInfo.city}`}

@@ -9,16 +9,16 @@ export default function FinalCTA({ content }: { content: HomeContentData }) {
         <div className="relative py-14 sm:py-16 flex flex-col items-center text-center gap-3 max-w-xl mx-auto">
 
           {/* Eyebrow */}
-          <div className="flex items-center gap-3">
-            <div aria-hidden="true" className="h-px w-6 shrink-0 bg-gold" />
-            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 sm:tracking-[0.2em]">
+          <div className="flex items-center gap-3 text-gold">
+            <div aria-hidden="true" className="accent-rule h-px w-6 shrink-0" />
+            <span className="text-xs font-semibold uppercase tracking-[0.16em] sm:tracking-[0.2em]">
               {content.ctaEyebrow}
             </span>
-            <div aria-hidden="true" className="h-px w-6 shrink-0 bg-gold" />
+            <div aria-hidden="true" className="accent-rule h-px w-6 shrink-0" />
           </div>
 
           {/* Headline */}
-          <h2 className="break-words text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl">
+          <h2 className="break-words font-serif text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
             {content.ctaHeadline}
           </h2>
 
